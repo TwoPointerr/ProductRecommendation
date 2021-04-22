@@ -1,2 +1,4 @@
 - Created 'main' app in apps\main   9:28 am Wednesday, 21 April 2021
 - some models created in apps\main	12:00 pm Wednesday, 21 April 2021
+- part 3 26 min	8:16 pm Wednesday, 21 April 2021
+- single product view added eg. "url/product/city-backpack" 7:43 pm Thursday, 22 April 2021 
