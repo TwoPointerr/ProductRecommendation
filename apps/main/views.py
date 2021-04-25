@@ -46,18 +46,18 @@ def addtocart(request, pid):
                 cart=cart_obj, product=product_obj, rate=product_obj.market_price, quantity=1, subtotal=product_obj.market_price)
             cart_obj.total += product_obj.market_price
             """ print(cart_obj.total) """
-            cart_obj.save
+            cart_obj.save()
             print("else 12: " + str(cart_obj.total))
 
     else:
-        print("else 21:" + str(cart_obj.total))
+        #print("else 21:" + str(cart_obj.total))
         cart_obj = Cart.objects.create(total=0)
         request.session['cart_id'] = cart_obj.id
         cartproduct = CartProduct.objects.create(
             cart=cart_obj, product=product_obj, rate=product_obj.market_price, quantity=1, subtotal=product_obj.market_price)
         cart_obj.total += product_obj.market_price
         """ print(str(cart_obj.total)) """
-        cart_obj.save
+        cart_obj.save()
         print("else 22:" + str(cart_obj.total))
     return render(request, "proadded.html")
 
@@ -69,6 +69,17 @@ def mycart(request):
         print(cart.total)
     else:
         cart = None
-        context['cart']=cart
     return render(request, "shop-cart.html", {'cart': cart})
+
+def checkout_detail(request):
+    return render(request,"checkout-details.html")
+
+def checkout_payment(request):
+    return render(request,"checkout-payment.html")
+
+def checkout_review(request):
+    return render(request,"checkout-review.html")
+
+
+
 
