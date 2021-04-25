@@ -71,14 +71,35 @@ def mycart(request):
         cart = None
     return render(request, "shop-cart.html", {'cart': cart})
 
+
+
 def checkout_detail(request):
-    return render(request,"checkout-details.html")
+    # return render(request, "shop-cart.html", {'cart': cart})
+    cart_id = request.session.get("cart_id", None)
+    if cart_id:
+        cart = Cart.objects.get(id=cart_id)
+        print(cart.total)
+    else:
+        cart = None
+    return render(request,"checkout-details.html",{'cart': cart})
 
 def checkout_payment(request):
-    return render(request,"checkout-payment.html")
+    cart_id = request.session.get("cart_id", None)
+    if cart_id:
+        cart = Cart.objects.get(id=cart_id)
+        print(cart.total)
+    else:
+        cart = None
+    return render(request,"checkout-payment.html",{'cart': cart})
 
 def checkout_review(request):
-    return render(request,"checkout-review.html")
+    cart_id = request.session.get("cart_id", None)
+    if cart_id:
+        cart = Cart.objects.get(id=cart_id)
+        print(cart.total)
+    else:
+        cart = None
+    return render(request,"checkout-review.html",{'cart': cart})
 
 
 
