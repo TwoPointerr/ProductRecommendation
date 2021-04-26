@@ -98,3 +98,5 @@ def managecart(request, cpid):
         else:
             pass
         return redirect('mycart')
+
+        
