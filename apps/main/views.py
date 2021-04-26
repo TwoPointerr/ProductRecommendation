@@ -6,6 +6,9 @@ from .models import *
 
 def index(request):
     product_list = Product.objects.all()
+    if request.method == "POST":
+        keyword = request.POST.get('keyword')
+        return redirect('search/'+ keyword)
     return render(request, "shop-grid-ft.html", {'product_list': product_list})
 
 
@@ -98,3 +101,10 @@ def managecart(request, cpid):
         else:
             pass
         return redirect('mycart')
+
+def SearchView(request, keyword):
+
+    search_result = Product.objects.filter(title__icontains = keyword)
+    return render(request, 'search.html', {'keyword':keyword, 'search_result': search_result})
+
+

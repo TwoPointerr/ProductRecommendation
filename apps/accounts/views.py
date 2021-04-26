@@ -38,7 +38,7 @@ def signup(request):
         user.save()
     return render(request, "account-signup.html") 
 
-def signout(request):
+def signout(request):                                                   
 
     logout(request)
     return redirect("index")
