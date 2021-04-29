@@ -1,16 +1,9 @@
 from django.db import models
+from apps.accounts.models import *
 from django.contrib.auth.models import User
 # Create your models here.
 
-class Customer(models.Model):
-    user=models.OneToOneField(User, on_delete=models.CASCADE)
-    full_name = models.CharField(max_length=200)
-    address = models.CharField(max_length=200, null=True, blank=True)
-    joined_on = models.DateTimeField(auto_now_add=True)
 
-    def __str__(self):
-        return self.full_name
-    
 class Category(models.Model):
     title = models.CharField(max_length=200)
     slug = models.SlugField(unique=True)
@@ -34,7 +27,7 @@ class Product(models.Model):
         return self.title
 
 class Cart (models.Model):
-    customer = models.ForeignKey(Customer, on_delete=models.SET_NULL, null=True, blank=True)
+    profile = models.ForeignKey(Profile, on_delete=models.SET_NULL, null=True, blank=True)
     total = models.PositiveIntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
 

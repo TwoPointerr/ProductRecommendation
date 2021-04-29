@@ -521,19 +521,19 @@
             <div class="row gx-4 gy-3">
               <div class="col-sm-6">
                 <label class="form-label" for="account-fn">First Name</label>
-                <input class="form-control" type="text" id="account-fn" value="Susan">
+                <input class="form-control" type="text" id="account-fn" value="{{user.first_name}}">
               </div>
               <div class="col-sm-6">
                 <label class="form-label" for="account-ln">Last Name</label>
-                <input class="form-control" type="text" id="account-ln" value="Gardner">
+                <input class="form-control" type="text" id="account-ln" value="{{user.last_name}}">
               </div>
               <div class="col-sm-6">
                 <label class="form-label" for="account-email">Email Address</label>
-                <input class="form-control" type="email" id="account-email" value="s.gardner@example.com" disabled>
+                <input class="form-control" type="email" id="account-email" value="{{user.email}}" disabled>
               </div>
               <div class="col-sm-6">
                 <label class="form-label" for="account-phone">Phone Number</label>
-                <input class="form-control" type="text" id="account-phone" value="+7 (805) 348 95 72" required>
+                <input class="form-control" type="text" id="account-phone" value="{{user.phoneno}}" required>
               </div>
               <div class="col-sm-6">
                 <label class="form-label" for="account-pass">New Password</label>
