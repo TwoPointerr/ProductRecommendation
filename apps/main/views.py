@@ -71,7 +71,7 @@ def mycart(request):
     else:
         cart = None
         
-    return render(request, "shop-cart.html", {'cart': cart})
+    return render(request, 'mycart', {'cart': cart})
 
 def managecart(request, cpid):
     
