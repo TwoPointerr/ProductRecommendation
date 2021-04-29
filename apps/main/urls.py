@@ -12,5 +12,7 @@ urlpatterns = [
     path('my-cart/',views.mycart, name="mycart"),
     path("managecart/<int:cpid>/", views.managecart, name="managecart"),
 
-    path("search/<str:keyword>", views.SearchView,  name = "search"),
+    path("search_result/<str:keyword>", views.Search_Result,  name = "search_result"),
+    path("search/", views.Search_Product,  name = "search_product"),
+    path("single_product/<int:pid>/", views.Single_Product,  name = "single_product"),
 ]

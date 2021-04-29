@@ -9,7 +9,6 @@ def signin(request):
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
-        print(username, password)
         # user = authenticate(username= email, password= password)
         user = auth.authenticate(username = username, password = password)
         print(user)
@@ -17,7 +16,7 @@ def signin(request):
 
             login(request, user)
             print("logged in")
-            return redirect("index")
+            return redirect("apps.main:index")
             
         else:
             print("not logged in")
@@ -41,6 +40,6 @@ def signup(request):
 def signout(request):                                                   
 
     logout(request)
-    return redirect("index")
+    return redirect("apps.main:index")
 
 
