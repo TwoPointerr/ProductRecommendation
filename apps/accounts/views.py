@@ -38,7 +38,7 @@ def signup(request):
         Profile.objects.create(user=user)
         user.save()
         login(request, user)
-        return redirect("profile")
+        return redirect("apps.accounts:profile")
     return render(request, "account-signup.html")
 
 
@@ -70,9 +70,9 @@ def profile(request):
                profile.image = previmg               
 
             profile.save(update_fields=['mob_no', 'gender', 'image'])
-            return redirect("/accounts/shipping")
+            return redirect("apps.accounts:shippinginfo")
     else:
-        return redirect("/accounts/signin")
+        return redirect("apps.accounts:signin")
     return render(request, "profile-details.html", {'profile': profile, 'user': user})
 
 
@@ -90,6 +90,6 @@ def shipping(request):
                 defaults={'addline':addline, 'city':city, 'state':state, 'pincode':pincode},
             )
     else:
-        return redirect("/accounts/signin")
+        return redirect("apps.accounts:signin")
 
     return render(request, "profile-shipping.html",{'profile': profile, 'address': address})
