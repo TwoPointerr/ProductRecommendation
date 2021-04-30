@@ -12,7 +12,8 @@ def index(request):
     paginator = Paginator(product_list, 4)
     page_number = request.GET.get('page')
     product_list = paginator.get_page(page_number)
-    return render(request, "home-fashion-store-v2.html", {'product_list': product_list})
+    allcat = Category.objects.all()
+    return render(request, "home-fashion-store-v2.html", {'product_list': product_list, 'allcat': allcat})
 
 
 def category(request):
@@ -66,7 +67,7 @@ def addtocart(request, pid):
         cart_obj.save()
         """ print("else 22:" + str(cart_obj.total)) """
     #return render(request, "proadded.html")
-    return redirect('mycart')
+    return redirect('apps.main:mycart')
 
 
 def mycart(request):
@@ -77,7 +78,7 @@ def mycart(request):
     else:
         cart = None
         
-    return render(request, 'mycart', {'cart': cart})
+    return render(request, 'shop-cart.html', {'cart': cart})
 
 def managecart(request, cpid):
     
@@ -103,7 +104,7 @@ def managecart(request, cpid):
 
         else:
             pass
-        return redirect('mycart')
+        return redirect('apps.main:mycart')
 
 def Search_Result(request, keyword):
 

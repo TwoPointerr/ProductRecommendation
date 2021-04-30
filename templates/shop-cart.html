@@ -545,9 +545,9 @@
                     <div class="pt-2 pt-sm-0 ps-sm-3 mx-auto mx-sm-0 text-center text-sm-start" style="max-width: 9rem;">
                         <label class="form-label" for="quantity1">Quantity </label>
                         <input class="form-control" type="number" id="quantity1" min="1" value="{{cp.quantity}}">
-                        <a href="{% url 'managecart' cp.id %}?action=inc">
+                        <a href="{% url 'apps.main:managecart' cp.id %}?action=inc">
                         <button class="btn btn-link px-0 text-success" type="button"><i class="ci-add-circle me-2"></i><span class="fs-sm">Add</span></button></a>
-                        <a href="{% url 'managecart' cp.id %}?action=dcr">
+                        <a href="{% url 'apps.main:managecart' cp.id %}?action=dcr">
                         <button class="btn btn-link px-0 text-danger" type="button"><i class="ci-close-circle me-2"></i><span class="fs-sm">Remove</span></button></a>
                     </div>
                 </div>
