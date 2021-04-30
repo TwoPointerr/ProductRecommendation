@@ -110,12 +110,13 @@ def acprofile(request):
             profile.mob_no = request.POST.get('phoneno')
             profile.gender = request.POST.get('gender')
             profile.image = request.FILES.get('img')
+            profile.isprimary = True
             
             newimg=profile.image
             
             if str(newimg) == '':
                 profile.image = previmg               
-            profile.save(update_fields=['mob_no', 'gender', 'image'])
+            profile.save(update_fields=['mob_no', 'gender', 'image','isprimary'])
             return redirect("apps.accounts:shippinginfo")
     else:
         return redirect("apps.accounts:signin")
@@ -124,19 +125,74 @@ def acprofile(request):
 def address(request):
     profile = Profile.objects.get(id=request.user.profile.id)
     address= Address.objects.filter(profile=profile).last()
-    address_list= Address.objects.all()
+    address_list= Address.objects.all().order_by('-id')
     if request.user.is_authenticated:
         if request.method == 'POST':
             addline = request.POST.get('addline')
             city = request.POST.get('city')
             state = request.POST.get('state')
             pincode = request.POST.get('zipcode')
+            isprimary = request.POST.get('primary')
+            if isprimary == 'on':
+                isprimary=True
+                addlist=Address.objects.filter(profile=profile)
+                addlist.update(isprimary=False)
+            else:
+                isprimary=False
             address, created = Address.objects.update_or_create(
-                profile_id=profile.id,
-                defaults={'addline':addline, 'city':city, 'state':state, 'pincode':pincode},
+                addline=addline, city=city, state=state, pincode=pincode,isprimary=isprimary, profile_id=profile.id,
+                defaults={'addline':addline, 'city':city, 'state':state, 'pincode':pincode,'isprimary':isprimary, 'profile_id':profile.id},
             )
-            return redirect("apps.main:index")
+            #address = Address.objects.create(addline=addline, city=city, state=state, pincode=pincode,isprimary=isprimary, profile_id=profile.id)
+            
+            return redirect("apps.accounts:address")
     else:
         return redirect("apps.accounts:signin")
 
     return render(request, "account-address.html",{'profile': profile, 'address': address, 'address_list':address_list})
+
+
+
+def manageadd(request, addid):
+    
+        add_id = addid
+        action = request.GET.get("action")
+        profile = Profile.objects.get(id=request.user.profile.id)
+        #address = Address.objects.filter(profile=profile).last()
+        address_list= Address.objects.all()
+
+        if action == "edit":
+            if request.user.is_authenticated:
+                print('edited')
+                if request.method == 'POST':
+                    addline = request.POST.get('addline')
+                    city = request.POST.get('city')
+                    state = request.POST.get('state')
+                    pincode = request.POST.get('zipcode')
+                    isprimary = request.POST.get('primary')
+                    if isprimary == 'on':
+                        isprimary=True
+                        addlist=Address.objects.filter(profile=profile)
+                        addlist.update(isprimary=False)
+                    else:
+                        isprimary=False
+                    address, created = Address.objects.update_or_create(
+                        id=add_id,
+                        defaults={'addline':addline, 'city':city, 'state':state, 'pincode':pincode,'isprimary':isprimary, 'profile_id':profile.id},
+                    )
+                    #address = Address.objects.create(addline=addline, city=city, state=state, pincode=pincode,isprimary=isprimary, profile_id=profile.id)
+                    
+                    return redirect("apps.accounts:address")
+
+        elif action == "rem":
+            cp_obj.quantity -= 1
+            cp_obj.subtotal -= cp_obj.rate
+            cp_obj.save()
+            cart_obj.total -= cp_obj.rate
+            cart_obj.save()
+            if cp_obj.quantity == 0:
+                cp_obj.delete()
+
+        else:
+            pass
+        return redirect('apps.accounts:address')
