@@ -9,6 +9,7 @@
               <h2 class="h4 mb-1">Sign in</h2>
               <hr>
               <h3 class="fs-base pt-4 pb-2">Don't have an account? <a href="{% url 'apps.accounts:signup' %}">SignUp</a></h3>
+              <h3 class="fs-base pt-4 pb-2">Are you a seller? <a href="{% url 'apps.seller_accounts:signin' %}">SignIn</a></h3>
               <form method="POST" class="needs-validation" onsubmit="return validName()" novalidate>
                 {% csrf_token %}
                 <div class="input-group mb-3"><i class="ci-mail position-absolute top-50 translate-middle-y text-muted fs-base ms-3"></i>

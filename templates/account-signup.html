@@ -46,14 +46,14 @@
         <form method="POST" name="signupForm" class="" novalidate onsubmit="return validName()">
           {% csrf_token %}
           <div class="row gx-4 gy-3">
-            <div class="col-sm-12">
+            <div class="col-sm-6">
               <label class="form-label" for="reg-fn">First Name</label><span id="sp1"></span>
               <input class="form-control" type="text" name="firstname" required id="reg-fn">
               <div>
                 <span id="message-firstname" style="color:red"></span>
               </div>
             </div>
-            <div class="col-sm-12">
+            <div class="col-sm-6">
               <label class="form-label" for="reg-fn">Last Name</label>
               <input class="form-control" type="text" name="lastname" required id="reg-fn">
               <div>
