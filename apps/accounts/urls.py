@@ -9,8 +9,11 @@ urlpatterns = [
     path('signin/',views.signin, name="signin"),
     path('signup/',views.signup, name="signup"),
     path('signout/',views.signout, name="signout"),
-    path('profile/',views.profile, name="profile"),
-    path('shipping/',views.shipping, name="shippinginfo")
+    path('profileset/',views.profileset, name="profileset"),
+    path('profile/',views.acprofile, name="profile"),
+    path('shippingset/',views.shippingset, name="shippinginfo"),
+    path('address/',views.address, name="address"),
+    path('manageadd/<int:addid>/',views.manageadd, name="manageadd")
     
 ]
-urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+#urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
