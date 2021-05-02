@@ -113,13 +113,13 @@
                         <div class="col-sm-6">
                             <div class="mb-3">
                                 <label class="form-label" for="checkout-address-1">Address</label>
-                                <input class="form-control" type="text" name="addline" value="{{address.addline}}" id="checkout-address-1">
+                                <input class="form-control" type="text" name="addline" value="" id="checkout-address-1">
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="mb-3">
                                 <label class="form-label" for="checkout-zip">City</label>
-                                <input class="form-control" type="text" name="city" value="{{address.city}}" id="checkout-zip">
+                                <input class="form-control" type="text" name="city" value="" id="checkout-zip">
                             </div>
                         </div>
                     </div>
@@ -127,13 +127,13 @@
                         <div class="col-sm-6">
                             <div class="mb-3">
                                 <label class="form-label" for="checkout-address-1">State</label>
-                                <input class="form-control" type="text" name="state" value="{{address.state}}" id="checkout-address-1">
+                                <input class="form-control" type="text" name="state" value="" id="checkout-address-1">
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="mb-3">
                                 <label class="form-label" for="checkout-zip">ZIP Code</label>
-                                <input class="form-control" type="text" name="zipcode" value="{{address.pincode}}" id="checkout-zip">
+                                <input class="form-control" type="text" name="zipcode" value="" id="checkout-zip">
                             </div>
                         </div>
                     </div>
@@ -155,64 +155,7 @@
             </div>
         </div>
     </form>
-    <!-- Edit Address-->
-    <form class="needs-validation modal fade" enctype="multipart/form-data" method="post" id="edit-address" tabindex="-1" novalidate>
-        {% csrf_token %}
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Edit address</h5>
-                    <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-
-
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <div class="mb-3">
-                                <label class="form-label" for="checkout-address-1">Address</label>
-                                <input class="form-control" type="text" name="addline" value="{{add.addline}}" id="checkout-address-1">
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="mb-3">
-                                <label class="form-label" for="checkout-zip">City</label>
-                                <input class="form-control" type="text" name="city" value="{{add.city}}" id="checkout-zip">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <div class="mb-3">
-                                <label class="form-label" for="checkout-address-1">State</label>
-                                <input class="form-control" type="text" name="state" value="{{address.state}}" id="checkout-address-1">
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="mb-3">
-                                <label class="form-label" for="checkout-zip">ZIP Code</label>
-                                <input class="form-control" type="text" name="zipcode" value="{{address.pincode}}" id="checkout-zip">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" name="primary" id="address-primary">
-                            <label class="form-check-label" for="address-primary">Make this address primary</label>
-                        </div>
-                    </div>
-
-
-
-
-                </div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Close</button>
-                    <button class="btn btn-primary btn-shadow" type="submit">Add address</button>
-                </div>
-            </div>
-        </div>
-    </form>
+    
     <!-- Navbar 3 Level (Light)-->
     <header class="shadow-sm">
         <!-- Topbar-->
@@ -729,7 +672,7 @@
                     <h6 class="fs-base text-light mb-0">List of your registered addresses:</h6><a class="btn btn-primary btn-sm" href="account-signin.html"><i class="ci-sign-out me-2"></i>Sign out</a>
                 </div>
                 <!-- Addresses list-->
-                <div class="table-responsive fs-md">
+                {% comment %} <div class="table-responsive fs-md">
                     <table class="table table-hover mb-0">
                         <thead>
                             <tr>
@@ -749,14 +692,14 @@
                                 {% endif %}
                                 <td class="py-3 align-middle">
                                     
-                                        <a class="nav-link-style me-2" href="#edit-address" data-bs-toggle="modal" data-bs-toggle="tooltip"  title="Edit">
+                                        <a class="nav-link-style me-2" href="{% url 'apps.accounts:manageadd' add.id %}?action=edit&addid={{add.id}}" data-bs-toggle="tooltip"  title="Edit">
                                             <i class="ci-edit"></i></a>
                                     
-                                    {% comment %} <a href="#add-address" data-bs-toggle="modal">
-                                    <a class="nav-link-style text-danger" href="{% url 'apps.accounts:manageadd' add.id %}?action=rem" data-bs-toggle="tooltip" title="Remove">
+                                    <a href="#add-address" data-bs-toggle="modal">
+                                    <a class="nav-link-style text-danger" href="{% url 'apps.accounts:manageadd' add.id %}?action=rem&addid={{add.id}}" data-bs-toggle="tooltip" title="Remove">
                                         <div class="ci-trash"></div>
                                     </a>
-                                    </a> {% endcomment %}
+                                    </a>
                                 </td>
                             </tr>
                             {% endif %} {% endfor %} {% comment %}
@@ -775,11 +718,72 @@
                                         <div class="ci-trash"></div>
                                     </a>
                                 </td>
-                            </tr> {% endcomment %}
+                            </tr> 
                         </tbody>
                     </table>
                 </div>
-                <div class="text-sm-end pt-4"><a class="btn btn-primary" href="#add-address" data-bs-toggle="modal" >Add new address</a></div>
+                <div class="text-sm-end pt-4"><a class="btn btn-primary" href="#add-address" data-bs-toggle="modal" >Add new address</a></div> {% endcomment %}
+
+
+                <!-- Edit Address-->
+    <form class="needs-validation" enctype="multipart/form-data" method="post" id="edit-address" tabindex="" novalidate>
+        {% csrf_token %}
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Edit address</h5>
+                    <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="mb-3">
+                                <label class="form-label" for="checkout-address-1">Address</label>
+                                <input class="form-control" type="text" name="addline" value="{{address.addline}}" id="checkout-address-1">
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="mb-3">
+                                <label class="form-label" for="checkout-zip">City</label>
+                                <input class="form-control" type="text" name="city" value="{{address.city}}" id="checkout-zip">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="mb-3">
+                                <label class="form-label" for="checkout-address-1">State</label>
+                                <input class="form-control" type="text" name="state" value="{{address.state}}" id="checkout-address-1">
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="mb-3">
+                                <label class="form-label" for="checkout-zip">ZIP Code</label>
+                                <input class="form-control" type="text" name="zipcode" value="{{address.pincode}}" id="checkout-zip">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="primary" id="address-primary"
+                            {% if address.isprimary == True %} checked{% endif %}>
+                            <label class="form-check-label" for="address-primary">Make this address primary</label>
+                        </div>
+                    </div>
+
+
+
+
+                </div>
+                <div class="modal-footer">
+                    <a href="{% url 'apps.accounts:address'%}"><button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Close</button></a>
+                    <button class="btn btn-primary btn-shadow" type="submit">Update address</button>
+                </div>
+            </div>
+        </div>
+    </form>
             </section>
         </div>
     </div>

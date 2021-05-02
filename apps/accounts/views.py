@@ -85,9 +85,10 @@ def shippingset(request):
             city = request.POST.get('city')
             state = request.POST.get('state')
             pincode = request.POST.get('zipcode')
+            
             address, created = Address.objects.update_or_create(
-                profile_id=profile.id,
-                defaults={'addline':addline, 'city':city, 'state':state, 'pincode':pincode},
+                profile_id=profile.id,addline=addline, city=city, state=state, pincode=pincode,
+                defaults={'addline':addline, 'city':city, 'state':state, 'pincode':pincode, 'isprimary':True},
             )
             return redirect("apps.main:index")
     else:
@@ -110,14 +111,14 @@ def acprofile(request):
             profile.mob_no = request.POST.get('phoneno')
             profile.gender = request.POST.get('gender')
             profile.image = request.FILES.get('img')
-            profile.isprimary = True
+            
             
             newimg=profile.image
             
             if str(newimg) == '':
                 profile.image = previmg               
-            profile.save(update_fields=['mob_no', 'gender', 'image','isprimary'])
-            return redirect("apps.accounts:shippinginfo")
+            profile.save(update_fields=['mob_no', 'gender', 'image'])
+            return redirect("apps.accounts:address")
     else:
         return redirect("apps.accounts:signin")
     return render(request, "account-profile.html", {'profile': profile, 'user': user})
@@ -160,6 +161,9 @@ def manageadd(request, addid):
         profile = Profile.objects.get(id=request.user.profile.id)
         #address = Address.objects.filter(profile=profile).last()
         address_list= Address.objects.all()
+        getaddid = request.GET.get("addid")
+        address = Address.objects.filter(id=int(getaddid)).last()
+        
 
         if action == "edit":
             if request.user.is_authenticated:
@@ -185,14 +189,9 @@ def manageadd(request, addid):
                     return redirect("apps.accounts:address")
 
         elif action == "rem":
-            cp_obj.quantity -= 1
-            cp_obj.subtotal -= cp_obj.rate
-            cp_obj.save()
-            cart_obj.total -= cp_obj.rate
-            cart_obj.save()
-            if cp_obj.quantity == 0:
-                cp_obj.delete()
+            address = Address.objects.filter(id=getaddid).delete()
+            return redirect("apps.accounts:address")
 
         else:
             pass
-        return redirect('apps.accounts:address')
+        return render(request, "account-edit-address.html",{'address': address})
