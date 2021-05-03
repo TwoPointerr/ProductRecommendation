@@ -82,7 +82,7 @@ def address_info(request):
         city = request.POST.get('City')
         pincode = request.POST.get('Pincode')
         addressinfo = CompanyAddress.objects.get_or_create(company=company, addline=addline, country=country, state=state, city=city, pincode=pincode)
-
+        return redirect("apps.seller_accounts:profile")
     return render(request, "seller_account_address_info.html")
 
 def addnewproduct(request):

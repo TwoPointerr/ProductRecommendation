@@ -10,7 +10,8 @@ urlpatterns = [
     path('',views.index, name="index"),
     path('category/',views.category, name="category"),
     path('product/<slug:slug>/',views.productdetail, name="productdetail"),
-   
+    path('allproducts', views.show_all_products, name="showallproducts"),
+    path('filter-data/', views.filter_data, name="filter_data"),
 
     path("search_result/<str:keyword>", views.Search_Result,  name = "search_result"),
     path("search/", views.Search_Product,  name = "search_product"),
