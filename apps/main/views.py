@@ -7,20 +7,22 @@ from apps.cart.models import *
 # Create your views here.
 
 
+
 def index(request):
     product_list = Product.objects.all()
-    print(product_list)
+    
     paginator = Paginator(product_list, 4)
     page_number = request.GET.get('page')
     product_list = paginator.get_page(page_number)
     allcat = Category.objects.all()
-    return render(request, "home-fashion-store-v2.html", {'product_list': product_list, 'allcat': allcat})
+    productcount = request.session.get('productcount')
+    return render(request, "home-fashion-store-v2.html", {'product_list': product_list, 'allcat': allcat, 'productcount':productcount})
 
 
 def category(request):
     allcat = Category.objects.all()
-    print(allcat)
-    return render(request, "home-fashion-store-v2.html", {'allcat': allcat})
+    productcount = request.session.get('productcount')
+    return render(request, "home-fashion-store-v2.html", {'allcat': allcat, 'productcount':productcount})
 
 
 def productdetail(request, slug):

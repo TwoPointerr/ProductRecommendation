@@ -3,6 +3,7 @@ from django.contrib.auth.models import User, auth
 from django.contrib.auth import authenticate, login
 from django.contrib.auth import logout
 from apps.accounts.models import *
+from apps.cart.models import *
 # Create your views here.
 
 
@@ -16,6 +17,11 @@ def signin(request):
         print(user)
         if user is not None:
             login(request, user)
+            productcount = request.session.get('productcount')
+            if productcount is None:
+                productcount = 0
+                request.session['productcount'] = productcount
+
             print("logged in")
             return redirect("apps.main:index")
             
@@ -38,6 +44,7 @@ def signup(request):
         Profile.objects.create(user=user)
         user.save()
         login(request, user)
+        request.session['productcount'] = 0
         return redirect("apps.accounts:profileset")
     return render(request, "account-signup.html")
 
@@ -125,7 +132,6 @@ def acprofile(request):
 
 def address(request):
     profile = Profile.objects.get(id=request.user.profile.id)
-    address= Address.objects.filter(profile=profile).last()
     address_list= Address.objects.all().order_by('-id')
     if request.user.is_authenticated:
         if request.method == 'POST':
@@ -146,11 +152,11 @@ def address(request):
             )
             #address = Address.objects.create(addline=addline, city=city, state=state, pincode=pincode,isprimary=isprimary, profile_id=profile.id)
             
-            return redirect("apps.accounts:address")
+            return redirect("apps.main:index")
     else:
         return redirect("apps.accounts:signin")
 
-    return render(request, "account-address.html",{'profile': profile, 'address': address, 'address_list':address_list})
+    return render(request, "account-address.html",{'profile': profile, 'address_list':address_list})
 
 
 
@@ -167,7 +173,6 @@ def manageadd(request, addid):
 
         if action == "edit":
             if request.user.is_authenticated:
-                print('edited')
                 if request.method == 'POST':
                     addline = request.POST.get('addline')
                     city = request.POST.get('city')
@@ -195,3 +200,29 @@ def manageadd(request, addid):
         else:
             pass
         return render(request, "account-edit-address.html",{'address': address})
+
+
+
+def orders(request):
+    
+    profile = Profile.objects.get(id=request.user.profile.id)
+    #cart= Cart.objects.filter(profile=profile)
+    #orders = Order.objects.filter(Order.cart.profile==profile).order_by("-id")
+    orders = Order.objects.filter(cart__profile=profile).order_by("-id")
+    print(orders)
+    #print(orders.last().ordered_by)
+    return render(request, 'account-orders.html', {'orders': orders})
+
+
+
+
+def orderdetail(request, orderid):
+    if request.user.is_authenticated and Profile.objects.filter(user=request.user).exists():
+            order_id = orderid
+            order = Order.objects.get(id=order_id)
+            if request.user.profile != order.cart.profile:
+                return redirect("apps.accounts:orders")
+            print(order.ordered_by)
+    else:
+        return redirect("apps.accounts:signin")
+    return render(request, 'account-order-detail.html', {'order':order})

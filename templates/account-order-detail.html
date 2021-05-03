@@ -604,10 +604,99 @@
                 <option>Delayed</option>
                 <option>Canceled</option>
               </select>
-            </div><a class="btn btn-primary btn-sm d-none d-lg-inline-block" href="account-signin.html"><i class="ci-sign-out me-2"></i>Sign out</a>
+            </div><a class="btn btn-primary btn-sm d-none d-lg-inline-block" href="account-signin.html"><i class="ci-arrow-left me-2"></i>Go Back</a>
           </div>
+           <div class="{% comment %} modal fade {% endcomment %}" id="order-details">
+      <div class="modal-dialog modal-lg modal-dialog-scrollable">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Order No - #ORDER_{{order.id}}</h5>
+            
+          </div>
+          <div class="modal-body pb-0">
+            <!-- Item-->
+             {% for cp in order.cart.cartproduct_set.all %}
+            <div class="d-sm-flex justify-content-between mb-4 pb-3 pb-sm-2 border-bottom">
+              <div class="d-sm-flex text-center text-sm-start"><a class="d-inline-block flex-shrink-0 mx-auto" href="shop-single-v1.html" style="width: 10rem;"><img src="{{cp.product.image.url}}" alt="Product"></a>
+                <div class="ps-sm-4 pt-2">
+                  <h3 class="product-title fs-base mb-2"><a href="shop-single-v1.html">{{cp.product.title}}</a></h3>
+                  <div class="fs-sm"><span class="text-muted me-2">Size:</span>8.5</div>
+                  <div class="fs-sm"><span class="text-muted me-2">Color:</span>White &amp; Blue</div>
+                  <div class="fs-lg text-accent pt-2">${{cp.rate}}</div>
+                </div>
+              </div>
+              <div class="pt-2 ps-sm-3 mx-auto mx-sm-0 text-center">
+                <div class="text-muted mb-2">Quantity:</div>{{cp.quantity}}
+              </div>
+              <div class="pt-2 ps-sm-3 mx-auto mx-sm-0 text-center">
+                <div class="text-muted mb-2">Subtotal</div>${{cp.subtotal}}
+              </div>
+            </div>
+            {% endfor %}
+            <!-- Item-->
+            {% comment %} <div class="d-sm-flex justify-content-between my-4 pb-3 pb-sm-2 border-bottom">
+              <div class="d-sm-flex text-center text-sm-start"><a class="d-inline-block flex-shrink-0 mx-auto" href="shop-single-v1.html" style="width: 10rem;"><img src="{% static 'img/shop/cart/02.jpg' %}" alt="Product"></a>
+                <div class="ps-sm-4 pt-2">
+                  <h3 class="product-title fs-base mb-2"><a href="shop-single-v1.html">TH Jeans City Backpack</a></h3>
+                  <div class="fs-sm"><span class="text-muted me-2">Brand:</span>Tommy Hilfiger</div>
+                  <div class="fs-sm"><span class="text-muted me-2">Color:</span>Khaki</div>
+                  <div class="fs-lg text-accent pt-2">$79.<small>50</small></div>
+                </div>
+              </div>
+              <div class="pt-2 ps-sm-3 mx-auto mx-sm-0 text-center">
+                <div class="text-muted mb-2">Quantity:</div>1
+              </div>
+              <div class="pt-2 ps-sm-3 mx-auto mx-sm-0 text-center">
+                <div class="text-muted mb-2">Subtotal</div>$79.<small>50</small>
+              </div>
+            </div>
+            <!-- Item-->
+            <div class="d-sm-flex justify-content-between my-4 pb-3 pb-sm-2 border-bottom">
+              <div class="d-sm-flex text-center text-sm-start"><a class="d-inline-block flex-shrink-0 mx-auto" href="shop-single-v1.html" style="width: 10rem;"><img src="{% static 'img/shop/cart/03.jpg' %}" alt="Product"></a>
+                <div class="ps-sm-4 pt-2">
+                  <h3 class="product-title fs-base mb-2"><a href="shop-single-v1.html">3-Color Sun Stash Hat</a></h3>
+                  <div class="fs-sm"><span class="text-muted me-2">Brand:</span>The North Face</div>
+                  <div class="fs-sm"><span class="text-muted me-2">Color:</span>Pink / Beige / Dark blue</div>
+                  <div class="fs-lg text-accent pt-2">$22.<small>50</small></div>
+                </div>
+              </div>
+              <div class="pt-2 ps-sm-3 mx-auto mx-sm-0 text-center">
+                <div class="text-muted mb-2">Quantity:</div>1
+              </div>
+              <div class="pt-2 ps-sm-3 mx-auto mx-sm-0 text-center">
+                <div class="text-muted mb-2">Subtotal</div>$22.<small>50</small>
+              </div>
+            </div>
+            <!-- Item-->
+            <div class="d-sm-flex justify-content-between my-4">
+              <div class="d-sm-flex text-center text-sm-start"><a class="d-inline-block flex-shrink-0 mx-auto" href="shop-single-v1.html" style="width: 10rem;"><img src="{% static 'img/shop/cart/04.jpg' %}" alt="Product"></a>
+                <div class="ps-sm-4 pt-2">
+                  <h3 class="product-title fs-base mb-2"><a href="shop-single-v1.html">Cotton Polo Regular Fit</a></h3>
+                  <div class="fs-sm"><span class="text-muted me-2">Size:</span>42</div>
+                  <div class="fs-sm"><span class="text-muted me-2">Color:</span>Light blue</div>
+                  <div class="fs-lg text-accent pt-2">$9.<small>00</small></div>
+                </div>
+              </div>
+              <div class="pt-2 ps-sm-3 mx-auto mx-sm-0 text-center">
+                <div class="text-muted mb-2">Quantity:</div>1
+              </div>
+              <div class="pt-2 ps-sm-3 mx-auto mx-sm-0 text-center">
+                <div class="text-muted mb-2">Subtotal</div>$9.<small>00</small>
+              </div>
+            </div> {% endcomment %}
+          </div>
+          <!-- Footer-->
+          <div class="modal-footer flex-wrap justify-content-between bg-secondary fs-md">
+            <div class="px-2 py-1"><span class="text-muted">Subtotal:&nbsp;</span><span>${{order.subtotal}}</span></div>
+            <div class="px-2 py-1"><span class="text-muted">Shipping:&nbsp;</span><span>$0</span></div>
+            <div class="px-2 py-1"><span class="text-muted">Tax:&nbsp;</span><span>$0</span></div>
+            <div class="px-2 py-1"><span class="text-muted">Total:&nbsp;</span><span class="fs-lg">${{order.total}}</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
           <!-- Orders list-->
-          <div class="table-responsive fs-md mb-4">
+          {% comment %} <div class="table-responsive fs-md mb-4">
             <table class="table table-hover mb-0">
               <thead>
                 <tr>
@@ -618,15 +707,13 @@
                 </tr>
               </thead>
               <tbody>
-              {% for ord in orders %}
                 <tr>
-                  <td class="py-3"><a class="nav-link-style fw-medium fs-sm" href="{% url 'apps.accounts:orderdetail' ord.pk %}" data-bs-toggle="modal">#ORDER_{{ord.id}}</a></td>
-                  <td class="py-3">{{ord.created_at}}</td>
-                  <td class="py-3"><span class="badge bg-info m-0">{{ord.order_status}}</span></td>
-                  <td class="py-3">${{ord.total}}</td>
+                  <td class="py-3"><a class="nav-link-style fw-medium fs-sm" href="#order-details" data-bs-toggle="modal">34VB5540K83</a></td>
+                  <td class="py-3">May 21, 2019</td>
+                  <td class="py-3"><span class="badge bg-info m-0">In Progress</span></td>
+                  <td class="py-3">$358.75</td>
                 </tr>
-                {% endfor %}
-                {% comment %} <tr>
+                <tr>
                   <td class="py-3"><a class="nav-link-style fw-medium fs-sm" href="#order-details" data-bs-toggle="modal">78A643CD409</a></td>
                   <td class="py-3">December 09, 2018</td>
                   <td class="py-3"><span class="badge bg-danger m-0">Canceled</span></td>
@@ -655,12 +742,12 @@
                   <td class="py-3">March 30, 2018</td>
                   <td class="py-3"><span class="badge bg-success m-0">Delivered</span></td>
                   <td class="py-3">$86.40</td>
-                </tr> {% endcomment %}
+                </tr>
               </tbody>
             </table>
-          </div>
+          </div> {% endcomment %}
           <!-- Pagination-->
-          <nav class="d-flex justify-content-between pt-2" aria-label="Page navigation">
+         {% comment %}  <nav class="d-flex justify-content-between pt-2" aria-label="Page navigation">
             <ul class="pagination">
               <li class="page-item"><a class="page-link" href="#"><i class="ci-arrow-left me-2"></i>Prev</a></li>
             </ul>
@@ -675,7 +762,7 @@
             <ul class="pagination">
               <li class="page-item"><a class="page-link" href="#" aria-label="Next">Next<i class="ci-arrow-right ms-2"></i></a></li>
             </ul>
-          </nav>
+          </nav> {% endcomment %}
         </section>
       </div>
     </div>
