@@ -4,6 +4,8 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth import logout
 from apps.seller_accounts.models import *
 
+from django.core.files.storage import FileSystemStorage
+
 # Create your views here.
 
 def signup(request):
@@ -86,6 +88,28 @@ def address_info(request):
     return render(request, "seller_account_address_info.html")
 
 def addnewproduct(request):
+    return render(request, "dashboard-add-new-product.html")
+
+def add_single_product(request):
+    if request.method == 'POST':
+        product_name = request.POST.get("product_name")
+        product_desc = request.POST.get("product_desc")
+        product_price = request.POST.get("product_price")
+        product_img = request.FILES.get("product_img")
+        print(product_img,type(product_img))
+        print("inside single products")
+    return render(request, "dashboard-add-new-product.html")
+
+def add_multiple_products(request):
+    if request.method == 'POST':
+        products_file = request.FILES.get("multi_product_file")
+
+        print(products_file)
+        fs = FileSystemStorage()
+        filename = fs.save(products_file.name,products_file)
+        uploaded_file_url = fs.url(filename)
+        print(uploaded_file_url)
+        print("inside multiple products")
     return render(request, "dashboard-add-new-product.html")
 
 def companyinfo(request):

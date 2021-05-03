@@ -44,8 +44,6 @@ def Single_Product(request, pid):
    single_product = Product.objects.get(id = pid)
    return render(request, 'shop-single-v2.html', {'single_product':single_product}) 
 
-
-
 def checkout_detail(request):
     # return render(request, "shop-cart.html", {'cart': cart})
     cart_id = request.session.get("cart_id", None)

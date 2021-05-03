@@ -6,9 +6,9 @@
     <div class="page-title-overlap bg-accent pt-4">
       <div class="container d-flex flex-wrap flex-sm-nowrap justify-content-center justify-content-sm-between align-items-center pt-2">
         <div class="d-flex align-items-center pb-3">
-          <div class="img-thumbnail rounded-circle position-relative flex-shrink-0" style="width: 6.375rem;"><img class="rounded-circle" src="{% static 'img/marketplace/account/avatar.jpg' %}" alt="DSE  Studio"></div>
+          {% comment %} <div class="img-thumbnail rounded-circle position-relative flex-shrink-0" style="width: 6.375rem;"><img class="rounded-circle" src="{% static 'img/marketplace/account/avatar.jpg' %}" alt="DSE  Studio"></div> {% endcomment %}
           <div class="ps-3">
-            <h3 class="text-light fs-lg mb-0">DSE  Studio</h3><span class="d-block text-light fs-ms opacity-60 py-1">Member since November 2019</span>
+            <h1 class="text-light mb-0">DSE  Studio</h1><span class="d-block text-light fs-ms opacity-60 py-1">Member since November 2019</span>
           </div>
         </div>
         <div class="d-flex">
@@ -58,10 +58,21 @@
           <!-- Content-->
           <section class="col-lg-8 pt-lg-4 pb-4 mb-3">
             <div class="pt-2 px-4 ps-lg-0 pe-xl-5">
+              <ul class="nav nav-tabs nav-justified" role="tablist">
+                <li class="nav-item"><a class="nav-link px-0 active" href="#profile" data-bs-toggle="tab" role="tab">
+                    <div class="d-none d-lg-block"><i class="ci-package  opacity-60 me-2"></i>Add Single Product</div>
+                    <div class="d-lg-none text-center"><i class="ci-user opacity-60 d-block fs-xl mb-2"></i><span class="fs-ms">Profile</span></div></a></li>
+                <li class="nav-item"><a class="nav-link px-0" href="#notifications" data-bs-toggle="tab" role="tab">
+                    <div class="d-none d-lg-block"><i class="ci-add-document opacity-60 me-2"></i>Add Multiple Products</div>
+                    <div class="d-lg-none text-center"><i class="ci-bell opacity-60 d-block fs-xl mb-2"></i><span class="fs-ms">Notifications</span></div></a></li>
+                {% comment %} <li class="nav-item"><a class="nav-link px-0" href="#payment" data-bs-toggle="tab" role="tab">
+                    <div class="d-none d-lg-block"><i class="ci-card opacity-60 me-2"></i>Payment methods</div>
+                    <div class="d-lg-none text-center"><i class="ci-card opacity-60 d-block fs-xl mb-2"></i><span class="fs-ms">Payment</span></div></a></li> {% endcomment %}
+              </ul>
               <!-- Title-->
               <div class="d-sm-flex flex-wrap justify-content-between align-items-center pb-2">
                 <h2 class="h3 py-2 me-2 text-center text-sm-start">Add New Product</h2>
-                <div class="py-2">
+                {% comment %} <div class="py-2">
                   <select class="form-select me-2" id="unp-category">
                     <option>Select category</option>
                     <option>Photos</option>
@@ -71,53 +82,70 @@
                     <option>Fonts</option>
                     <option>Add-Ons</option>
                   </select>
+                </div> {% endcomment %}
+              </div>
+              <div class="tab-content">
+                <!-- Profile-->
+                <div class="tab-pane fade show active" id="profile" role="tabpanel">
+                  <form method="POST" action="{% url 'apps.seller_accounts:add_single_product' %}" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="mb-3 pb-2">
+                      <label class="form-label" for="unp-product-name">Product name</label>
+                      <input class="form-control" type="text" id="unp-product-name" name="product_name">
+                      <div class="form-text">Maximum 100 characters. No HTML or emoji allowed.</div>
+                    </div>
+                    <div class="file-drop-area mb-3">
+                      <div class="file-drop-icon ci-cloud-upload"></div><span class="file-drop-message">Drag and drop here to upload product screenshot</span>
+                      <input class="file-drop-input" type="file" accept="image/*" name="product_img">
+                      <button class="file-drop-btn btn btn-primary btn-sm mb-2" type="button">Or select file</button>
+                      <div class="form-text">1000 x 800px ideal size for hi-res displays</div>
+                    </div>
+                    <div class="mb-3 py-2">
+                      <label class="form-label" for="unp-product-description">Product description</label>
+                      <textarea class="form-control" rows="6" id="unp-product-description" name="product_desc"></textarea>
+                      <div class="bg-secondary p-3 fs-ms rounded-bottom"><span class="d-inline-block fw-medium me-2 my-1">Markdown supported:</span><em class="d-inline-block border-end pe-2 me-2 my-1">*Italic*</em><strong class="d-inline-block border-end pe-2 me-2 my-1">**Bold**</strong><span class="d-inline-block border-end pe-2 me-2 my-1">- List item</span><span class="d-inline-block border-end pe-2 me-2 my-1">##Heading##</span><span class="d-inline-block">--- Horizontal rule</span></div>
+                    </div>
+                    <div class="row">
+                      {% comment %} <div class="col-sm-6 mb-3">
+                        <label class="form-label" for="unp-standard-price">Standard license price</label>
+                        <div class="input-group"><span class="input-group-text"><i class="ci-dollar"></i></span>
+                          <input class="form-control" type="text" id="unp-standard-price">
+                        </div>
+                        <div class="form-text">Average marketplace price for this category is $15.</div>
+                      </div> {% endcomment %}
+                      <div class="col-sm-6 mb-3">
+                        <label class="form-label" for="unp-extended-price">Product price</label>
+                        <div class="input-group"><span class="input-group-text"><i class="ci-dollar"></i></span>
+                          <input class="form-control" type="text" id="unp-extended-price" name="product_price">
+                        </div>
+                        <div class="form-text">Typically 10x of the Standard license price.</div>
+                      </div>
+                    </div>
+                    {% comment %} <div class="mb-3 py-2">
+                      <label class="form-label" for="unp-product-tags">Product tags</label>
+                      <textarea class="form-control" rows="4" id="unp-product-tags"></textarea>
+                      <div class="form-text">Up to 10 keywords that describe your item. Tags should all be in lowercase and separated by commas.</div>
+                    </div> {% endcomment %}
+                    {% comment %} <div class="mb-3 pb-2">
+                      <label class="form-label" for="unp-product-files">Product files for sale</label>
+                      <input class="form-control" type="file" id="unp-product-files">
+                      <div class="form-text">Maximum file size is 1GB</div>
+                    </div> {% endcomment %}
+                    <button class="btn btn-primary d-block w-100" type="submit"><i class="ci-cloud-upload fs-lg me-2"></i>Upload Product</button>
+                  </form>
+                </div>
+                <div class="tab-pane fade" id="notifications" role="tabpanel">
+                  <form method="POST" action="{% url 'apps.seller_accounts:add_multiple_products' %}" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="mb-3 pb-2">
+                      <label class="form-label" for="unp-product-files">Product files for sale</label>
+                      <input class="form-control" type="file" id="unp-product-files" name="multi_product_file">
+                      <div class="form-text">Maximum file size is 1GB</div>
+                    </div>
+                    <button class="btn btn-primary d-block w-100" type="submit"><i class="ci-cloud-upload fs-lg me-2"></i>Upload Product</button>
+                  </form>
                 </div>
               </div>
-              <form>
-                <div class="mb-3 pb-2">
-                  <label class="form-label" for="unp-product-name">Product name</label>
-                  <input class="form-control" type="text" id="unp-product-name">
-                  <div class="form-text">Maximum 100 characters. No HTML or emoji allowed.</div>
-                </div>
-                <div class="file-drop-area mb-3">
-                  <div class="file-drop-icon ci-cloud-upload"></div><span class="file-drop-message">Drag and drop here to upload product screenshot</span>
-                  <input class="file-drop-input" type="file">
-                  <button class="file-drop-btn btn btn-primary btn-sm mb-2" type="button">Or select file</button>
-                  <div class="form-text">1000 x 800px ideal size for hi-res displays</div>
-                </div>
-                <div class="mb-3 py-2">
-                  <label class="form-label" for="unp-product-description">Product description</label>
-                  <textarea class="form-control" rows="6" id="unp-product-description"></textarea>
-                  <div class="bg-secondary p-3 fs-ms rounded-bottom"><span class="d-inline-block fw-medium me-2 my-1">Markdown supported:</span><em class="d-inline-block border-end pe-2 me-2 my-1">*Italic*</em><strong class="d-inline-block border-end pe-2 me-2 my-1">**Bold**</strong><span class="d-inline-block border-end pe-2 me-2 my-1">- List item</span><span class="d-inline-block border-end pe-2 me-2 my-1">##Heading##</span><span class="d-inline-block">--- Horizontal rule</span></div>
-                </div>
-                <div class="row">
-                  <div class="col-sm-6 mb-3">
-                    <label class="form-label" for="unp-standard-price">Standard license price</label>
-                    <div class="input-group"><span class="input-group-text"><i class="ci-dollar"></i></span>
-                      <input class="form-control" type="text" id="unp-standard-price">
-                    </div>
-                    <div class="form-text">Average marketplace price for this category is $15.</div>
-                  </div>
-                  <div class="col-sm-6 mb-3">
-                    <label class="form-label" for="unp-extended-price">Extended license price</label>
-                    <div class="input-group"><span class="input-group-text"><i class="ci-dollar"></i></span>
-                      <input class="form-control" type="text" id="unp-extended-price">
-                    </div>
-                    <div class="form-text">Typically 10x of the Standard license price.</div>
-                  </div>
-                </div>
-                <div class="mb-3 py-2">
-                  <label class="form-label" for="unp-product-tags">Product tags</label>
-                  <textarea class="form-control" rows="4" id="unp-product-tags"></textarea>
-                  <div class="form-text">Up to 10 keywords that describe your item. Tags should all be in lowercase and separated by commas.</div>
-                </div>
-                <div class="mb-3 pb-2">
-                  <label class="form-label" for="unp-product-files">Product files for sale</label>
-                  <input class="form-control" type="file" id="unp-product-files">
-                  <div class="form-text">Maximum file size is 1GB</div>
-                </div>
-                <button class="btn btn-primary d-block w-100" type="submit"><i class="ci-cloud-upload fs-lg me-2"></i>Upload Product</button>
-              </form>
             </div>
           </section>
         </div>

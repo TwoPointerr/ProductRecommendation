@@ -14,9 +14,7 @@ urlpatterns = [
     # path('my-cart/',views.mycart, name="mycart"),
     path('checkout/detail',views.checkout_detail,name='checkout_detail'),
     path('checkout/review',views.checkout_review,name='checkout_review'),
-    path('checkout/payment',views.checkout_payment,name='checkout_payment')
-   
-
+    path('checkout/payment',views.checkout_payment,name='checkout_payment'),
     path("search_result/<str:keyword>", views.Search_Result,  name = "search_result"),
     path("search/", views.Search_Product,  name = "search_product"),
     path("single_product/<int:pid>/", views.Single_Product,  name = "single_product"),
