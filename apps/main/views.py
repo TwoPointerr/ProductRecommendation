@@ -45,12 +45,8 @@ def productdetail(request, slug):
     return render(request, "shop-single-v2.html", {'product': product})
 
 def Search_Result(request, keyword):
-<<<<<<< HEAD
 
     search_result = Product.objects.filter(Q(title__icontains = keyword) | Q(description__icontains = keyword))
-=======
-    search_result = Product.objects.filter(title__icontains = keyword)
->>>>>>> 5dc66210fdf31b69db3203f644c26b489732eff9
     paginator = Paginator(search_result, 2)
     page_number = request.GET.get('page')
     search_result = paginator.get_page(page_number)
