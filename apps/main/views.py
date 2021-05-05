@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.views.generic import TemplateView
 from django.urls import reverse
+from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.template.loader import render_to_string
@@ -40,7 +41,6 @@ def productdetail(request, slug):
     return render(request, "shop-single-v2.html", {'product': product})
 
 def Search_Result(request, keyword):
-
     search_result = Product.objects.filter(title__icontains = keyword)
     paginator = Paginator(search_result, 2)
     page_number = request.GET.get('page')
