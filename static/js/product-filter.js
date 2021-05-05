@@ -1,7 +1,11 @@
 $(document).ready(function(){
     $(".ajaxLoader").hide();
-    $(".form-check-input").on('click', function(){
+    $(".form-check-input, #priceFilterBtn").on('click', function(){
         var _filterObj={};
+        var _minPrice=$('#minPrice').val();
+        var _maxPrice=$('#maxPrice').val();
+        _filterObj.minPrice= _minPrice;
+        _filterObj.maxPrice= _maxPrice;
         $(".form-check-input").each(function(index, ele){
             var _filterVal=$(this).val();
             var _filterKey=$(this).data('filter');
