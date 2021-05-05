@@ -1,13 +1,16 @@
 from django.shortcuts import render, redirect
 from django.views.generic import TemplateView
 from django.urls import reverse
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.http import HttpResponse, HttpResponseRedirect
 from apps.cart.models import *
 
 # Create your views here.
-productcount=0
+# productcount=0
 #productcount = CartProduct.objects.filter(cart=cart).count()
+@login_required
 def addtocart(request, pid):
     url_pid = pid
     product_obj = Product.objects.get(id=url_pid)
@@ -45,11 +48,11 @@ def addtocart(request, pid):
         
     
     #return render(request, "proadded.html")
+    messages.success(request,'Item added to Cart.')
     return redirect('apps.cart:mycart')
 
-
+@login_required
 def mycart(request):
-    
     profile = Profile.objects.get(id=request.user.profile.id)
     #cart_id = request.session.get("cart_id", None)
     cart= Cart.objects.filter(profile=profile, ordered='False').last()
@@ -61,9 +64,8 @@ def mycart(request):
     #productcount = request.session.get('productcount')    
     return render(request, 'shop-cart.html', {'cart': cart})
 
-
-def managecart(request, cpid):
-    
+@login_required
+def managecart(request, cpid):  
         cp_id = cpid
         action = request.GET.get("action")
         cp_obj = CartProduct.objects.get(id=cp_id)
@@ -87,8 +89,10 @@ def managecart(request, cpid):
                 #print(productcount)
         else:
             pass
+        messages.info(request,'Cart Updated.')
         return redirect('apps.cart:mycart')
 
+@login_required
 def emptycart(request):
         profile = Profile.objects.get(id=request.user.profile.id)
         cart= Cart.objects.filter(profile=profile).last()
@@ -97,10 +101,11 @@ def emptycart(request):
             cart.cartproduct_set.all().delete()
             cart.total = 0
             cart.save()
+        messages.warning(request,'Items from cart removed.')
         return redirect("apps.cart:mycart")
 
 
-
+@login_required
 def checkoutdetails(request):
     user = request.user
     profile = Profile.objects.get(id=request.user.profile.id)
@@ -150,10 +155,16 @@ def checkoutdetails(request):
                 # print(cart.id)
                 cart = Cart.objects.create(total=0, profile=profile)
                 # print(cart.id)
+                messages.success(request,'Order Placed.')
+                
+                return redirect("apps.accounts:orders")
+
         else:
+            messages.warning(request,'Add iteems to Cart.')
             return redirect("apps.main:index")
          
     else:
+        messages.warning(request,'You are not signed in.')
         return redirect("apps.accounts:signin")
 
     return render(request, "checkout-details.html",{'profile': profile, 'address':address, 'order':order})

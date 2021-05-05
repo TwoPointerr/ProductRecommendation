@@ -1,5 +1,6 @@
     {% extends 'base.html' %}
     {% load static %}
+    
     {% block content %}
     <!-- Hero slider-->
     <section class="tns-carousel tns-controls-lg mb-4 mb-lg-5">
@@ -45,6 +46,7 @@
             </div>
         </div>
     </section>
+    
     <!-- Category (Women)-->
     <section class="container pt-lg-3 mb-4 mb-sm-5">
         <div class="row">
@@ -68,7 +70,7 @@
                 <div class="tns-carousel">
                     <div class="tns-carousel-inner" data-carousel-options="{&quot;nav&quot;: false, &quot;controlsContainer&quot;: &quot;#for-women&quot;}">
                         <!-- Carousel item-->
-                        {% for cat in allcat %} {% if cat.title == "Womens Wear" %}
+                        {% for cat in allcat %} 
                         <div>
 
                             <div class="row mx-n2">
@@ -92,8 +94,7 @@
                                 </div>
                                 {% endfor %}
                             </div>
-                        </div>
-                        {% endif %} {% endfor %} {% comment %}
+                        </div>{% endfor %} {% comment %}
                         <div class="col-lg-4 col-6 px-0 px-sm-2 mb-sm-4">
                             <div class="card product-card card-static">
                                 <button class="btn-wishlist btn-sm" type="button" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to wishlist"><i class="ci-heart"></i></button>
@@ -301,7 +302,7 @@
                 <div class="tns-carousel">
                     <div class="tns-carousel-inner" data-carousel-options="{&quot;nav&quot;: false, &quot;controlsContainer&quot;: &quot;#for-men&quot;}">
                          <!-- Carousel item-->
-                         {% for cat in allcat %} {% if cat.title == "Mens Wear" %}
+                         {% for cat in allcat %} 
                         <div>
 
                             <div class="row mx-n2">
@@ -325,8 +326,7 @@
                                 </div>
                                 {% endfor %}
                             </div>
-                        </div>
-                        {% endif %} {% endfor %}
+                        </div> {% endfor %}
                          {% comment %}
                         <div>
                             <div class="row mx-n2">
@@ -558,7 +558,7 @@
                 <div class="tns-carousel">
                     <div class="tns-carousel-inner" data-carousel-options="{&quot;nav&quot;: false, &quot;controlsContainer&quot;: &quot;#for-kids&quot;}">
                         <!-- Carousel item-->
-                        {% for cat in allcat %} {% if cat.title == "Kids Wear" %}
+                        {% for cat in allcat %}
                         <div>
 
                             <div class="row mx-n2">
@@ -583,7 +583,7 @@
                                 {% endfor %}
                             </div>
                         </div>
-                        {% endif %} {% endfor %}
+                         {% endfor %}
                         {% comment %} <div>
                             <div class="row mx-n2">
                                 <div class="col-lg-4 col-6 px-0 px-sm-2 mb-sm-4">

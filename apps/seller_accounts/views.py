@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User, auth
 from django.contrib.auth import authenticate, login
 from django.contrib.auth import logout
@@ -22,6 +23,7 @@ def signup(request):
         return redirect("apps.seller_accounts:company_details")
     return render(request, "seller_account_signup.html")
 
+
 def signin(request):
     if request.method == 'POST':
         username = request.POST.get('username')
@@ -41,9 +43,13 @@ def signin(request):
             print("not logged in")
     return render(request, "seller_account_signin.html")
 
+@login_required
 def signout(request):
-    pass
+    logout(request)
+    messages.success(request,'Logged Out Successfully.')
+    return redirect("apps.main:index")
 
+@login_required
 def profile(request):
     user_id = request.user.id
     if request.user.is_staff:
@@ -60,6 +66,7 @@ def profile(request):
     
     return render(request, "seller_account_profile.html", {'seller_user':user})
 
+@login_required
 def company_details(request):
     if request.method == 'POST':
         user_id = request.user.id
@@ -72,6 +79,7 @@ def company_details(request):
         return redirect("apps.seller_accounts:address_info")
     return render(request, "seller_account_company_detail.html")
 
+@login_required
 def address_info(request):
     if request.method == 'POST':
         user_id = request.user.id
@@ -85,9 +93,11 @@ def address_info(request):
         return redirect("apps.seller_accounts:profile")
     return render(request, "seller_account_address_info.html")
 
+@login_required
 def addnewproduct(request):
     return render(request, "dashboard-add-new-product.html")
 
+@login_required
 def companyinfo(request):
     user_id = request.user.id
     user = User.objects.get(id=user_id)
@@ -110,8 +120,10 @@ def companyinfo(request):
 
     return render(request, "seller_account_company_info.html",{'company_info': company_info, 'address_info': addressinfo})
 
+@login_required
 def companysales(request):
     return render(request, "dashboard-sales.html")
 
+@login_required
 def companyproducts(request):
     return render(request, "dashboard-products.html")
