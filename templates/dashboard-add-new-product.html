@@ -96,7 +96,7 @@
                     </div>
                     <div class="file-drop-area mb-3">
                       <div class="file-drop-icon ci-cloud-upload"></div><span class="file-drop-message">Drag and drop here to upload product screenshot</span>
-                      <input class="file-drop-input" type="file" accept="image/*" name="product_img">
+                      <input class="file-drop-input" type="file" accept="image/*" name="product_img" required>
                       <button class="file-drop-btn btn btn-primary btn-sm mb-2" type="button">Or select file</button>
                       <div class="form-text">1000 x 800px ideal size for hi-res displays</div>
                     </div>
@@ -139,7 +139,7 @@
                     {% csrf_token %}
                     <div class="mb-3 pb-2">
                       <label class="form-label" for="unp-product-files">Product files for sale</label>
-                      <input class="form-control" type="file" id="unp-product-files" name="multi_product_file">
+                      <input class="form-control" type="file" id="unp-product-files" name="multi_product_file" required>
                       <div class="form-text">Maximum file size is 1GB</div>
                     </div>
                     <button class="btn btn-primary d-block w-100" type="submit"><i class="ci-cloud-upload fs-lg me-2"></i>Upload Product</button>

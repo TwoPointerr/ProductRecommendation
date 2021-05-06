@@ -3,9 +3,15 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User, auth
 from django.contrib.auth import authenticate, login
 from django.contrib.auth import logout
+from apps.cart.models import *
 from apps.seller_accounts.models import *
 
 from django.core.files.storage import FileSystemStorage
+
+from apps.seller_accounts.product_cat_ML import get_product_cat 
+from django.conf import settings
+import os
+import pandas as pd
 
 # Create your views here.
 
@@ -100,25 +106,45 @@ def addnewproduct(request):
     return render(request, "dashboard-add-new-product.html")
 
 def add_single_product(request):
-    if request.method == 'POST':
-        product_name = request.POST.get("product_name")
-        product_desc = request.POST.get("product_desc")
-        product_price = request.POST.get("product_price")
-        product_img = request.FILES.get("product_img")
-        print(product_img,type(product_img))
-        print("inside single products")
+    if request.user.is_staff:
+        if request.method == 'POST':
+            product_name = request.POST.get("product_name")
+            product_desc = request.POST.get("product_desc")
+            product_price = request.POST.get("product_price")
+            product_img = request.FILES.get("product_img")
+            product_cat = get_product_cat(product_name)
+            product = Product.objects.create(title=product_name,
+                                            gender_cat=product_cat['gender'],
+                                            sub_cat=product_cat['sub_cat'],
+                                            articel_type=product_cat['articel_type'],
+                                            image=product_img,
+                                            market_price=product_price,
+                                            description=product_desc,
+                                            seller=CompanyDetails.objects.get(user=request.user))
     return render(request, "dashboard-add-new-product.html")
 
 def add_multiple_products(request):
+    columns = ["product_name","product_desc","product_price","product_img_url"]
     if request.method == 'POST':
         products_file = request.FILES.get("multi_product_file")
-
-        print(products_file)
-        fs = FileSystemStorage()
-        filename = fs.save(products_file.name,products_file)
-        uploaded_file_url = fs.url(filename)
-        print(uploaded_file_url)
-        print("inside multiple products")
+        if products_file is not None:
+            upload_file_to_media(products_file)
+            full_file_path = get_file_path(settings.MEDIA_ROOT,products_file.name)
+            df = pd.read_csv(full_file_path)
+            seller = CompanyDetails.objects.get(user=request.user)
+            for i in range(df.shape[0]):
+                product_cat = get_product_cat(df['product_name'][i])
+                product = Product.objects.create(title=df['product_name'][i],
+                                            gender_cat=product_cat['gender'],
+                                            sub_cat=product_cat['sub_cat'],
+                                            articel_type=product_cat['articel_type'],
+                                            image_url=df['product_img_url'][i],
+                                            market_price=df['product_price'][i],
+                                            description=df['product_desc'][i],
+                                            seller=seller)
+                print("Product successfully added :",i,product.title)
+        else:
+            print("file is not uploaded")
     return render(request, "dashboard-add-new-product.html")
 
 @login_required
@@ -151,3 +177,12 @@ def companysales(request):
 @login_required
 def companyproducts(request):
     return render(request, "dashboard-products.html")
+
+def get_file_path(base_url,filename):
+    file_path = os.path.join(base_url, filename)   #full path to text.
+    return file_path
+
+def upload_file_to_media(filename):
+    fs = FileSystemStorage()
+    filename = fs.save(filename.name,filename)
+    return fs.url(filename)
