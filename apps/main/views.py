@@ -4,6 +4,7 @@ from django.urls import reverse
 from django.core.paginator import Paginator
 from django.http import HttpResponse, HttpResponseRedirect
 from apps.cart.models import *
+
 # Create your views here.
 
 
@@ -13,8 +14,8 @@ def index(request):
     paginator = Paginator(product_list, 4)
     page_number = request.GET.get('page')
     product_list = paginator.get_page(page_number)
-    allcat = Category.objects.all()
-    return render(request, "home-fashion-store-v2.html", {'product_list': product_list, 'allcat': allcat})
+    # allcat = Category.objects.all()
+    return render(request, "home-fashion-store-v2.html", {'product_list': product_list})
 
 
 def category(request):

@@ -7,10 +7,10 @@
         <div class="order-lg-2 mb-3 mb-lg-0 pt-lg-2">
           <nav aria-label="breadcrumb">
             <ol class="breadcrumb breadcrumb-light flex-lg-nowrap justify-content-center justify-content-lg-start">
-              <li class="breadcrumb-item"><a class="text-nowrap" href="index.html"><i class="ci-home"></i>Home</a></li>
-              <li class="breadcrumb-item text-nowrap"><a href="#">Shop</a>
-              </li>
-              <li class="breadcrumb-item text-nowrap active" aria-current="page">Product Page v.2</li>
+              <li class="breadcrumb-item"><a class="text-nowrap" href="{% url 'apps.main:index' %}"><i class="ci-home"></i>Home</a></li>
+              <li class="breadcrumb-item text-nowrap"><a href="#">{{single_product.gender_cat}}</a></li>
+              <li class="breadcrumb-item text-nowrap"><a href="#">{{single_product.sub_cat}}</a></li>
+              <li class="breadcrumb-item text-nowrap active" aria-current="page">{{single_product.articel_type}}</li>
             </ol>
           </nav>
         </div>
@@ -40,9 +40,15 @@
                 <div class="col-lg-7 pe-lg-0">
                   <div class="product-gallery">
                     <div class="product-gallery-preview order-sm-2">
-                      <div class="product-gallery-preview-item active" id="first"><img class="image-zoom" src="{{single_product.image.url}}" data-zoom="{{single_product.image.url}}" alt="Product image">
-                        <div class="image-zoom-pane"></div>
-                      </div>
+                      {% if single_product.image_file %}
+                        <div class="product-gallery-preview-item active" id="first"><img class="image-zoom" src="{{single_product.image_file.url}}" data-zoom="{{single_product.image_file.url}}" alt="if 1Product image">
+                          <div class="image-zoom-pane"></div>
+                        </div>
+                      {% else %}
+                        <div class="product-gallery-preview-item active" id="first"><img class="image-zoom" src="{{single_product.image_url}}" data-zoom="{{single_product.image_url}}" alt="if 2 Product image">
+                          <div class="image-zoom-pane"></div>
+                        </div>
+                      {% endif %}
                       <div class="product-gallery-preview-item" id="second"><img class="image-zoom" src="{% static 'img/shop/single/gallery/06.jpg' %}" data-zoom="{% static 'img/shop/single/gallery/06.jpg' %}" alt="Product image">
                         <div class="image-zoom-pane"></div>
                       </div>
@@ -53,8 +59,19 @@
                         <div class="image-zoom-pane"></div>
                       </div>
                     </div>
-                    <div class="product-gallery-thumblist order-sm-1"><a class="product-gallery-thumblist-item active" href="#first"><img src="{{single_product.image.url}}" alt="Product thumb"></a><a class="product-gallery-thumblist-item" href="#second"><img src="{% static 'img/shop/single/gallery/th06.jpg' %}" alt="Product thumb"></a><a class="product-gallery-thumblist-item" href="#third"><img src="{% static 'img/shop/single/gallery/th07.jpg' %}" alt="Product thumb"></a><a class="product-gallery-thumblist-item" href="#fourth"><img src="{% static 'img/shop/single/gallery/th08.jpg' %}" alt="Product thumb"></a><a class="product-gallery-thumblist-item video-item" href="https://www.youtube.com/watch?v=nrQevwouWn0">
-                        <div class="product-gallery-thumblist-item-text"><i class="ci-video"></i>Video</div></a></div>
+                     
+                    <div class="product-gallery-thumblist order-sm-1">
+                      {% if single_product.image_file %}
+                      <a class="product-gallery-thumblist-item active" href="#first"><img src="{{single_product.image_file.url}}" alt="Product thumb"></a>
+                      {%else%}
+                      <a class="product-gallery-thumblist-item active" href="#first"><img src="{{single_product.image_url}}" alt="Product thumb"></a>
+                      {%endif%}
+                      <a class="product-gallery-thumblist-item" href="#second"><img src="{% static 'img/shop/single/gallery/th06.jpg' %}" alt="Product thumb"></a>
+                      <a class="product-gallery-thumblist-item" href="#third"><img src="{% static 'img/shop/single/gallery/th07.jpg' %}" alt="Product thumb"></a>
+                      <a class="product-gallery-thumblist-item" href="#fourth"><img src="{% static 'img/shop/single/gallery/th08.jpg' %}" alt="Product thumb"></a>
+                      <a class="product-gallery-thumblist-item video-item" href="https://www.youtube.com/watch?v=nrQevwouWn0">
+                      <div class="product-gallery-thumblist-item-text"><i class="ci-video"></i>Video</div></a>
+                    </div>
                   </div>
                 </div>
                 <!-- Product details-->
