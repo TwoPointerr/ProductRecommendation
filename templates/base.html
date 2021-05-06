@@ -30,6 +30,7 @@
   <link rel="stylesheet" media="screen" href="{% static 'vendor/drift-zoom/dist/drift-basic.min.css' %}" />
   <!-- Main Theme Styles + Bootstrap-->
   <link rel="stylesheet" media="screen" href="{% static 'css/theme.min.css' %}">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 
 <body>
@@ -288,10 +289,13 @@
               <div class="navbar-tool-text ms-n3"><small>Hello, Sign in</small></div>
             </a>
             {% endif %}
-            <div class="navbar-tool dropdown ms-3"><a class="navbar-tool-icon-box bg-secondary dropdown-toggle"
-                href="shop-cart.html"><span class="navbar-tool-label">4</span><i
-                  class="navbar-tool-icon ci-cart"></i></a><a class="navbar-tool-text" href="shop-cart.html"><small>My
-                  Cart</small>$265.00</a>
+            <div class="navbar-tool dropdown ms-3">
+            <a class="navbar-tool-icon-box bg-secondary dropdown-toggle" href="shop-cart.html">
+            <span class="navbar-tool-label">4</span>
+            <i class="navbar-tool-icon ci-cart"></i></a>
+            <a class="navbar-tool-text" href="shop-cart.html"><small>My Cart</small>$265.00</a>
+                  </div>
+                  
               <!-- Cart dropdown-->
               <div class="dropdown-menu dropdown-menu-end">
                 <div class="widget widget-cart px-3 pt-2 pb-3" style="width: 20rem;">
@@ -458,8 +462,7 @@
             </ul>
             <!-- Primary menu-->
             <ul class="navbar-nav">
-              <li class="nav-item dropdown active"><a class="nav-link dropdown-toggle" href="#"
-                  data-bs-toggle="dropdown">Home</a>
+              <li class="nav-item dropdown active"><a class="nav-link" href="{% url 'apps.main:index' %}">Home</a>
                 {% comment %} <ul class="dropdown-menu">
                   <li class="dropdown position-static mb-0"><a class="dropdown-item py-2 border-bottom"
                       href="home-fashion-store-v1.html"><span class="d-block text-heading">Fashion Store
@@ -512,9 +515,8 @@
                   </li>
                 </ul> {% endcomment %}
               </li>
-              <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#"
-                  data-bs-toggle="dropdown">Shop</a>
-                <div class="dropdown-menu p-0">
+              <li class="nav-item dropdown"><a class="nav-link" href="{% url 'apps.main:showallproducts' %}">Shop</a>
+                {% comment %} <div class="dropdown-menu p-0">
                   <div class="d-flex flex-wrap flex-sm-nowrap px-2">
                     <div class="mega-dropdown-column pt-1 pt-lg-4 pb-4 px-2 px-lg-3">
                       <div class="widget widget-links mb-4">
@@ -605,7 +607,7 @@
                       </div>
                     </div>
                   </div>
-                </div>
+                </div> {% endcomment %}
               </li>
               <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#"
                   data-bs-toggle="dropdown">Account</a>
@@ -738,16 +740,22 @@
                 </ul>
               </li>
             </ul>
-          </div>
+            
+          
+      
+      
+                </div>
+          
         </div>
-      </div>
     </div>
+    </div>
+    
   </header>
 
 {% block content %}
 
 {% endblock %}
-
+{% include 'messages.html' %}
 
 <footer class="bg-dark pt-5">
     <div class="container">
@@ -943,6 +951,7 @@
   <script src="{% static 'js/theme.min.js' %}"></script>
   <script src="{% static 'js/account.js' %}"></script>
   <script src="{% static 'js/seller_account.js' %}"></script>
+  <script src="{% static 'js/product-filter.js' %}"></script>
 
 </body>
 

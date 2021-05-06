@@ -2,7 +2,10 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.models import User, auth
 from django.contrib.auth import authenticate, login
 from django.contrib.auth import logout
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from apps.accounts.models import *
+from apps.cart.models import *
 # Create your views here.
 
 
@@ -16,16 +19,21 @@ def signin(request):
         print(user)
         if user is not None:
             login(request, user)
-            print("logged in")
+            # productcount = request.session.get('productcount')
+            # if productcount is None:
+            #     productcount = 0
+            #     request.session['productcount'] = productcount
+
+            messages.info(request,'Happy Shopping!')
             return redirect("apps.main:index")
             
         else:
-            print("not logged in")
+            messages.warning(request,'Username and Password mismatch.')
+            return redirect("apps.accounts:signin")
     return render(request, "account-signin.html")
 
 
 def signup(request):
-
     if request.method == 'POST':
         firstname = request.POST.get('firstname')
         lastname = request.POST.get('lastname')
@@ -38,15 +46,18 @@ def signup(request):
         Profile.objects.create(user=user)
         user.save()
         login(request, user)
+        #request.session['productcount'] = 0
+        messages.info(request,'Enter Information')
         return redirect("apps.accounts:profileset")
     return render(request, "account-signup.html")
 
-
+@login_required
 def signout(request):
     logout(request)
+    messages.success(request,'Logged Out Successfully.')
     return redirect("apps.main:index")
 
-
+@login_required
 def profileset(request):
     user_id = request.user.id
     user = User.objects.get(id=user_id)
@@ -70,12 +81,14 @@ def profileset(request):
                profile.image = previmg               
 
             profile.save(update_fields=['mob_no', 'gender', 'image'])
+            messages.success(request,'Information Added.')
             return redirect("apps.accounts:shippinginfo")
     else:
+        messages.warning(request,'You are not signed in.')
         return redirect("apps.accounts:signin")
     return render(request, "profile-details.html", {'profile': profile, 'user': user})
 
-
+@login_required
 def shippingset(request):
     profile = Profile.objects.get(id=request.user.profile.id)
     address= Address.objects.filter(profile=profile).last()
@@ -90,13 +103,15 @@ def shippingset(request):
                 profile_id=profile.id,addline=addline, city=city, state=state, pincode=pincode,
                 defaults={'addline':addline, 'city':city, 'state':state, 'pincode':pincode, 'isprimary':True},
             )
+            messages.succeess(request,'Address added.')
             return redirect("apps.main:index")
     else:
+        messages.warning(request,'You are not signed in.')
         return redirect("apps.accounts:signin")
 
     return render(request, "profile-shipping.html",{'profile': profile, 'address': address})
 
-
+@login_required
 def acprofile(request):
     user_id = request.user.id
     user = User.objects.get(id=user_id)
@@ -118,14 +133,15 @@ def acprofile(request):
             if str(newimg) == '':
                 profile.image = previmg               
             profile.save(update_fields=['mob_no', 'gender', 'image'])
+            messages.info(request,'Profile Updated.')
             return redirect("apps.accounts:address")
     else:
+        messages.warning(request,'You are not signed in.')
         return redirect("apps.accounts:signin")
     return render(request, "account-profile.html", {'profile': profile, 'user': user})
 
 def address(request):
     profile = Profile.objects.get(id=request.user.profile.id)
-    address= Address.objects.filter(profile=profile).last()
     address_list= Address.objects.all().order_by('-id')
     if request.user.is_authenticated:
         if request.method == 'POST':
@@ -145,15 +161,16 @@ def address(request):
                 defaults={'addline':addline, 'city':city, 'state':state, 'pincode':pincode,'isprimary':isprimary, 'profile_id':profile.id},
             )
             #address = Address.objects.create(addline=addline, city=city, state=state, pincode=pincode,isprimary=isprimary, profile_id=profile.id)
-            
+            messages.success(request,'Address added.')
             return redirect("apps.accounts:address")
     else:
+        messages.warning(request,'You are not signed in.')
         return redirect("apps.accounts:signin")
 
-    return render(request, "account-address.html",{'profile': profile, 'address': address, 'address_list':address_list})
+    return render(request, "account-address.html",{'profile': profile, 'address_list':address_list})
 
 
-
+@login_required
 def manageadd(request, addid):
     
         add_id = addid
@@ -167,7 +184,6 @@ def manageadd(request, addid):
 
         if action == "edit":
             if request.user.is_authenticated:
-                print('edited')
                 if request.method == 'POST':
                     addline = request.POST.get('addline')
                     city = request.POST.get('city')
@@ -185,13 +201,39 @@ def manageadd(request, addid):
                         defaults={'addline':addline, 'city':city, 'state':state, 'pincode':pincode,'isprimary':isprimary, 'profile_id':profile.id},
                     )
                     #address = Address.objects.create(addline=addline, city=city, state=state, pincode=pincode,isprimary=isprimary, profile_id=profile.id)
-                    
+                    messages.success(request,'Address Edited')
                     return redirect("apps.accounts:address")
 
         elif action == "rem":
             address = Address.objects.filter(id=getaddid).delete()
+            messages.warning(request,'Address Removed')
             return redirect("apps.accounts:address")
 
-        else:
-            pass
+        
         return render(request, "account-edit-address.html",{'address': address})
+
+
+@login_required
+def orders(request):
+    
+    profile = Profile.objects.get(id=request.user.profile.id)
+    #cart= Cart.objects.filter(profile=profile)
+    #orders = Order.objects.filter(Order.cart.profile==profile).order_by("-id")
+    orders = Order.objects.filter(cart__profile=profile).order_by("-id")
+    # print(orders)
+    #print(orders.last().ordered_by)
+    return render(request, 'account-orders.html', {'orders': orders})
+
+
+
+@login_required
+def orderdetail(request, orderid):
+    if request.user.is_authenticated and Profile.objects.filter(user=request.user).exists():
+            order_id = orderid
+            order = Order.objects.get(id=order_id)
+            if request.user.profile != order.cart.profile:
+                return redirect("apps.accounts:orders")
+            print(order.ordered_by)
+    else:
+        return redirect("apps.accounts:signin")
+    return render(request, 'account-order-detail.html', {'order':order})

@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 class Profile(models.Model):
     user=models.OneToOneField(User, on_delete=models.CASCADE)
-    mob_no = models.PositiveIntegerField(null=True, blank=True)
+    mob_no = models.CharField(max_length=12, null=True, blank=True, unique=True)
     GENDER_CHOICES = (
         ('M', 'Male'),
         ('F', 'Female'),
