@@ -63,7 +63,7 @@ def profile(request):
             user = User.objects.create_user(id=user_id, first_name=firstname, last_name=lastname, username=username, email=email, is_staff=True)
             user.save()
             login(request, user)
-    
+            return redirect('apps.seller_accounts:companyinfo')
     return render(request, "seller_account_profile.html", {'seller_user':user})
 
 @login_required
@@ -116,7 +116,7 @@ def companyinfo(request):
         companydetail = CompanyDetails.objects.filter(id=company_info.id).update(company_name=companyname, company_email=companyemail, company_desc=company_desc, company_number=companynumber)
         addressinfo = CompanyAddress.objects.filter(id=addressinfo.id).update(addline=addline, country=country, state=state, city=city, pincode=pincode)
         
-        return redirect("apps.seller_accounts:companyinfo")
+        return redirect("apps.main:index")
 
     return render(request, "seller_account_company_info.html",{'company_info': company_info, 'address_info': addressinfo})
 
