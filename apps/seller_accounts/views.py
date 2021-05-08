@@ -117,7 +117,7 @@ def add_single_product(request):
                                             gender_cat=product_cat['gender'],
                                             sub_cat=product_cat['sub_cat'],
                                             articel_type=product_cat['articel_type'],
-                                            image=product_img,
+                                            image_file=product_img,
                                             market_price=product_price,
                                             description=product_desc,
                                             seller=CompanyDetails.objects.get(user=request.user))

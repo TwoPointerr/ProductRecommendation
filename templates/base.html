@@ -30,6 +30,18 @@
   <link rel="stylesheet" media="screen" href="{% static 'vendor/drift-zoom/dist/drift-basic.min.css' %}" />
   <!-- Main Theme Styles + Bootstrap-->
   <link rel="stylesheet" media="screen" href="{% static 'css/theme.min.css' %}">
+  <style>
+  input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+
+input[type=number] {
+  -moz-appearance: textfield;
+}
+  </style>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 
@@ -622,7 +634,7 @@
                       <li><a class="dropdown-item" href="dashboard-purchases.html">Purchases</a></li>
                       <li><a class="dropdown-item" href="dashboard-favorites.html">Favorites</a></li>
                       <li><a class="dropdown-item" href="{% url 'apps.seller_accounts:companysales' %}">Sales</a></li>
-                      <li><a class="dropdown-item" href="dashboard-products.html">Products</a></li>
+                      <li><a class="dropdown-item" href="{% url 'apps.seller_accounts:companyproducts' %}">Products</a></li>
                       <li><a class="dropdown-item" href="{% url 'apps.seller_accounts:add_new_product' %}">Add New Product</a></li>
                       <li><a class="dropdown-item" href="dashboard-payouts.html">Payouts</a></li>
                     {% comment %} </ul> 

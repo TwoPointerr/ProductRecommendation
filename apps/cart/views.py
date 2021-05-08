@@ -56,13 +56,14 @@ def mycart(request):
     profile = Profile.objects.get(id=request.user.profile.id)
     #cart_id = request.session.get("cart_id", None)
     cart= Cart.objects.filter(profile=profile, ordered='False').last()
+    cartproducts = cart.cartproduct_set.all().order_by('-id')
     if cart:
         cart = Cart.objects.get(id=cart.id)        
             
     else:
         cart = Cart.objects.create(total=0, profile=profile)
     #productcount = request.session.get('productcount')    
-    return render(request, 'shop-cart.html', {'cart': cart})
+    return render(request, 'shop-cart.html', {'cart': cart,'cartproducts':cartproducts})
 
 @login_required
 def managecart(request, cpid):  
@@ -112,7 +113,9 @@ def checkoutdetails(request):
     address= Address.objects.filter(profile=profile,isprimary=True).last()
     # address_list= Address.objects.all().order_by('-id')
     cart = Cart.objects.filter(profile=profile, ordered='False').last()
+    
     order = Order.objects.filter(cart=cart).last()
+    
     if request.user.is_authenticated:
         if cart:
             print(cart)
@@ -152,19 +155,16 @@ def checkoutdetails(request):
                 # completing order here
                 cart.ordered = True
                 cart.save(update_fields=['ordered'])
-                # print(cart.id)
                 cart = Cart.objects.create(total=0, profile=profile)
-                # print(cart.id)
                 messages.success(request,'Order Placed.')
-                
                 return redirect("apps.accounts:orders")
 
         else:
             messages.warning(request,'Add iteems to Cart.')
-            return redirect("apps.main:index")
+            return redirect("apps.main:showallproducts")
          
     else:
         messages.warning(request,'You are not signed in.')
         return redirect("apps.accounts:signin")
-
-    return render(request, "checkout-details.html",{'profile': profile, 'address':address, 'order':order})
+    cartproducts = cart.cartproduct_set.all().order_by('-id')
+    return render(request, "checkout-details.html",{'profile': profile, 'address':address, 'order':order, 'cart': cart,'cartproducts':cartproducts})
