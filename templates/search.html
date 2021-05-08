@@ -795,7 +795,12 @@
         <div class="card product-card">
           <button class="btn-wishlist btn-sm" type="button" data-bs-toggle="tooltip" data-bs-placement="left"
             title="Add to wishlist"><i class="ci-heart"></i></button><a class="card-img-top d-block overflow-hidden"
-            href="product/{{p.slug}}"><img src="{{p.image.url}}" alt="Product"></a>
+            href="product/{{p.slug}}">
+            {% if p.image_file %}
+              <img src="{{p.image_file.url}}" alt="Product"></a>
+            {%else%}
+              <img src="{{p.image_url}}" alt="Product"></a>
+            {% endif %}
           <div class="card-body py-2"><a class="product-meta d-block fs-xs pb-1" href="#">Sneakers &amp; Keds</a>
             <h3 class="product-title fs-sm"><a href="product/{{p.slug}}">{{p.title}}</a></h3>
             <div class="d-flex justify-content-between">
@@ -826,7 +831,7 @@
                 <label class="form-option-label" for="s-90">9</label>
               </div>
             </div>
-            <a href="addtocart-{{p.id}}">
+            <a href="{% url 'apps.cart:addtocart' product.id %}">
               <button class="btn btn-primary btn-sm d-block w-100 mb-2" type="button"><i
                   class="ci-cart fs-sm me-1"></i>Add to Cart</button></a>
             <div class="text-center"><a class="nav-link-style fs-ms" href="#quick-view" data-bs-toggle="modal"><i
@@ -1150,8 +1155,13 @@
         <div class="card product-card">
           <button class="btn-wishlist btn-sm" type="button" data-bs-toggle="tooltip" data-bs-placement="left"
             title="Add to wishlist"><i class="ci-heart"></i></button>
-            <a class="card-img-top d-block overflow-hidden"
-            href="{% url 'apps.main:single_product' product.id %}"><img src="{{product.image.url}}" alt="Product"></a>
+            <div style="height:350px"><a class="card-img-top d-block overflow-hidden"
+            href="{% url 'apps.main:single_product' product.id %}">
+            {% if product.image_file %}
+              <img src="{{product.image_file.url}}" alt="Product"></a></div>
+            {%else%}
+              <img src="{{product.image_url}}" alt="Product"></a></div>
+            {% endif %}
           <div class="card-body py-2"><a class="product-meta d-block fs-xs pb-1" href="#">{{product.category}}</a>
             <h3 class="product-title fs-sm"><a href="{% url 'apps.main:single_product' product.id %}">{{product.title}}</a></h3>
             <div class="d-flex justify-content-between">
@@ -1181,7 +1191,7 @@
                     class="form-option-color rounded-circle" style="background-color: #ca8799;"></span></label>
               </div>
             </div>
-            <a href="{% url 'apps.main:addtocart' product.id %}">
+            <a href="{% url 'apps.cart:addtocart' product.id %}">
             <button class="btn btn-primary btn-sm d-block w-100 mb-2" type="button"><i
                 class="ci-cart fs-sm me-1"></i>Add to Cart</button></a>
             <div class="text-center"><a class="nav-link-style fs-ms" href="#quick-view" data-bs-toggle="modal"><i

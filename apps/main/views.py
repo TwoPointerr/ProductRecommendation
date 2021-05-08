@@ -8,33 +8,34 @@ from django.db.models import Count, Min, Sum, Avg, Max
 from django.db.models import Q
 from django.template.loader import render_to_string
 from apps.cart.models import *
+
 # Create your views here.
-
-
 
 def index(request):
     product_list = Product.objects.all()
-    paginator = Paginator(product_list, 2)
-    page_number = request.GET.get('page')
-    product_list = paginator.get_page(page_number)
-    allcat = Category.objects.all()
-    productcount = request.session.get('productcount')
-    return render(request, "home-fashion-store-v2.html", {'product_list': product_list, 'allcat': allcat, 'productcount':productcount})
+    # paginator = Paginator(product_list, 2)
+    # page_number = request.GET.get('page')
+    # product_list = paginator.get_page(page_number)
+    # allcat = Category.objects.all()
+    return render(request, "home-fashion-store-v2.html", {'product_list': product_list})
 
 def show_all_products(request):
-    product_list = Product.objects.all()
+    product_list = Product.objects.all().order_by('id')
     minprice = Product.objects.all().aggregate(Min('market_price'))['market_price__min']
     maxprice = Product.objects.all().aggregate(Max('market_price'))['market_price__max']
     subCategory_list = ['Topwear', 'Bottomwear', 'Dress', 'Saree', 'Shoes', 'Innerwear', 'Headwear', 'Socks', 'Flip Flops']
     all_articel_type_list = ['Belts', 'Blazers', 'Booties', 'Boxers', 'Bra', 'Briefs', 'Camisoles', 'Capris', 'Caps', 'Casual Shoes', 'Churidar', 'Dresses', 'Dupatta', 'Flats', 'Flip Flops', 'Formal Shoes', 'Hat', 'Headband', 'Heels', 'Innerwear Vests', 'Jackets', 'Jeans', 'Jeggings', 'Jumpsuit', 'Kurtas', 'Kurtis', 'Leggings', 'Lehenga Choli', 'Nehru Jackets', 'Patiala', 'Rain Jacket', 'Rain Trousers', 'Rompers', 'Salwar', 'Salwar and Dupatta', 'Sandals', 'Sarees', 'Shapewear', 'Shirts', 'Shorts', 'Shrug', 'Skirts', 'Socks', 'Sports Shoes', 'Stockings', 'Suits', 'Suspenders', 'Sweaters', 'Sweatshirts', 'Swimwear', 'Tights', 'Tops', 'Track Pants', 'Tracksuits', 'Trousers', 'Trunk', 'Tshirts', 'Tunics', 'Waistcoat']
-    all_category = Category.objects.all()
+    # all_category = Category.objects.all()
+    gender_cat = Product.objects.values_list('gender_cat',flat=True).distinct()
+    sub_cat = Product.objects.values_list('sub_cat',flat=True).distinct()
+    articel_type = Product.objects.values_list('articel_type',flat=True).distinct()
     paginator = Paginator(product_list, 6)
     page_number = request.GET.get('page')
     product_list = paginator.get_page(page_number)
-    return render(request, "shop-grid-ls.html", {'product_list': product_list, 'all_category': all_category,'sub_category':subCategory_list,'article_type':all_articel_type_list, 'minprice':minprice, 'maxprice':maxprice})
+    return render(request, "shop-grid-ls.html", {'product_list': product_list,'gender_cat':list(gender_cat),'sub_category':list(sub_cat),'article_type':list(articel_type), 'minprice':minprice, 'maxprice':maxprice})
 
 def category(request):
-    allcat = Category.objects.all()
+    # allcat = Category.objects.all()
     productcount = request.session.get('productcount')
     return render(request, "home-fashion-store-v2.html", {'allcat': allcat, 'productcount':productcount})
 
@@ -67,17 +68,23 @@ def Single_Product(request, pid):
 #To Filter Data
 
 def filter_data(request):
-    categories= request.GET.getlist('category[]')
-    product_list = Product.objects.all().order_by('-id')
+    gender_categories= request.GET.getlist('gender_category[]')
+    sub_categories= request.GET.getlist('sub_category[]')
+    article_categories= request.GET.getlist('article_category[]')
+
+    product_list = Product.objects.all().order_by('id')
     min_price = request.GET.get('minPrice')
     max_price = request.GET.get('maxPrice')
     product_list = product_list.filter(market_price__gte=min_price).order_by('market_price')
     product_list = product_list.filter(market_price__lte=max_price).order_by('market_price')
-    if len(categories)>0:
-        category = Category.objects.filter(title__in=categories)
-        cat_id = []
-        for cat in category:
-            cat_id.append(cat.id)
-        product_list = product_list.filter(category__in=cat_id)
+
+    if len(gender_categories)>0:
+        # category = Category.objects.filter(title__in=categories)
+        product_list = product_list.filter(gender_cat__in=gender_categories)
+    if len(sub_categories)>0:
+        product_list = product_list.filter(sub_cat__in=sub_categories)
+    if len(article_categories)>0:
+        product_list = product_list.filter(articel_type__in=article_categories)
+    print(product_list)
     template = render_to_string('ajax/product-list.html', {'product_list': product_list})
     return JsonResponse({'data':template})

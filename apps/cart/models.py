@@ -1,26 +1,35 @@
 from django.db import models
 from apps.accounts.models import *
 from django.contrib.auth.models import User
+from apps.seller_accounts.models import CompanyDetails
+from django.core.files import File
+import os
+import urllib.request
 # Create your models here.
 
-class Category(models.Model):
-    title = models.CharField(max_length=200)
-    slug = models.SlugField(unique=True)
+# class Category(models.Model):
+#     title = models.CharField(max_length=200)
+#     slug = models.SlugField(unique=True)
 
-    def __str__(self):
-        return self.title
+#     def __str__(self):
+#         return self.title
 
 class Product(models.Model):
     title = models.CharField(max_length=200)
-    slug = models.SlugField(unique=True)
-    category = models.ForeignKey(Category, on_delete=models.CASCADE)
-    image = models.ImageField(upload_to="products")
+    # slug = models.SlugField(unique=True)
+    # category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    gender_cat = models.CharField(max_length=50,null=True)
+    sub_cat = models.CharField(max_length=50,null=True)
+    articel_type = models.CharField(max_length=50,null=True)
+    image_file = models.ImageField(upload_to="products",blank=True)
+    image_url = models.URLField(blank=True)
     market_price =models.PositiveIntegerField()
-    selling_price =models.PositiveIntegerField()
+    # selling_price =models.PositiveIntegerField()
     description = models.TextField()
-    warranty = models.CharField(max_length=300, null=True, blank=True)
-    return_policy = models.CharField(max_length=300, null=True, blank=True)
-    view_count =models.PositiveIntegerField(default=0)
+    seller = models.ForeignKey(CompanyDetails, on_delete=models.SET_NULL,null=True)
+    # warranty = models.CharField(max_length=300, null=True, blank=True)
+    # return_policy = models.CharField(max_length=300, null=True, blank=True)
+    # view_count =models.PositiveIntegerField(default=0)
 
     def __str__(self):
         return self.title

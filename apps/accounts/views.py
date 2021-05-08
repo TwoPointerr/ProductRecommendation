@@ -6,6 +6,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from apps.accounts.models import *
 from apps.cart.models import *
+
 # Create your views here.
 
 
