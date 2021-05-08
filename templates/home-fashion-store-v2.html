@@ -13,7 +13,7 @@
                             <h3 class="h2 text-light fw-light pb-1 from-bottom">Hurry up! Limited time offer.</h3>
                             <h2 class="text-light display-5 from-bottom delay-1">Women Sportswear Sale</h2>
                             <p class="fs-lg text-light pb-3 from-bottom delay-2">Sneakers, Keds, Sweatshirts, Hoodies &amp; much more...</p>
-                            <div class="d-table scale-up delay-4 mx-auto mx-lg-0"><a class="btn btn-primary" href="shop-grid-ls.html">Shop Now<i class="ci-arrow-right ms-2 me-n1"></i></a></div>
+                            <div class="d-table scale-up delay-4 mx-auto mx-lg-0"><a class="btn btn-primary" href="{% url 'apps.main:showallproducts' %}">Shop Now<i class="ci-arrow-right ms-2 me-n1"></i></a></div>
                         </div>
                     </div>
                 </div>
@@ -26,7 +26,7 @@
                             <h3 class="h2 text-light fw-light pb-1 from-start">Has just arrived!</h3>
                             <h2 class="text-light display-5 from-start delay-1">Huge Summer Collection</h2>
                             <p class="fs-lg text-light pb-3 from-start delay-2">Swimwear, Tops, Shorts, Sunglasses &amp; much more...</p>
-                            <div class="d-table scale-up delay-4 mx-auto mx-lg-0"><a class="btn btn-primary" href="shop-grid-ls.html">Shop Now<i class="ci-arrow-right ms-2 me-n1"></i></a></div>
+                            <div class="d-table scale-up delay-4 mx-auto mx-lg-0"><a class="btn btn-primary" href="{% url 'apps.main:showallproducts' %}">Shop Now<i class="ci-arrow-right ms-2 me-n1"></i></a></div>
                         </div>
                     </div>
                 </div>
@@ -39,7 +39,7 @@
                             <h3 class="h2 text-light fw-light pb-1 from-top">Complete your look with</h3>
                             <h2 class="text-light display-5 from-top delay-1">New Men's Accessories</h2>
                             <p class="fs-lg text-light pb-3 from-top delay-2">Hats &amp; Caps, Sunglasses, Bags &amp; much more...</p>
-                            <div class="d-table scale-up delay-4 mx-auto mx-lg-0"><a class="btn btn-primary" href="shop-grid-ls.html">Shop Now<i class="ci-arrow-right ms-2 me-n1"></i></a></div>
+                            <div class="d-table scale-up delay-4 mx-auto mx-lg-0"><a class="btn btn-primary" href="{% url 'apps.main:showallproducts' %}">Shop Now<i class="ci-arrow-right ms-2 me-n1"></i></a></div>
                         </div>
                     </div>
                 </div>
@@ -70,18 +70,22 @@
                 <div class="tns-carousel">
                     <div class="tns-carousel-inner" data-carousel-options="{&quot;nav&quot;: false, &quot;controlsContainer&quot;: &quot;#for-women&quot;}">
                         <!-- Carousel item-->
-                        {% for cat in allcat %} 
                         <div>
-
                             <div class="row mx-n2">
-
-                                {% for p in cat.product_set.all %}
+                                {% for p in product_list %}
+                                {% if p.gender_cat == "Women" %}
                                 <div class="col-lg-4 col-6 px-0 px-sm-2 mb-sm-4">
                                     <div class="card product-card card-static">
                                         <button class="btn-wishlist btn-sm" type="button" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to wishlist"><i class="ci-heart"></i></button>
-                                        <a class="card-img-top d-block overflow-hidden" href="shop-single-v1.html"><img src="{{p.image.url}}" alt="Product"></a>
-                                        <div class="card-body py-2"><a class="product-meta d-block fs-xs pb-1" href="#">Cosmetics</a>
-                                            <h3 class="product-title fs-sm"><a href="shop-single-v1.html">{{p.title}}</a></h3>
+                                        <a class="card-img-top d-block overflow-hidden" href="{% url 'apps.main:single_product' p.id%}">
+                                        {% if p.image_file %}
+                                            <img src="{{p.image_file.url}}" alt="Product">
+                                        {% else %}
+                                            <img src="{{p.image_url}}" alt="Product">
+                                        {% endif %}
+                                        </a>
+                                        <div class="card-body py-2"><a class="product-meta d-block fs-xs pb-1" href="{% url 'apps.main:single_product' p.id%}">Cosmetics</a>
+                                            <h3 class="product-title fs-sm"><a href="{% url 'apps.main:single_product' p.id%}">{{p.title}}</a></h3>
                                             <div class="d-flex justify-content-between">
                                                 <div class="product-price"><span class="text-accent">${{p.market_price}}</span></div>
                                                 <div class="star-rating"><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-half active"></i>
@@ -92,14 +96,15 @@
                                         </div>
                                     </div>
                                 </div>
+                                {% endif %}
                                 {% endfor %}
                             </div>
-                        </div>{% endfor %} {% comment %}
+                        </div> {% comment %}
                         <div class="col-lg-4 col-6 px-0 px-sm-2 mb-sm-4">
                             <div class="card product-card card-static">
                                 <button class="btn-wishlist btn-sm" type="button" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to wishlist"><i class="ci-heart"></i></button>
                                 <a class="card-img-top d-block overflow-hidden" href="shop-single-v1.html"><img src="{% static 'img/shop/catalog/26.jpg' %}" alt="Product"></a>
-                                <div class="card-body py-2"><a class="product-meta d-block fs-xs pb-1" href="#">Shoes</a>
+                                <div class="card-body py-2"><a class="product-meta d-block fs-xs pb-1" href="{% url 'apps.main:single_product' p.id%}">Shoes</a>
                                     <h3 class="product-title fs-sm"><a href="shop-single-v1.html">Textile Platform Sneakers</a></h3>
                                     <div class="d-flex justify-content-between">
                                         <div class="product-price"><span class="text-accent">$59.<small>99</small></span></div>
@@ -302,31 +307,35 @@
                 <div class="tns-carousel">
                     <div class="tns-carousel-inner" data-carousel-options="{&quot;nav&quot;: false, &quot;controlsContainer&quot;: &quot;#for-men&quot;}">
                          <!-- Carousel item-->
-                         {% for cat in allcat %} 
                         <div>
-
                             <div class="row mx-n2">
-
-                                {% for p in cat.product_set.all %}
+                                {% for p in product_list %}
+                                {% if p.gender_cat == "Men" %}
                                 <div class="col-lg-4 col-6 px-0 px-sm-2 mb-sm-4">
                                     <div class="card product-card card-static">
                                         <button class="btn-wishlist btn-sm" type="button" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to wishlist"><i class="ci-heart"></i></button>
-                                        <a class="card-img-top d-block overflow-hidden" href="shop-single-v1.html"><img src="{{p.image.url}}" alt="Product"></a>
-                                        <div class="card-body py-2"><a class="product-meta d-block fs-xs pb-1" href="#">Cosmetics</a>
-                                            <h3 class="product-title fs-sm"><a href="shop-single-v1.html">{{p.title}}</a></h3>
+                                        <a class="card-img-top d-block overflow-hidden" href="{% url 'apps.main:single_product' p.id%}">
+                                        {% if p.image_file %}
+                                            <img src="{{p.image_file.url}}" alt="Product">
+                                        {% else %}
+                                            <img src="{{p.image_url}}" alt="Product">
+                                        {% endif %}
+                                        </a>
+                                        <div class="card-body py-2"><a class="product-meta d-block fs-xs pb-1" href="{% url 'apps.main:single_product' p.id%}">Cosmetics</a>
+                                            <h3 class="product-title fs-sm"><a href="{% url 'apps.main:single_product' p.id%}">{{p.title}}</a></h3>
                                             <div class="d-flex justify-content-between">
                                                 <div class="product-price"><span class="text-accent">${{p.market_price}}</span></div>
                                                 <div class="star-rating"><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-half active"></i>
-                                                    <i
-                                                        class="star-rating-icon ci-star"></i>
+                                                    <i class="star-rating-icon ci-star"></i>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+                                {% endif %}
                                 {% endfor %}
                             </div>
-                        </div> {% endfor %}
+                        </div>
                          {% comment %}
                         <div>
                             <div class="row mx-n2">
@@ -567,9 +576,9 @@
                                 <div class="col-lg-4 col-6 px-0 px-sm-2 mb-sm-4">
                                     <div class="card product-card card-static">
                                         <button class="btn-wishlist btn-sm" type="button" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to wishlist"><i class="ci-heart"></i></button>
-                                        <a class="card-img-top d-block overflow-hidden" href="shop-single-v1.html"><img src="{{p.image.url}}" alt="Product"></a>
-                                        <div class="card-body py-2"><a class="product-meta d-block fs-xs pb-1" href="#">Cosmetics</a>
-                                            <h3 class="product-title fs-sm"><a href="shop-single-v1.html">{{p.title}}</a></h3>
+                                        <a class="card-img-top d-block overflow-hidden" href="{% url 'apps.main:single_product' p.id%}"><img src="{{p.image.url}}" alt="Product"></a>
+                                        <div class="card-body py-2"><a class="product-meta d-block fs-xs pb-1" href="{% url 'apps.main:single_product' p.id%}">Cosmetics</a>
+                                            <h3 class="product-title fs-sm"><a href="{% url 'apps.main:single_product' p.id%}">{{p.title}}</a></h3>
                                             <div class="d-flex justify-content-between">
                                                 <div class="product-price"><span class="text-accent">${{p.market_price}}</span></div>
                                                 <div class="star-rating"><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-half active"></i>
@@ -839,30 +848,30 @@
                 <div class="widget">
                     <h3 class="widget-title">Bestsellers</h3>
                     <div class="d-flex align-items-center pb-2 border-bottom">
-                        <a class="d-block" href="shop-single-v1.html"><img src="{% static 'img/shop/cart/widget/01.jpg' %}" width="64" alt="Product"></a>
+                        <a class="d-block" href="#"><img src="{% static 'img/shop/cart/widget/01.jpg' %}" width="64" alt="Product"></a>
                         <div class="ps-2">
-                            <h6 class="widget-product-title"><a href="shop-single-v1.html">Women Colorblock Sneakers</a></h6>
+                            <h6 class="widget-product-title"><a href="#">Women Colorblock Sneakers</a></h6>
                             <div class="widget-product-meta"><span class="text-accent me-2">$150.<small>00</small></span></div>
                         </div>
                     </div>
                     <div class="d-flex align-items-center py-2 border-bottom">
-                        <a class="d-block" href="shop-single-v1.html"><img src="{% static 'img/shop/cart/widget/02.jpg' %}" width="64" alt="Product"></a>
+                        <a class="d-block" href="#"><img src="{% static 'img/shop/cart/widget/02.jpg' %}" width="64" alt="Product"></a>
                         <div class="ps-2">
-                            <h6 class="widget-product-title"><a href="shop-single-v1.html">TH Jeans City Backpack</a></h6>
+                            <h6 class="widget-product-title"><a href="#">TH Jeans City Backpack</a></h6>
                             <div class="widget-product-meta"><span class="text-accent me-2">$79.<small>50</small></span></div>
                         </div>
                     </div>
                     <div class="d-flex align-items-center py-2 border-bottom">
-                        <a class="d-block" href="shop-single-v1.html"><img src="{% static 'img/shop/cart/widget/03.jpg' %}" width="64" alt="Product"></a>
+                        <a class="d-block" href="#"><img src="{% static 'img/shop/cart/widget/03.jpg' %}" width="64" alt="Product"></a>
                         <div class="ps-2">
-                            <h6 class="widget-product-title"><a href="shop-single-v1.html">3-Color Sun Stash Hat</a></h6>
+                            <h6 class="widget-product-title"><a href="#">3-Color Sun Stash Hat</a></h6>
                             <div class="widget-product-meta"><span class="text-accent me-2">$22.<small>50</small></span></div>
                         </div>
                     </div>
                     <div class="d-flex align-items-center py-2">
-                        <a class="d-block" href="shop-single-v1.html"><img src="{% static 'img/shop/cart/widget/04.jpg' %}" width="64" alt="Product"></a>
+                        <a class="d-block" href="#"><img src="{% static 'img/shop/cart/widget/04.jpg' %}" width="64" alt="Product"></a>
                         <div class="ps-2">
-                            <h6 class="widget-product-title"><a href="shop-single-v1.html">Cotton Polo Regular Fit</a></h6>
+                            <h6 class="widget-product-title"><a href="#">Cotton Polo Regular Fit</a></h6>
                             <div class="widget-product-meta"><span class="text-accent me-2">$9.<small>00</small></span></div>
                         </div>
                     </div>
@@ -873,30 +882,30 @@
                 <div class="widget">
                     <h3 class="widget-title">New arrivals</h3>
                     <div class="d-flex align-items-center pb-2 border-bottom">
-                        <a class="d-block" href="shop-single-v1.html"><img src="{% static 'img/shop/widget/02.jpg' %}" width="64" alt="Product"></a>
+                        <a class="d-block" href="#"><img src="{% static 'img/shop/widget/02.jpg' %}" width="64" alt="Product"></a>
                         <div class="ps-2">
-                            <h6 class="widget-product-title"><a href="shop-single-v1.html">Cap with Appliqué</a></h6>
+                            <h6 class="widget-product-title"><a href="#">Cap with Appliqué</a></h6>
                             <div class="widget-product-meta"><span class="text-accent me-2">$15.<small>99</small></span></div>
                         </div>
                     </div>
                     <div class="d-flex align-items-center py-2 border-bottom">
-                        <a class="d-block" href="shop-single-v1.html"><img src="{% static 'img/shop/widget/01.jpg' %}" width="64" alt="Product"></a>
+                        <a class="d-block" href="#"><img src="{% static 'img/shop/widget/01.jpg' %}" width="64" alt="Product"></a>
                         <div class="ps-2">
-                            <h6 class="widget-product-title"><a href="shop-single-v1.html">Girl's T-shirt with Motif</a></h6>
+                            <h6 class="widget-product-title"><a href="#">Girl's T-shirt with Motif</a></h6>
                             <div class="widget-product-meta"><span class="text-accent me-2">$14.<small>50</small></span></div>
                         </div>
                     </div>
                     <div class="d-flex align-items-center py-2 border-bottom">
-                        <a class="d-block" href="shop-single-v1.html"><img src="{% static 'img/shop/widget/03.jpg' %}" width="64" alt="Product"></a>
+                        <a class="d-block" href="#"><img src="{% static 'img/shop/widget/03.jpg' %}" width="64" alt="Product"></a>
                         <div class="ps-2">
-                            <h6 class="widget-product-title"><a href="shop-single-v1.html">Leather Platform Sandals</a></h6>
+                            <h6 class="widget-product-title"><a href="#">Leather Platform Sandals</a></h6>
                             <div class="widget-product-meta"><span class="text-accent me-2">$78.<small>00</small></span></div>
                         </div>
                     </div>
                     <div class="d-flex align-items-center py-2">
-                        <a class="d-block" href="shop-single-v1.html"><img src="{% static 'img/shop/widget/04.jpg' %}" width="64" alt="Product"></a>
+                        <a class="d-block" href="#"><img src="{% static 'img/shop/widget/04.jpg' %}" width="64" alt="Product"></a>
                         <div class="ps-2">
-                            <h6 class="widget-product-title"><a href="shop-single-v1.html">Regular Fit Cotton Shirt</a></h6>
+                            <h6 class="widget-product-title"><a href="#">Regular Fit Cotton Shirt</a></h6>
                             <div class="widget-product-meta"><span class="text-accent me-2">$17.<small>99</small></span></div>
                         </div>
                     </div>

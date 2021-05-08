@@ -566,7 +566,14 @@
           {% for product in search_result %}
           <div class="card product-card product-list">
             <button class="btn-wishlist btn-sm" type="button" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to wishlist"><i class="ci-heart"></i></button>
-            <div class="d-sm-flex align-items-center"><a class="product-list-thumb" href="{% url 'apps.main:single_product' product.id %}"><img src="{{product.image.url}}" alt="Product"></a>
+            <div class="d-sm-flex align-items-center"><a class="product-list-thumb" href="{% url 'apps.main:single_product' product.id %}">
+            {% if product.image_file %}
+              <img src="{{product.image_file.url}}" alt="Product">
+            {% else %}
+              <img src="{{product.image_url}}" alt="Product">
+            {% endif %}
+            
+            </a>
               <div class="card-body py-2"><a class="product-meta d-block fs-xs pb-1" href="#">{{product.category}}</a>
                 <h3 class="product-title fs-base"><a href="{% url 'apps.main:single_product' product.id %}">{{product.title}}</a></h3>
                 <div class="d-flex justify-content-between">

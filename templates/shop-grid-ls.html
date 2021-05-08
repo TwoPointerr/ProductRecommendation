@@ -195,9 +195,9 @@
                         <input class="form-control range-slider-value-max" id="maxPrice" name="maxPrice" type="text">
                       </div>
                     </div>
-                    <br>
-                    <button class="btn btn-primary btn-sm " id="priceFilterBtn">Filter</button>
                   </div>
+                  <br>
+                  <button class="btn btn-primary d-block w-100" id="priceFilterBtn">Filter</button>
                 </div>
               </div>
               <!-- Filter by Brand-->
@@ -391,10 +391,10 @@
                   <input class="widget-filter-search form-control rounded-end pe-5" type="text" placeholder="Search"><i class="ci-search position-absolute top-50 end-0 translate-middle-y fs-sm me-3"></i>
                 </div>
                 <ul class="widget-list widget-filter-list list-unstyled pt-1" style="max-height: 11rem;" data-simplebar data-simplebar-auto-hide="false">
-                {% for category in all_category %}
+                {% for category in gender_cat %}
                   <li class="widget-filter-item d-flex justify-content-between align-items-center mb-1">
                     <div class="form-check">
-                      <input class="form-check-input" data-filter="category" value="{{category.title}}" type="checkbox" id="size-xs">
+                      <input class="form-check-input" id="gender_cat" data-filter="gender_category" value="{{category.title}}" type="checkbox" id="size-xs">
                       <label class="form-check-label widget-filter-item-text" for="size-xs">{{category.title}}</label>
                     </div><span class="fs-xs text-muted">34</span>
                   </li>
@@ -409,7 +409,7 @@
                 {% for category in sub_category %}
                   <li class="widget-filter-item d-flex justify-content-between align-items-center mb-1">
                     <div class="form-check">
-                      <input class="form-check-input" data-filter="category" value="{{category.title}}" type="checkbox" id="size-xs">
+                      <input class="form-check-input" id="sub_cat" data-filter="sub_category" value="{{category.title}}" type="checkbox" id="size-xs">
                       <label class="form-check-label widget-filter-item-text" for="size-xs">{{category.title}}</label>
                     </div><span class="fs-xs text-muted">34</span>
                   </li>
@@ -424,7 +424,7 @@
                 {% for category in article_type %}
                   <li class="widget-filter-item d-flex justify-content-between align-items-center mb-1">
                     <div class="form-check">
-                      <input class="form-check-input" data-filter="category" value="{{category.title}}" type="checkbox" id="size-xs">
+                      <input class="form-check-input" id="article_type" data-filter="article_category" value="{{category.title}}" type="checkbox" id="size-xs">
                       <label class="form-check-label widget-filter-item-text" for="size-xs">{{category.title}}</label>
                     </div><span class="fs-xs text-muted">34</span>
                   </li>
@@ -602,96 +602,104 @@
           </div>
           <!-- Products grid-->
           <div class="row mx-n2" id="filteredProducts">
-          <p class="ajaxLoader">Loading...</p>
+            <p class="ajaxLoader">Loading...</p>
             <!-- Product-->
             {% for product in product_list %}
-            <div class="col-md-4 col-sm-6 px-2 mb-4">
-              <div class="card product-card">
-                <button class="btn-wishlist btn-sm" type="button" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to wishlist"><i class="ci-heart"></i></button><a class="card-img-top d-block overflow-hidden" href="shop-single-v1.html"><img src="{{product.image.url}}" alt="Product"></a>
-                <div class="card-body py-2"><a class="product-meta d-block fs-xs pb-1" href="#">{{product.category}}</a>
-                  <h3 class="product-title fs-sm"><a href="shop-single-v1.html">{{product.title}}</a></h3>
-                  <div class="d-flex justify-content-between">
-                    <div class="product-price"><span class="text-accent">${{product.market_price}}</span></div>
-                    <div class="star-rating"><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star"></i>
+              <div class="col-md-4 col-sm-6 px-2 mb-4">
+                <div class="card product-card">
+                  <button class="btn-wishlist btn-sm" type="button" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to wishlist"><i class="ci-heart"></i></button><a class="card-img-top d-block overflow-hidden" href="{% url 'apps.main:single_product' product.id %}">
+                  <div style="height:350px">
+                    {% if product.image_file %}
+                      <img src="{{product.image_file.url}}" alt="Product">
+                    {%else%}
+                      <img src="{{product.image_url}}" alt="Product">
+                    {% endif %}
+                    
+                  </div>
+                  </a>
+                  <div class="card-body py-2"><a class="product-meta d-block fs-xs pb-1" href="#">{{product.category}}</a>
+                    <h3 class="product-title fs-sm"><a href="shop-single-v1.html">{{product.title}}</a></h3>
+                    <div class="d-flex justify-content-between">
+                      <div class="product-price"><span class="text-accent">${{product.market_price}}</span></div>
+                      <div class="star-rating"><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star"></i>
+                      </div>
                     </div>
                   </div>
-                </div>
-                <div class="card-body card-body-hidden">
-                  <div class="text-center pb-2">
-                    <div class="form-check form-option form-check-inline mb-2">
-                      <input class="form-check-input" type="radio" name="size1" id="s-75">
-                      <label class="form-option-label" for="s-75">7.5</label>
+                  <div class="card-body card-body-hidden">
+                    <div class="text-center pb-2">
+                      <div class="form-check form-option form-check-inline mb-2">
+                        <input class="form-check-input" type="radio" name="size1" id="s-75">
+                        <label class="form-option-label" for="s-75">7.5</label>
+                      </div>
+                      <div class="form-check form-option form-check-inline mb-2">
+                        <input class="form-check-input" type="radio" name="size1" id="s-80" checked>
+                        <label class="form-option-label" for="s-80">8</label>
+                      </div>
+                      <div class="form-check form-option form-check-inline mb-2">
+                        <input class="form-check-input" type="radio" name="size1" id="s-85">
+                        <label class="form-option-label" for="s-85">8.5</label>
+                      </div>
+                      <div class="form-check form-option form-check-inline mb-2">
+                        <input class="form-check-input" type="radio" name="size1" id="s-90">
+                        <label class="form-option-label" for="s-90">9</label>
+                      </div>
                     </div>
-                    <div class="form-check form-option form-check-inline mb-2">
-                      <input class="form-check-input" type="radio" name="size1" id="s-80" checked>
-                      <label class="form-option-label" for="s-80">8</label>
-                    </div>
-                    <div class="form-check form-option form-check-inline mb-2">
-                      <input class="form-check-input" type="radio" name="size1" id="s-85">
-                      <label class="form-option-label" for="s-85">8.5</label>
-                    </div>
-                    <div class="form-check form-option form-check-inline mb-2">
-                      <input class="form-check-input" type="radio" name="size1" id="s-90">
-                      <label class="form-option-label" for="s-90">9</label>
-                    </div>
+                    <a href="{% url 'apps.cart:addtocart' product.id %}">
+                    <button class="btn btn-primary btn-sm d-block w-100 mb-2" type="button"><i class="ci-cart fs-sm me-1"></i>Add to Cart</button>
+                    <div class="text-center"><a class="nav-link-style fs-ms" href="#quick-view" data-bs-toggle="modal"><i class="ci-eye align-middle me-1"></i>Quick view</a></div>
                   </div>
-                  <a href="{% url 'apps.cart:addtocart' product.id %}">
-                  <button class="btn btn-primary btn-sm d-block w-100 mb-2" type="button"><i class="ci-cart fs-sm me-1"></i>Add to Cart</button>
-                  <div class="text-center"><a class="nav-link-style fs-ms" href="#quick-view" data-bs-toggle="modal"><i class="ci-eye align-middle me-1"></i>Quick view</a></div>
                 </div>
+                <hr class="d-sm-none">
               </div>
-              <hr class="d-sm-none">
-            </div>
             {% endfor %}
-          <hr class="my-3">
-          <!-- Pagination-->
-          <nav class="d-flex justify-content-between pt-2" aria-label="Page navigation">
-            {% if product_list.has_previous %}
-            <ul class="pagination">
-              <li class="page-item"><a class="page-link" href="?page={{ product_list.previous_page_number }}"><i class="ci-arrow-left me-2"></i>Prev</a></li>
-            </ul>
-            {% else %}
-            <ul class="pagination" style="visibility:none">
-              <li class="page-item"><a class="page-link" href="#"><i class="ci-arrow-left me-2"></i>Prev</a></li>
-            </ul>
-            {% endif %}
-
-
-            <ul class="pagination">
-              {% if product_list.previous_page_number != 1 %}
-                <li class="page-item d-none d-sm-block" aria-current="page"><a href="?page={{product_list.previous_page_number|add:"-1"}}">
-                <span class="page-link">{{product_list.previous_page_number|add:"-1"}}<span class="visually-hidden">(current)</span></span></a>
-                </li>
+            
+            <hr class="my-3">
+            <!-- Pagination-->
+            <nav class="d-flex justify-content-between pt-2" aria-label="Page navigation">
+              {% if product_list.has_previous %}
+              <ul class="pagination">
+                <li class="page-item"><a class="page-link" href="?page={{ product_list.previous_page_number }}"><i class="ci-arrow-left me-2"></i>Prev</a></li>
+              </ul>
+              {% else %}
+              <ul class="pagination" style="visibility:none">
+                <li class="page-item"><a class="page-link" href="#"><i class="ci-arrow-left me-2"></i>Prev</a></li>
+              </ul>
               {% endif %}
-              {% if product_list.number != 1 %}
-                <li class="page-item d-none d-sm-block" aria-current="page"><a href="?page={{product_list.previous_page_number}}">
-                <span class="page-link">{{product_list.previous_page_number}}<span class="visually-hidden">(current)</span></span></a>
-                </li>
+              <ul class="pagination">
+                {% if product_list.previous_page_number != 1 %}
+                  <li class="page-item d-none d-sm-block" aria-current="page"><a href="?page={{product_list.previous_page_number|add:"-1"}}">
+                  <span class="page-link">{{product_list.previous_page_number|add:"-1"}}<span class="visually-hidden">(current)</span></span></a>
+                  </li>
+                {% endif %}
+                {% if product_list.number != 1 %}
+                  <li class="page-item d-none d-sm-block" aria-current="page"><a href="?page={{product_list.previous_page_number}}">
+                  <span class="page-link">{{product_list.previous_page_number}}<span class="visually-hidden">(current)</span></span></a>
+                  </li>
+                {% endif %}
+                  <li class="page-item active d-none d-sm-block" aria-current="page"><a href="?page={{product_list.number}}">
+                  <span class="page-link">{{product_list.number}}<span class="visually-hidden">(current)</span></span></a>
+                  </li>
+                {% if product_list.number != product_list.paginator.num_pages %}
+                  <li class="page-item d-none d-sm-block" aria-current="page"><a href="?page={{product_list.next_page_number}}">
+                  <span class="page-link">{{product_list.next_page_number}}<span class="visually-hidden">(current)</span></span></a>
+                  </li>
+                {% endif %}
+                {% if product_list.next_page_number != product_list.paginator.num_pages %}
+                  <li class="page-item d-none d-sm-block" aria-current="page"><a href="?page={{product_list.next_page_number|add:"1"}}">
+                  <span class="page-link">{{product_list.next_page_number|add:"1"}}<span class="visually-hidden">(current)</span></span></a>
+                  </li>
+                {% endif %}
+              </ul>
+              {% if product_list.has_next %}
+                <ul class="pagination">
+                  <li class="page-item"><a class="page-link" href="?page={{ product_list.next_page_number }}" aria-label="Next">Next<i class="ci-arrow-right ms-2"></i></a></li>
+                </ul>
+              {% else %}
+                <ul class="pagination" style="visibility:none">
+                  <li class="page-item"><a class="page-link" href="#" aria-label="Next">Next<i class="ci-arrow-right ms-2"></i></a></li>
+                </ul>
               {% endif %}
-                <li class="page-item active d-none d-sm-block" aria-current="page"><a href="?page={{product_list.number}}">
-                <span class="page-link">{{product_list.number}}<span class="visually-hidden">(current)</span></span></a>
-                </li>
-              {% if product_list.number != product_list.paginator.num_pages %}
-                <li class="page-item d-none d-sm-block" aria-current="page"><a href="?page={{product_list.next_page_number}}">
-                <span class="page-link">{{product_list.next_page_number}}<span class="visually-hidden">(current)</span></span></a>
-                </li>
-              {% endif %}
-              {% if product_list.next_page_number != product_list.paginator.num_pages %}
-                <li class="page-item d-none d-sm-block" aria-current="page"><a href="?page={{product_list.next_page_number|add:"1"}}">
-                <span class="page-link">{{product_list.next_page_number|add:"1"}}<span class="visually-hidden">(current)</span></span></a>
-                </li>
-              {% endif %}
-            </ul>
-          {% if product_list.has_next %}
-            <ul class="pagination">
-              <li class="page-item"><a class="page-link" href="?page={{ product_list.next_page_number }}" aria-label="Next">Next<i class="ci-arrow-right ms-2"></i></a></li>
-            </ul>
-          {% else %}
-            <ul class="pagination" style="visibility:none">
-              <li class="page-item"><a class="page-link" href="#" aria-label="Next">Next<i class="ci-arrow-right ms-2"></i></a></li>
-            </ul>
-          {% endif %}
-          </nav>
+            </nav>
         </section>
       </div>
     </div>

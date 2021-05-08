@@ -40,10 +40,6 @@
                 <div class="col-lg-7 pe-lg-0">
                   <div class="product-gallery">
                     <div class="product-gallery-preview order-sm-2">
-                      <div class="product-gallery-preview-item active" id="first"><img class="image-zoom" src="{{single_product.image.url}}" data-zoom="{{single_product.image.url}}" alt="Product image">
-                        <div class="image-zoom-pane"></div>
-                      </div>
-                      {% comment %} <div class="product-gallery-preview-item" id="second"><img class="image-zoom" src="{% static 'img/shop/single/gallery/06.jpg' %}" data-zoom="{% static 'img/shop/single/gallery/06.jpg' %}" alt="Product image">
                       {% if single_product.image_file %}
                         <div class="product-gallery-preview-item active" id="first"><img class="image-zoom" src="{{single_product.image_file.url}}" data-zoom="{{single_product.image_file.url}}" alt="if 1Product image">
                           <div class="image-zoom-pane"></div>
@@ -53,6 +49,10 @@
                           <div class="image-zoom-pane"></div>
                         </div>
                       {% endif %}
+                      {% comment %} <div class="product-gallery-preview-item active" id="first"><img class="image-zoom" src="{{single_product.image.url}}" data-zoom="{{single_product.image.url}}" alt="Product image">
+                        <div class="image-zoom-pane"></div>
+                      </div> {% endcomment %}
+                      {% comment %} <div class="product-gallery-preview-item" id="second"><img class="image-zoom" src="{% static 'img/shop/single/gallery/06.jpg' %}" data-zoom="{% static 'img/shop/single/gallery/06.jpg' %}" alt="Product image">
                       <div class="product-gallery-preview-item" id="second"><img class="image-zoom" src="{% static 'img/shop/single/gallery/06.jpg' %}" data-zoom="{% static 'img/shop/single/gallery/06.jpg' %}" alt="Product image">
                         <div class="image-zoom-pane"></div>
                       </div>
@@ -63,8 +63,7 @@
                         <div class="image-zoom-pane"></div>
                       </div> {% endcomment %}
                     </div>
-                    <div class="product-gallery-thumblist order-sm-1"><a class="product-gallery-thumblist-item active" href="#first"><img src="{{single_product.image.url}}" alt="Product thumb"></a>
-                    </div>
+                   
                      
                     <div class="product-gallery-thumblist order-sm-1">
                       {% if single_product.image_file %}
@@ -72,11 +71,7 @@
                       {%else%}
                       <a class="product-gallery-thumblist-item active" href="#first"><img src="{{single_product.image_url}}" alt="Product thumb"></a>
                       {%endif%}
-                      <a class="product-gallery-thumblist-item" href="#second"><img src="{% static 'img/shop/single/gallery/th06.jpg' %}" alt="Product thumb"></a>
-                      <a class="product-gallery-thumblist-item" href="#third"><img src="{% static 'img/shop/single/gallery/th07.jpg' %}" alt="Product thumb"></a>
-                      <a class="product-gallery-thumblist-item" href="#fourth"><img src="{% static 'img/shop/single/gallery/th08.jpg' %}" alt="Product thumb"></a>
-                      <a class="product-gallery-thumblist-item video-item" href="https://www.youtube.com/watch?v=nrQevwouWn0">
-                      <div class="product-gallery-thumblist-item-text"><i class="ci-video"></i>Video</div></a>
+                      
                     </div>
                   </div>
                 </div>
@@ -113,7 +108,9 @@
                         <option value="4">4</option>
                         <option value="5">5</option>
                       </select>
+                      <a class="w-100" href="{% url 'apps.cart:addtocart' single_product.id %}">
                       <button class="btn btn-primary btn-shadow d-block w-100" type="button"><i class="ci-cart fs-lg me-2"></i>Add to Cart</button>
+                      </a>
                     </div>
                     <div class="d-flex mb-4">
                       <div class="w-100 me-3">
