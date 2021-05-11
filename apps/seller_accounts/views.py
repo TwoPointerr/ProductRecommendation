@@ -105,6 +105,7 @@ def address_info(request):
 def addnewproduct(request):
     return render(request, "dashboard-add-new-product.html")
 
+@login_required
 def add_single_product(request):
     if request.user.is_staff:
         if request.method == 'POST':
@@ -121,8 +122,10 @@ def add_single_product(request):
                                             market_price=product_price,
                                             description=product_desc,
                                             seller=CompanyDetails.objects.get(user=request.user))
+            sale=Sales.objects.create(company=CompanyDetails.objects.get(user=request.user),product=product, rate= product_price)
     return render(request, "dashboard-add-new-product.html")
 
+@login_required
 def add_multiple_products(request):
     columns = ["product_name","product_desc","product_price","product_img_url"]
     if request.method == 'POST':
@@ -146,6 +149,40 @@ def add_multiple_products(request):
         else:
             print("file is not uploaded")
     return render(request, "dashboard-add-new-product.html")
+
+
+@login_required
+def editproduct(request, proid):
+    if request.user.is_staff:
+        seller = CompanyDetails.objects.get(user=request.user)
+        product = Product.objects.filter(id=proid, seller=seller).last()
+        print(product)
+        previmg=product.image_file
+          
+        if request.method == 'POST':
+            product.title = request.POST.get("product_name")
+            product.description = request.POST.get("product_desc")
+            product.market_price = request.POST.get("product_price")
+            product.image_file = request.FILES.get("product_img")
+            product_cat = get_product_cat(product.title)
+            product.gender_cat=product_cat['gender']
+            product.sub_cat=product_cat['sub_cat']
+            product.articel_type=product_cat['articel_type']
+
+            newimg=product.image_file
+            
+            if str(newimg) == '':
+               product.image_file = previmg
+
+
+            #product, created = Product.objects.update_or_create(product_id=proid,defaults={'title':title, 'image_file':image_file, 'gender_cat':gender_cat, 'sub_cat':sub_cat, 'articel_type':articel_type, 'market_price':market_price, 'description':description},)
+
+            print(product)
+            product.save(update_fields=['title','image_file','gender_cat', 'sub_cat', 'articel_type', 'market_price', 'description'])
+            
+            
+    return render(request, "dashboard-edit-product.html",{'product':product})
+
 
 @login_required
 def companyinfo(request):
@@ -186,3 +223,18 @@ def upload_file_to_media(filename):
     fs = FileSystemStorage()
     filename = fs.save(filename.name,filename)
     return fs.url(filename)
+
+@login_required
+def orders(request):
+    seller = CompanyDetails.objects.get(id=request.user.companydetails.id)
+    sales = Sales.objects.filter(company=seller)
+    print(product__seller)
+    #cart= Cart.objects.filter(profile=profile)
+    cart = Cart.objects.filter(ordered='True')
+
+    #orders = Order.objects.filter(cart.ordered == 'True').order_by("-id")
+    print(orders)
+    #orders = Order.objects.filter(cart__profile=profile).order_by("-id")
+    # print(orders)
+    #print(orders.last().ordered_by)
+    return render(request, 'dashboard-payouts.html', {'orders': orders})

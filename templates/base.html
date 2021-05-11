@@ -384,10 +384,20 @@ input[type=number] {
         <div class="container">
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <!-- Search-->
-            <div class="input-group d-lg-none my-3"><i
+            {% comment %} <div class="input-group d-lg-none my-3"><i
                 class="ci-search position-absolute top-50 start-0 translate-middle-y text-muted fs-base ms-3"></i>
               <input class="form-control rounded-start" type="text" placeholder="Search for products">
-            </div>
+            </div> {% endcomment %}
+            <form class="input-group d-lg-none d-flex flex-nowrap my-3" method="POST" action="{% url 'apps.main:search_product' %}">
+          {% csrf_token %}
+          <div class="input-group d-lg-none d-lg-flex">
+            <input class="form-control rounded-end pe-5" type="text" name = "keyword" placeholder="Search for products" required>
+            {% comment %} <button type="submit" class="btn btn-sm btn-outline-dark">Search</button> {% endcomment %}
+            <button type="submit" class="btn btn-outline-dark btn-icon">
+            <i class="ci-search"></i>
+            </button>
+          </div>
+          </form>
             <!-- Departments menu-->
             <ul class="navbar-nav navbar-mega-nav pe-lg-2 me-lg-2">
               <li class="nav-item dropdown"><a class="nav-link dropdown-toggle ps-lg-0" href="#"

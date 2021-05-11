@@ -56,13 +56,13 @@ def mycart(request):
     profile = Profile.objects.get(id=request.user.profile.id)
     #cart_id = request.session.get("cart_id", None)
     cart= Cart.objects.filter(profile=profile, ordered='False').last()
-    cartproducts = cart.cartproduct_set.all().order_by('-id')
     if cart:
         cart = Cart.objects.get(id=cart.id)        
             
     else:
         cart = Cart.objects.create(total=0, profile=profile)
     #productcount = request.session.get('productcount')    
+    cartproducts = cart.cartproduct_set.all().order_by('-id')
     return render(request, 'shop-cart.html', {'cart': cart,'cartproducts':cartproducts})
 
 @login_required
@@ -113,7 +113,7 @@ def checkoutdetails(request):
     address= Address.objects.filter(profile=profile,isprimary=True).last()
     # address_list= Address.objects.all().order_by('-id')
     cart = Cart.objects.filter(profile=profile, ordered='False').last()
-    
+    cartproduct = CartProduct.objects.filter(cart=cart)
     order = Order.objects.filter(cart=cart).last()
     
     if request.user.is_authenticated:
@@ -156,6 +156,16 @@ def checkoutdetails(request):
                 cart.ordered = True
                 cart.save(update_fields=['ordered'])
                 cart = Cart.objects.create(total=0, profile=profile)
+                for cp in cartproduct:
+                    sale= Sales.objects.filter(product=cp.product, rate=cp.rate).last()
+                    sale.quantity += cp.quantity
+                    sale.subtotal += cp.subtotal
+                    print(sale)
+                    sale.save(update_fields=['quantity','subtotal'])
+                    print(sale)
+                    
+
+                
                 messages.success(request,'Order Placed.')
                 return redirect("apps.accounts:orders")
 

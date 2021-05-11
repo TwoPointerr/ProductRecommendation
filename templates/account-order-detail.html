@@ -80,7 +80,13 @@
             <!-- Item-->
              {% for cp in order.cart.cartproduct_set.all %}
             <div class="d-sm-flex justify-content-between mb-4 pb-3 pb-sm-2 border-bottom">
-              <div class="d-sm-flex text-center text-sm-start"><a class="d-inline-block flex-shrink-0 mx-auto" href="shop-single-v1.html" style="width: 10rem;"><img src="{{cp.product.image.url}}" alt="Product"></a>
+              <div class="d-sm-flex text-center text-sm-start"><a class="d-inline-block flex-shrink-0 mx-auto" href="shop-single-v1.html" style="width: 10rem;">
+                                        {% if cp.product.image_file %}
+                                            <img src="{{cp.product.image_file.url}}" alt="Product">
+                                        {% else %}
+                                            <img src="{{cp.product.image_url}}" alt="Product">
+                                        {% endif %}
+              </a>
                 <div class="ps-sm-4 pt-2">
                   <h3 class="product-title fs-base mb-2"><a href="shop-single-v1.html">{{cp.product.title}}</a></h3>
                   <div class="fs-sm"><span class="text-muted me-2">Size:</span>8.5</div>
