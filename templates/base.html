@@ -301,11 +301,15 @@ input[type=number] {
               <div class="navbar-tool-text ms-n3"><small>Hello, Sign in</small></div>
             </a>
             {% endif %}
+            {% if request.user.is_staff %}
+            {% comment %} <a class="nav-link" href="{% url 'apps.seller_accounts:companyproducts' %}"><i class="ci-view-list"></i> Products</a>
+             {% endcomment %}{% else %}
             <div class="navbar-tool dropdown ms-3">
-            <a class="navbar-tool-icon-box bg-secondary dropdown-toggle" href="shop-cart.html">
+            <a class="navbar-tool-icon-box bg-secondary dropdown-toggle" href="{% url 'apps.cart:mycart' %}">
             <span class="navbar-tool-label">4</span>
             <i class="navbar-tool-icon ci-cart"></i></a>
-            <a class="navbar-tool-text" href="shop-cart.html"><small>My Cart</small>$265.00</a>
+            <a class="" href="{% url 'apps.cart:mycart' %}"><small>My Cart</small></a>
+            {% endif %}
                   </div>
                   
               <!-- Cart dropdown-->

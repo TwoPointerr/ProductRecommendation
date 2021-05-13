@@ -40,10 +40,7 @@ def category(request):
     return render(request, "home-fashion-store-v2.html", {'allcat': allcat, 'productcount':productcount})
 
 
-def productdetail(request, slug):
-    url_slug = slug
-    product = Product.objects.get(slug=url_slug)
-    return render(request, "shop-single-v2.html", {'product': product})
+
 
 def Search_Result(request, keyword):
 
@@ -85,6 +82,6 @@ def filter_data(request):
         product_list = product_list.filter(sub_cat__in=sub_categories)
     if len(article_categories)>0:
         product_list = product_list.filter(articel_type__in=article_categories)
-    print(product_list)
+    
     template = render_to_string('ajax/product-list.html', {'product_list': product_list})
     return JsonResponse({'data':template})

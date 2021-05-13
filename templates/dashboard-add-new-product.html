@@ -46,8 +46,8 @@
                   <h3 class="fs-sm mb-0 text-muted">Seller Dashboard</h3>
                 </div>
                 <ul class="list-unstyled mb-0">
-                  <li class="border-bottom mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3" href="{% url 'apps.seller_accounts:companysales' %}"><i class="ci-dollar opacity-60 me-2"></i>Sales<span class="fs-sm text-muted ms-auto">$1,375.00</span></a></li>
-                  <li class="border-bottom mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3" href="{% url 'apps.seller_accounts:companyproducts' %}"><i class="ci-package opacity-60 me-2"></i>Products<span class="fs-sm text-muted ms-auto">5</span></a></li>
+                  <li class="border-bottom mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3" href="{% url 'apps.seller_accounts:companysales' %}"><i class="ci-dollar opacity-60 me-2"></i>Sales</a></li>
+                  <li class="border-bottom mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3" href="{% url 'apps.seller_accounts:companyproducts' %}"><i class="ci-package opacity-60 me-2"></i>Products</a></li>
                   <li class="border-bottom mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3 active" href="{% url 'apps.seller_accounts:add_new_product' %}"><i class="ci-cloud-upload opacity-60 me-2"></i>Add New Product</a></li>
                   <li class="mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3" href="account-signin.html"><i class="ci-sign-out opacity-60 me-2"></i>Sign out</a></li>
                 </ul>
@@ -103,7 +103,6 @@
                     <div class="mb-3 py-2">
                       <label class="form-label" for="unp-product-description">Product description</label>
                       <textarea class="form-control" rows="6" id="unp-product-description" name="product_desc"></textarea>
-                      <div class="bg-secondary p-3 fs-ms rounded-bottom"><span class="d-inline-block fw-medium me-2 my-1">Markdown supported:</span><em class="d-inline-block border-end pe-2 me-2 my-1">*Italic*</em><strong class="d-inline-block border-end pe-2 me-2 my-1">**Bold**</strong><span class="d-inline-block border-end pe-2 me-2 my-1">- List item</span><span class="d-inline-block border-end pe-2 me-2 my-1">##Heading##</span><span class="d-inline-block">--- Horizontal rule</span></div>
                     </div>
                     <div class="row">
                       {% comment %} <div class="col-sm-6 mb-3">
@@ -118,7 +117,7 @@
                         <div class="input-group"><span class="input-group-text"><i class="ci-dollar"></i></span>
                           <input class="form-control" type="text" id="unp-extended-price" name="product_price">
                         </div>
-                        <div class="form-text">Typically 10x of the Standard license price.</div>
+                        
                       </div>
                     </div>
                     {% comment %} <div class="mb-3 py-2">

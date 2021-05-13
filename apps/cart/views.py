@@ -88,8 +88,7 @@ def managecart(request, cpid):
                 cp_obj.delete()
                 #productcount = CartProduct.objects.filter(cart=cart_obj).count()
                 #print(productcount)
-        else:
-            pass
+        
         messages.info(request,'Cart Updated.')
         return redirect('apps.cart:mycart')
 

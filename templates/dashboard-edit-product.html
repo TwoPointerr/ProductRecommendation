@@ -46,8 +46,8 @@
                   <h3 class="fs-sm mb-0 text-muted">Seller Dashboard</h3>
                 </div>
                 <ul class="list-unstyled mb-0">
-                  <li class="border-bottom mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3" href="{% url 'apps.seller_accounts:companysales' %}"><i class="ci-dollar opacity-60 me-2"></i>Sales<span class="fs-sm text-muted ms-auto">$1,375.00</span></a></li>
-                  <li class="border-bottom mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3" href="{% url 'apps.seller_accounts:companyproducts' %}"><i class="ci-package opacity-60 me-2"></i>Products<span class="fs-sm text-muted ms-auto">5</span></a></li>
+                  <li class="border-bottom mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3" href="{% url 'apps.seller_accounts:companysales' %}"><i class="ci-dollar opacity-60 me-2"></i>Sales</a></li>
+                  <li class="border-bottom mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3" href="{% url 'apps.seller_accounts:companyproducts' %}"><i class="ci-package opacity-60 me-2"></i>Products</a></li>
                   <li class="border-bottom mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3 active" href="{% url 'apps.seller_accounts:add_new_product' %}"><i class="ci-cloud-upload opacity-60 me-2"></i>Add New Product</a></li>
                   <li class="mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3" href="account-signin.html"><i class="ci-sign-out opacity-60 me-2"></i>Sign out</a></li>
                 </ul>
@@ -58,31 +58,17 @@
           <!-- Content-->
           <section class="col-lg-8 pt-lg-4 pb-4 mb-3">
             <div class="pt-2 px-4 ps-lg-0 pe-xl-5">
-              <ul class="nav nav-tabs nav-justified" role="tablist">
-                <li class="nav-item"><a class="nav-link px-0 active" href="#profile" data-bs-toggle="tab" role="tab">
-                    <div class="d-none d-lg-block"><i class="ci-package  opacity-60 me-2"></i>Add Single Product</div>
-                    <div class="d-lg-none text-center"><i class="ci-user opacity-60 d-block fs-xl mb-2"></i><span class="fs-ms">Profile</span></div></a></li>
-                <li class="nav-item"><a class="nav-link px-0" href="#notifications" data-bs-toggle="tab" role="tab">
-                    <div class="d-none d-lg-block"><i class="ci-add-document opacity-60 me-2"></i>Add Multiple Products</div>
-                    <div class="d-lg-none text-center"><i class="ci-bell opacity-60 d-block fs-xl mb-2"></i><span class="fs-ms">Notifications</span></div></a></li>
+              <ul class="nav nav-tabs nav-justified" role="">
+                <li class="nav-item"><a class="nav-link px-0 active" href="#profile">
+                    <div class="d-none d-lg-block  h6"><i class="ci-edit-alt opacity-60 me-2"></i>Edit Product</div></a></li>
+                
                 {% comment %} <li class="nav-item"><a class="nav-link px-0" href="#payment" data-bs-toggle="tab" role="tab">
                     <div class="d-none d-lg-block"><i class="ci-card opacity-60 me-2"></i>Payment methods</div>
                     <div class="d-lg-none text-center"><i class="ci-card opacity-60 d-block fs-xl mb-2"></i><span class="fs-ms">Payment</span></div></a></li> {% endcomment %}
               </ul>
               <!-- Title-->
               <div class="d-sm-flex flex-wrap justify-content-between align-items-center pb-2">
-                <h2 class="h3 py-2 me-2 text-center text-sm-start">Edit Product</h2>
-                {% comment %} <div class="py-2">
-                  <select class="form-select me-2" id="unp-category">
-                    <option>Select category</option>
-                    <option>Photos</option>
-                    <option>Graphics</option>
-                    <option>UI Design</option>
-                    <option>Web Themes</option>
-                    <option>Fonts</option>
-                    <option>Add-Ons</option>
-                  </select>
-                </div> {% endcomment %}
+                
               </div>
               <div class="tab-content">
                 <!-- Profile-->
@@ -92,8 +78,18 @@
                     <div class="mb-3 pb-2">
                       <label class="form-label" for="unp-product-name">Product name</label>
                       <input class="form-control" type="text" id="unp-product-name" name="product_name" value="{{product.title}}">
-                      <div class="form-text">Maximum 100 characters. No HTML or emoji allowed.</div>
+                      <div class="form-text">Maximum 100 characters.</div>
                     </div>
+                      <label class="form-label" for="unp-product-name">Product Category</label>
+                    <div class="mb-3 pb-2 d-flex align-items-center">
+                      <input class="form-control" type="text" name="product_gcat" value="{{product.gender_cat}}"> <strong class="fw-bold">&nbsp;>&nbsp;</strong> 
+                      
+                      <input class="form-control" type="text" name="product_scat" value="{{product.sub_cat}}"> <strong class="fw-bold"> &nbsp;>&nbsp; </strong>
+                      
+                      <input class="form-control" type="text" name="product_atype" value="{{product.articel_type}}"> 
+                      
+                    </div>
+                    <label class="form-label" for="unp-product-name">Previous Image</label>
                     <div class="d-flex align-items-center">
                     {% if product.image_file %}
                       <img src="{{product.image_file.url}}" width="300" alt="Product">
@@ -110,9 +106,10 @@
                                 </div>
                                  {% endcomment %}
                            <div class="ps-4">
+
                     <div class="file-drop-area mb-3">
                       <div class="file-drop-icon ci-cloud-upload"></div><span class="file-drop-message">Drag and drop here to upload product screenshot</span>
-                      <input class="file-drop-input" type="file" accept="image/*" name="product_img" required>
+                      <input class="file-drop-input" type="file" accept="image/*" name="product_img">
                       <button class="file-drop-btn btn btn-primary btn-sm mb-2" type="button">Or select file</button>
                       <div class="form-text">1000 x 800px ideal size for hi-res displays</div>
                     </div>  </div>
@@ -120,7 +117,7 @@
                     <div class="mb-3 py-2">
                       <label class="form-label" for="unp-product-description">Product description</label>
                       <textarea class="form-control" rows="6" id="unp-product-description" name="product_desc" value="">{{product.description}}</textarea>
-                      <div class="bg-secondary p-3 fs-ms rounded-bottom"><span class="d-inline-block fw-medium me-2 my-1">Markdown supported:</span><em class="d-inline-block border-end pe-2 me-2 my-1">*Italic*</em><strong class="d-inline-block border-end pe-2 me-2 my-1">**Bold**</strong><span class="d-inline-block border-end pe-2 me-2 my-1">- List item</span><span class="d-inline-block border-end pe-2 me-2 my-1">##Heading##</span><span class="d-inline-block">--- Horizontal rule</span></div>
+                      
                     </div>
                     <div class="row">
                       {% comment %} <div class="col-sm-6 mb-3">
@@ -135,7 +132,7 @@
                         <div class="input-group"><span class="input-group-text"><i class="ci-dollar"></i></span>
                           <input class="form-control" type="text" id="unp-extended-price" name="product_price" value="{{product.market_price}}">
                         </div>
-                        <div class="form-text">Typically 10x of the Standard license price.</div>
+                        
                       </div>
                     </div>
                     {% comment %} <div class="mb-3 py-2">
@@ -151,17 +148,7 @@
                     <button class="btn btn-primary d-block w-100" type="submit"><i class="ci-cloud-upload fs-lg me-2"></i>Update Product</button>
                   </form>
                 </div>
-                <div class="tab-pane fade" id="notifications" role="tabpanel">
-                  <form method="POST" action="{% url 'apps.seller_accounts:add_multiple_products' %}" enctype="multipart/form-data">
-                    {% csrf_token %}
-                    <div class="mb-3 pb-2">
-                      <label class="form-label" for="unp-product-files">Product files for sale</label>
-                      <input class="form-control" type="file" id="unp-product-files" name="multi_product_file" required>
-                      <div class="form-text">Maximum file size is 1GB</div>
-                    </div>
-                    <button class="btn btn-primary d-block w-100" type="submit"><i class="ci-cloud-upload fs-lg me-2"></i>Update Product</button>
-                  </form>
-                </div>
+                
               </div>
             </div>
           </section>

@@ -5,9 +5,9 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth import logout
 from apps.cart.models import *
 from apps.seller_accounts.models import *
-
+from django.contrib import messages
 from django.core.files.storage import FileSystemStorage
-
+from django.db.models import Sum
 from apps.seller_accounts.product_cat_ML import get_product_cat 
 from django.conf import settings
 import os
@@ -156,30 +156,53 @@ def editproduct(request, proid):
     if request.user.is_staff:
         seller = CompanyDetails.objects.get(user=request.user)
         product = Product.objects.filter(id=proid, seller=seller).last()
-        print(product)
-        previmg=product.image_file
-          
-        if request.method == 'POST':
-            product.title = request.POST.get("product_name")
-            product.description = request.POST.get("product_desc")
-            product.market_price = request.POST.get("product_price")
-            product.image_file = request.FILES.get("product_img")
-            product_cat = get_product_cat(product.title)
-            product.gender_cat=product_cat['gender']
-            product.sub_cat=product_cat['sub_cat']
-            product.articel_type=product_cat['articel_type']
+        if product :    
+            previmg=product.image_file
+            if request.method == 'POST':
+                product.title = request.POST.get("product_name")
+                product.description = request.POST.get("product_desc")
+                product.market_price = request.POST.get("product_price")
+                product.image_file = request.FILES.get("product_img")
+                #product_cat = get_product_cat(product.title)
+                product.gender_cat=request.POST.get("product_gcat")
+                product.sub_cat=request.POST.get("product_scat")
+                product.articel_type=request.POST.get("product_atype")
 
-            newimg=product.image_file
+                newimg=product.image_file
+                
+                if str(newimg) == '':
+                    product.image_file = previmg
+
+                
+                product.save(update_fields=['title','image_file','gender_cat', 'sub_cat', 'articel_type', 'market_price', 'description'])
+                messages.success(request,'Product updated.')
+                return redirect("apps.seller_accounts:companyproducts")
+        else:
+            messages.warning(request,'Product not found.')
+            return redirect("apps.seller_accounts:companyproducts")    
+    else:
+        messages.warning(request,'Login as Seller Account.')
+        return redirect("apps.main:index")    
             
-            if str(newimg) == '':
-               product.image_file = previmg
+    return render(request, "dashboard-edit-product.html",{'product':product})
 
 
-            #product, created = Product.objects.update_or_create(product_id=proid,defaults={'title':title, 'image_file':image_file, 'gender_cat':gender_cat, 'sub_cat':sub_cat, 'articel_type':articel_type, 'market_price':market_price, 'description':description},)
-
-            print(product)
-            product.save(update_fields=['title','image_file','gender_cat', 'sub_cat', 'articel_type', 'market_price', 'description'])
-            
+@login_required
+def deleteproduct(request, proid):
+    if request.user.is_staff:
+        seller = CompanyDetails.objects.get(user=request.user)
+        product = Product.objects.filter(id=proid, seller=seller).last()
+        
+        if product :    
+            product.delete()
+            messages.warning(request,'Product deleted.')
+            return redirect("apps.seller_accounts:companyproducts")
+        else:
+            messages.warning(request,'Product not found.')
+            return redirect("apps.seller_accounts:companyproducts")    
+    else:
+        messages.warning(request,'Login as Seller Account.')
+        return redirect("apps.main:index")    
             
     return render(request, "dashboard-edit-product.html",{'product':product})
 
@@ -213,7 +236,10 @@ def companysales(request):
 
 @login_required
 def companyproducts(request):
-    return render(request, "dashboard-products.html")
+    if request.user.is_staff:
+        seller = CompanyDetails.objects.get(user=request.user)
+        sale = Sales.objects.filter(company=seller).order_by("-id")
+    return render(request, "dashboard-products.html",{'sale':sale})
 
 def get_file_path(base_url,filename):
     file_path = os.path.join(base_url, filename)   #full path to text.
@@ -226,15 +252,35 @@ def upload_file_to_media(filename):
 
 @login_required
 def orders(request):
-    seller = CompanyDetails.objects.get(id=request.user.companydetails.id)
-    sales = Sales.objects.filter(company=seller)
-    print(product__seller)
-    #cart= Cart.objects.filter(profile=profile)
-    cart = Cart.objects.filter(ordered='True')
-
-    #orders = Order.objects.filter(cart.ordered == 'True').order_by("-id")
-    print(orders)
-    #orders = Order.objects.filter(cart__profile=profile).order_by("-id")
-    # print(orders)
-    #print(orders.last().ordered_by)
+    if request.user.is_staff:
+        seller = CompanyDetails.objects.get(user=request.user)
+        sale = Sales.objects.filter(company=seller).order_by("-id")
+        product = Product.objects.filter(seller=seller)
+        cart= Cart.objects.filter(ordered='True')
+        orders=[]
+        for cart in cart:
+            cartproduct = CartProduct.objects.filter(cart=cart)
+            for cp in cartproduct:
+                if (cp.product in product):
+                    order= Order.objects.filter(cart=cart).last()
+                    # change quantity total in order object n then pass to match products
+                    orders.append(order)
+                    print(order)
+                    print(str(cp.product)+""+str(cp.id)+" --"+str(cp.quantity)+" cart"+str(cart.id))
+            #order = Order.objects.filter(cart=cart)
+            print(orders)
+        print(cartproduct)
+        """ for cp in cartproduct:
+            sale= Sales.objects.filter(product=cp.product, rate=cp.rate).last() """
+   
     return render(request, 'dashboard-payouts.html', {'orders': orders})
+
+
+
+    """ 
+        total sell count
+        seller = CompanyDetails.objects.get(user=request.user)
+
+        product = Product.objects.filter(id=proid, seller=seller).last()
+        totalsell=Sales.objects.filter(company=seller).aggregate(sum=Sum('subtotal'))
+        total=totalsell['sum'] """

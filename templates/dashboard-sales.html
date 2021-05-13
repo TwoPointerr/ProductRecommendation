@@ -46,9 +46,9 @@
                   <h3 class="fs-sm mb-0 text-muted">Seller Dashboard</h3>
                 </div>
                 <ul class="list-unstyled mb-0">
-                  <li class="border-bottom mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3 active" href="{% url 'apps.seller_accounts:companysales' %}"><i class="ci-dollar opacity-60 me-2"></i>Sales<span class="fs-sm text-muted ms-auto">$1,375.00</span></a></li>
-                  <li class="border-bottom mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3" href="{% url 'apps.seller_accounts:companyproducts' %}"><i class="ci-package opacity-60 me-2"></i>Products<span class="fs-sm text-muted ms-auto">5</span></a></li>
-                  <li class="border-bottom mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3" href="dashboard-add-new-product.html"><i class="ci-cloud-upload opacity-60 me-2"></i>Add New Product</a></li>
+                  <li class="border-bottom mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3 active" href="{% url 'apps.seller_accounts:companysales' %}"><i class="ci-dollar opacity-60 me-2"></i>Sales</a></li>
+                  <li class="border-bottom mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3" href="{% url 'apps.seller_accounts:companyproducts' %}"><i class="ci-package opacity-60 me-2"></i>Products</a></li>
+                  <li class="border-bottom mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3" href="{% url 'apps.seller_accounts:add_new_product' %}"><i class="ci-cloud-upload opacity-60 me-2"></i>Add New Product</a></li>
                   {% comment %} <li class="border-bottom mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3" href="dashboard-payouts.html"><i class="ci-currency-exchange opacity-60 me-2"></i>Payouts</a></li> {% endcomment %}
                   <li class="mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3" href="account-signin.html"><i class="ci-sign-out opacity-60 me-2"></i>Sign out</a></li>
                 </ul>
@@ -103,32 +103,32 @@
                     <div class="card-body">
                       <h3 class="fs-sm pb-3 mb-0 border-bottom">Your top countries</h3>
                       <div class="d-flex justify-content-between align-items-center fs-sm py-2 border-bottom">
-                        <div class="d-flex align-items-start py-1"><img src="{% static 'img/marketplace/account/flags/usa.jpg' %}" width="20" alt="USA">
+                        <div class="d-flex align-items-start py-1"><img src="{% static 'img/marketplace/account/flags/usa.png' %}" width="20" alt="USA">
                           <div class="ps-1">United States</div>
                         </div><span>$452</span>
                       </div>
                       <div class="d-flex justify-content-between align-items-center fs-sm py-2 border-bottom">
-                        <div class="d-flex align-items-start py-1"><img src="{% static 'img/marketplace/account/flags/sweden.jpg' %}" width="20" alt="Sweden">
+                        <div class="d-flex align-items-start py-1"><img src="{% static 'img/marketplace/account/flags/sweden.png' %}" width="20" alt="Sweden">
                           <div class="ps-1">Sweden</div>
                         </div><span>$318</span>
                       </div>
                       <div class="d-flex justify-content-between align-items-center fs-sm py-2 border-bottom">
-                        <div class="d-flex align-items-start py-1"><img src="{% static 'img/marketplace/account/flags/india.jpg' %}" width="20" alt="India">
+                        <div class="d-flex align-items-start py-1"><img src="{% static 'img/marketplace/account/flags/india.png' %}" width="20" alt="India">
                           <div class="ps-1">India</div>
                         </div><span>$106</span>
                       </div>
                       <div class="d-flex justify-content-between align-items-center fs-sm py-2 border-bottom">
-                        <div class="d-flex align-items-start py-1"><img src="{% static 'img/marketplace/account/flags/france.jpg' %}" width="20" alt="France">
+                        <div class="d-flex align-items-start py-1"><img src="{% static 'img/marketplace/account/flags/france.png' %}" width="20" alt="France">
                           <div class="ps-1">France</div>
                         </div><span>$82</span>
                       </div>
                       <div class="d-flex justify-content-between align-items-center fs-sm py-2 border-bottom">
-                        <div class="d-flex align-items-start py-1"><img src="{% static 'img/marketplace/account/flags/argentina.jpg' %}" width="20" alt="Argentina">
+                        <div class="d-flex align-items-start py-1"><img src="{% static 'img/marketplace/account/flags/argentina.png' %}" width="20" alt="Argentina">
                           <div class="ps-1">Argentina</div>
                         </div><span>$40</span>
                       </div>
                       <div class="d-flex justify-content-between align-items-center fs-sm pt-2">
-                        <div class="d-flex align-items-start py-1"><img src="{% static 'img/marketplace/account/flags/south-africa.jpg' %}" width="20" alt="South Africa">
+                        <div class="d-flex align-items-start py-1"><img src="{% static 'img/marketplace/account/flags/south-africa.png' %}" width="20" alt="South Africa">
                           <div class="ps-1">South Africa</div>
                         </div><span>$17</span>
                       </div>

@@ -183,8 +183,8 @@ def manageadd(request, addid):
         address = Address.objects.filter(id=int(getaddid)).last()
         
 
-        if action == "edit":
-            if request.user.is_authenticated:
+        if request.user.is_authenticated:
+            if action == "edit":
                 if request.method == 'POST':
                     addline = request.POST.get('addline')
                     city = request.POST.get('city')
@@ -205,11 +205,13 @@ def manageadd(request, addid):
                     messages.success(request,'Address Edited')
                     return redirect("apps.accounts:address")
 
-        elif action == "rem":
-            address = Address.objects.filter(id=getaddid).delete()
-            messages.warning(request,'Address Removed')
-            return redirect("apps.accounts:address")
-
+            elif action == "rem":
+                address = Address.objects.filter(id=getaddid).delete()
+                messages.warning(request,'Address Removed')
+                return redirect("apps.accounts:address")
+        else:
+            messages.warning(request,'You are not log in.')
+            return redirect("apps.accounts:signin")
         
         return render(request, "account-edit-address.html",{'address': address})
 

@@ -9,7 +9,7 @@ app_name = "apps.main"
 urlpatterns = [
     path('',views.index, name="index"),
     path('category/',views.category, name="category"),
-    path('product/<slug:slug>/',views.productdetail, name="productdetail"),
+    
     path('allproducts', views.show_all_products, name="showallproducts"),
     path('filter-data/', views.filter_data, name="filter_data"),
 
