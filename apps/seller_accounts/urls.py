@@ -20,6 +20,7 @@ urlpatterns = [
     path('add_single_product',views.add_single_product,name="add_single_product"),
     path('add_multiple_product',views.add_multiple_products,name="add_multiple_products"),
     path('addressinfo/',views.address_info, name="address_info"),
-    path('orders/',views.orders, name="sellerorders")
+    path('orders/',views.orders, name="sellerorders"),
+    path('order-<int:orderid>/',views.orderdetail, name="sellerorderdetail")
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

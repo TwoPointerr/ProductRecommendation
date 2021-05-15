@@ -258,22 +258,59 @@ def orders(request):
         product = Product.objects.filter(seller=seller)
         cart= Cart.objects.filter(ordered='True')
         orders=[]
+        # total=0
         for cart in cart:
             cartproduct = CartProduct.objects.filter(cart=cart)
             for cp in cartproduct:
                 if (cp.product in product):
                     order= Order.objects.filter(cart=cart).last()
-                    # change quantity total in order object n then pass to match products
-                    orders.append(order)
-                    print(order)
-                    print(str(cp.product)+""+str(cp.id)+" --"+str(cp.quantity)+" cart"+str(cart.id))
+                    if (order in orders):
+                        
+                        for ord in orders:
+                            if ord == order:
+                                ord.total+=cp.subtotal
+                    else:
+                        order.total=cp.subtotal
+                        orders.append(order)
+                    # # change quantity total in order object n then pass to match products
+                    # order.total=cp.subtotal
+                    # orders.append(order)
+                    # print("Orderaaaa:"+str(order))
+                    # print(str(cp.product)+""+str(cp.id)+" --"+str(cp.quantity)+" cart"+str(cart.id))
             #order = Order.objects.filter(cart=cart)
             print(orders)
         print(cartproduct)
+        
         """ for cp in cartproduct:
             sale= Sales.objects.filter(product=cp.product, rate=cp.rate).last() """
    
     return render(request, 'dashboard-payouts.html', {'orders': orders})
+
+
+
+@login_required
+def orderdetail(request, orderid):
+    if request.user.is_authenticated and CompanyDetails.objects.filter(user=request.user).exists():
+        order_id = orderid
+        seller = CompanyDetails.objects.get(user=request.user)
+        product = Product.objects.filter(seller=seller)
+        cart= Cart.objects.filter(ordered='True')
+        #orders=[]
+        total=0
+        for cart in cart:
+            cartproduct = CartProduct.objects.filter(cart=cart)
+            for cp in cartproduct:
+                if (cp.product in product):
+                    order= Order.objects.get(id=order_id)   
+                    if cp.cart == order.cart:
+                        total += cp.subtotal
+        order.total =total                
+                      
+            
+    else:
+        return redirect("apps.seller_accounts:signin")
+    return render(request, 'dashboard-seller-order.html', {'order':order,'product':product})
+
 
 
 

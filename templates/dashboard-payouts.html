@@ -72,7 +72,7 @@
               <tbody>
               {% for ord in orders %}
                 <tr>
-                  <td class="py-3"><a class="nav-link-style fw-medium fs-sm" href="" data-bs-toggle="modal">#ORDER_{{ord.id}}</a></td>
+                  <td class="py-3"><a class="nav-link-style fw-medium fs-sm" href="{% url 'apps.seller_accounts:sellerorderdetail' ord.pk %}" data-bs-toggle="modal">#ORDER_{{ord.id}}</a></td>
                   <td class="py-3">{{ord.created_at}}</td>
                   <td class="py-3"><span class="badge bg-info m-0">{{ord.order_status}}</span></td>
                   <td class="py-3">${{ord.total}}</td>
