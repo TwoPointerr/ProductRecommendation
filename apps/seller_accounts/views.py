@@ -264,26 +264,15 @@ def orders(request):
             for cp in cartproduct:
                 if (cp.product in product):
                     order= Order.objects.filter(cart=cart).last()
-                    if (order in orders):
-                        
-                        for ord in orders:
-                            if ord == order:
-                                ord.total+=cp.subtotal
-                    else:
-                        order.total=cp.subtotal
-                        orders.append(order)
-                    # # change quantity total in order object n then pass to match products
-                    # order.total=cp.subtotal
-                    # orders.append(order)
-                    # print("Orderaaaa:"+str(order))
-                    # print(str(cp.product)+""+str(cp.id)+" --"+str(cp.quantity)+" cart"+str(cart.id))
-            #order = Order.objects.filter(cart=cart)
-            print(orders)
-        print(cartproduct)
-        
-        """ for cp in cartproduct:
-            sale= Sales.objects.filter(product=cp.product, rate=cp.rate).last() """
-   
+                    if order:
+                        if (order in orders):
+                            
+                            for ord in orders:
+                                if ord == order:
+                                    ord.total+=cp.subtotal
+                        else:
+                            order.total=cp.subtotal
+                            orders.append(order)
     return render(request, 'dashboard-payouts.html', {'orders': orders})
 
 
@@ -295,7 +284,6 @@ def orderdetail(request, orderid):
         seller = CompanyDetails.objects.get(user=request.user)
         product = Product.objects.filter(seller=seller)
         cart= Cart.objects.filter(ordered='True')
-        #orders=[]
         total=0
         for cart in cart:
             cartproduct = CartProduct.objects.filter(cart=cart)
@@ -304,9 +292,15 @@ def orderdetail(request, orderid):
                     order= Order.objects.get(id=order_id)   
                     if cp.cart == order.cart:
                         total += cp.subtotal
-        order.total =total                
+        order.total = total
+
+        if request.method == 'POST':
+            status = request.POST.get('status')
+            if order:
+                order.order_status=status
+                order.save(update_fields=['order_status'])
+
                       
-            
     else:
         return redirect("apps.seller_accounts:signin")
     return render(request, 'dashboard-seller-order.html', {'order':order,'product':product})
