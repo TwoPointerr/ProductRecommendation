@@ -49,7 +49,7 @@ def show_all_products(request):
 def category(request):
     # allcat = Category.objects.all()
     productcount = request.session.get('productcount')
-    return render(request, "home-fashion-store-v2.html", {'allcat': allcat, 'productcount':productcount})
+    return render(request, "home-fashion-store-v2.html", {'productcount':productcount})
 
 
 def productdetail(request, slug):
@@ -83,13 +83,15 @@ def filter_data(request):
     gender_categories= request.GET.getlist('gender_category[]')
     sub_categories= request.GET.getlist('sub_category[]')
     article_categories= request.GET.getlist('article_category[]')
-
+    sort_by_categories= request.GET.getlist('sort_by[]')
+    color_filter= request.GET.getlist('color_filter[]')
+    
     product_list = Product.objects.all().order_by('id')
     min_price = request.GET.get('minPrice')
     max_price = request.GET.get('maxPrice')
     product_list = product_list.filter(market_price__gte=min_price).order_by('market_price')
     product_list = product_list.filter(market_price__lte=max_price).order_by('market_price')
-
+    # product_sort_list = product_sort_list.all().order_by('title')
     if len(gender_categories)>0:
         # category = Category.objects.filter(title__in=categories)
         product_list = product_list.filter(gender_cat__in=gender_categories)
@@ -97,6 +99,20 @@ def filter_data(request):
         product_list = product_list.filter(sub_cat__in=sub_categories)
     if len(article_categories)>0:
         product_list = product_list.filter(articel_type__in=article_categories)
-    print(product_list)
+    if len(sort_by_categories)>0:
+        if(sort_by_categories[0] == 'l_h_sort_by'):
+            product_list = product_list.all().order_by('market_price')
+        elif(sort_by_categories[0] == 'h_l_sort_by'):
+            product_list = product_list.all().order_by('-market_price')
+        elif(sort_by_categories[0] == 'a_z_sort_by'):
+            product_list = product_list.all().order_by('title')
+        elif(sort_by_categories[0] == 'z_a_sort_by'):
+            product_list = product_list.all().order_by('-title')
+        # product_list = product_list.all().order_by('title')
+    # prod_list = product_list
+    paginator = Paginator(product_list, 4)
+    page_number = request.GET.get('page')
+    product_list = paginator.get_page(page_number)
+    
     template = render_to_string('ajax/product-list.html', {'product_list': product_list})
     return JsonResponse({'data':template})
