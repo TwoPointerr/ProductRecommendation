@@ -5,6 +5,7 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth import logout
 from apps.cart.models import *
 from apps.seller_accounts.models import *
+from django.contrib import messages
 
 from django.core.files.storage import FileSystemStorage
 
@@ -59,8 +60,8 @@ def signout(request):
 
 @login_required
 def profile(request):
-    user_id = request.user.id
-    if request.user.is_staff:
+    if check_is_seller(request):
+        user_id = request.user.id
         user = User.objects.get(id=user_id)
         if request.method == 'POST':
             firstname = request.POST.get('firstname')
@@ -71,42 +72,52 @@ def profile(request):
             user = User.objects.create_user(id=user_id, first_name=firstname, last_name=lastname, username=username, email=email, is_staff=True)
             user.save()
             login(request, user)
-    
+    else:
+        return redirect('apps.seller_accounts:signin')
     return render(request, "seller_account_profile.html", {'seller_user':user})
 
 @login_required
 def company_details(request):
-    if request.method == 'POST':
-        user_id = request.user.id
-        user = User.objects.get(id=user_id)
-        companyname = request.POST.get('companyname')
-        companyemail = request.POST.get('companyemail')
-        company_desc = request.POST.get('description')
-        companynumber = request.POST.get('companynumber')
-        companydetail = CompanyDetails.objects.get_or_create(user=user, company_name=companyname, company_email=companyemail, company_desc=company_desc, company_number=companynumber)
-        return redirect("apps.seller_accounts:address_info")
+    if check_is_seller(request):
+        if request.method == 'POST':
+            user_id = request.user.id
+            user = User.objects.get(id=user_id)
+            companyname = request.POST.get('companyname')
+            companyemail = request.POST.get('companyemail')
+            company_desc = request.POST.get('description')
+            companynumber = request.POST.get('companynumber')
+            companydetail = CompanyDetails.objects.get_or_create(user=user, company_name=companyname, company_email=companyemail, company_desc=company_desc, company_number=companynumber)
+            return redirect("apps.seller_accounts:address_info")
+    else:
+        return redirect('apps.seller_accounts:signin')
     return render(request, "seller_account_company_detail.html")
 
 @login_required
 def address_info(request):
-    if request.method == 'POST':
-        user_id = request.user.id
-        company = CompanyDetails.objects.get(user_id=user_id)
-        addline = request.POST.get('Address')
-        country = request.POST.get('Country')
-        state = request.POST.get('State')
-        city = request.POST.get('City')
-        pincode = request.POST.get('Pincode')
-        addressinfo = CompanyAddress.objects.get_or_create(company=company, addline=addline, country=country, state=state, city=city, pincode=pincode)
-        return redirect("apps.seller_accounts:profile")
+    if check_is_seller(request):
+        if request.method == 'POST':
+            user_id = request.user.id
+            company = CompanyDetails.objects.get(user_id=user_id)
+            addline = request.POST.get('Address')
+            country = request.POST.get('Country')
+            state = request.POST.get('State')
+            city = request.POST.get('City')
+            pincode = request.POST.get('Pincode')
+            addressinfo = CompanyAddress.objects.get_or_create(company=company, addline=addline, country=country, state=state, city=city, pincode=pincode)
+            return redirect("apps.seller_accounts:profile")
+    else:
+        return redirect('apps.seller_accounts:signin')
     return render(request, "seller_account_address_info.html")
 
 @login_required
 def addnewproduct(request):
-    return render(request, "dashboard-add-new-product.html")
-
+    if check_is_seller(request):
+        return render(request, "dashboard-add-new-product.html")
+    else:
+        return redirect('apps.seller_accounts:signin')
+@login_required
 def add_single_product(request):
-    if request.user.is_staff:
+    if check_is_seller(request):
         if request.method == 'POST':
             product_name = request.POST.get("product_name")
             product_desc = request.POST.get("product_desc")
@@ -117,66 +128,81 @@ def add_single_product(request):
                                             gender_cat=product_cat['gender'],
                                             sub_cat=product_cat['sub_cat'],
                                             articel_type=product_cat['articel_type'],
-                                            image=product_img,
+                                            image_file=product_img,
                                             market_price=product_price,
                                             description=product_desc,
                                             seller=CompanyDetails.objects.get(user=request.user))
+            messages.success(request,'Product Added Succesfully')
+            print(product_name)
+            print(product_cat['gender'],product_cat['sub_cat'],product_cat['articel_type'])
+    else:
+        return redirect('apps.seller_accounts:signin')
     return render(request, "dashboard-add-new-product.html")
 
 def add_multiple_products(request):
-    columns = ["product_name","product_desc","product_price","product_img_url"]
-    if request.method == 'POST':
-        products_file = request.FILES.get("multi_product_file")
-        if products_file is not None:
-            upload_file_to_media(products_file)
-            full_file_path = get_file_path(settings.MEDIA_ROOT,products_file.name)
-            df = pd.read_csv(full_file_path)
-            seller = CompanyDetails.objects.get(user=request.user)
-            for i in range(df.shape[0]):
-                product_cat = get_product_cat(df['product_name'][i])
-                product = Product.objects.create(title=df['product_name'][i],
-                                            gender_cat=product_cat['gender'],
-                                            sub_cat=product_cat['sub_cat'],
-                                            articel_type=product_cat['articel_type'],
-                                            image_url=df['product_img_url'][i],
-                                            market_price=df['product_price'][i],
-                                            description=df['product_desc'][i],
-                                            seller=seller)
-                print("Product successfully added :",i,product.title)
-        else:
-            print("file is not uploaded")
+    if check_is_seller(request):
+        columns = ["product_name","product_desc","product_price","product_img_url"]
+        if request.method == 'POST':
+            products_file = request.FILES.get("multi_product_file")
+            if products_file is not None:
+                upload_file_to_media(products_file)
+                full_file_path = get_file_path(settings.MEDIA_ROOT,products_file.name)
+                df = pd.read_csv(full_file_path)
+                seller = CompanyDetails.objects.get(user=request.user)
+                for i in range(df.shape[0]):
+                    product_cat = get_product_cat(df['product_name'][i])
+                    product = Product.objects.create(title=df['product_name'][i],
+                                                gender_cat=product_cat['gender'],
+                                                sub_cat=product_cat['sub_cat'],
+                                                articel_type=product_cat['articel_type'],
+                                                image_url=df['product_img_url'][i],
+                                                market_price=df['product_price'][i],
+                                                description=df['product_desc'][i],
+                                                seller=seller)
+                    print("Product successfully added :",i,product.title)
+            else:
+                print("file is not uploaded")
+    else:
+        return redirect('apps.seller_accounts:signin')
     return render(request, "dashboard-add-new-product.html")
 
 @login_required
 def companyinfo(request):
-    user_id = request.user.id
-    user = User.objects.get(id=user_id)
-    company_info = CompanyDetails.objects.get(user = user)
-    addressinfo = CompanyAddress.objects.get(company = company_info)
-    if request.method == 'POST':
-        companyname = request.POST.get('companyname')
-        companyemail = request.POST.get('companyemail')
-        company_desc = request.POST.get('description')
-        companynumber = request.POST.get('companynumber')
-        addline = request.POST.get('Address')
-        country = request.POST.get('Country')
-        state = request.POST.get('State')
-        city = request.POST.get('City')
-        pincode = request.POST.get('Pincode')
-        companydetail = CompanyDetails.objects.filter(id=company_info.id).update(company_name=companyname, company_email=companyemail, company_desc=company_desc, company_number=companynumber)
-        addressinfo = CompanyAddress.objects.filter(id=addressinfo.id).update(addline=addline, country=country, state=state, city=city, pincode=pincode)
-        
-        return redirect("apps.seller_accounts:companyinfo")
-
+    if check_is_seller(request):
+        user_id = request.user.id
+        user = User.objects.get(id=user_id)
+        company_info = CompanyDetails.objects.get(user = user)
+        addressinfo = CompanyAddress.objects.get(company = company_info)
+        if request.method == 'POST':
+            companyname = request.POST.get('companyname')
+            companyemail = request.POST.get('companyemail')
+            company_desc = request.POST.get('description')
+            companynumber = request.POST.get('companynumber')
+            addline = request.POST.get('Address')
+            country = request.POST.get('Country')
+            state = request.POST.get('State')
+            city = request.POST.get('City')
+            pincode = request.POST.get('Pincode')
+            companydetail = CompanyDetails.objects.filter(id=company_info.id).update(company_name=companyname, company_email=companyemail, company_desc=company_desc, company_number=companynumber)
+            addressinfo = CompanyAddress.objects.filter(id=addressinfo.id).update(addline=addline, country=country, state=state, city=city, pincode=pincode)
+            return redirect("apps.seller_accounts:companyinfo")
+    else:
+        return redirect('apps.seller_accounts:signin')
     return render(request, "seller_account_company_info.html",{'company_info': company_info, 'address_info': addressinfo})
 
 @login_required
 def companysales(request):
-    return render(request, "dashboard-sales.html")
+    if check_is_seller(request):
+        return render(request, "dashboard-sales.html")
+    else:
+        return redirect('apps.seller_accounts:signin')
 
 @login_required
 def companyproducts(request):
-    return render(request, "dashboard-products.html")
+    if check_is_seller(request):
+        return render(request, "dashboard-products.html")
+    else:
+        return redirect('apps.seller_accounts:signin')
 
 def get_file_path(base_url,filename):
     file_path = os.path.join(base_url, filename)   #full path to text.
@@ -186,3 +212,11 @@ def upload_file_to_media(filename):
     fs = FileSystemStorage()
     filename = fs.save(filename.name,filename)
     return fs.url(filename)
+
+
+def check_is_seller(request):
+    if not request.user.is_staff:
+        messages.warning(request,'You are signed in as Customer')
+        return False
+    else:
+        return True
