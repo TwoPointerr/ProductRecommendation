@@ -9,9 +9,20 @@ from django.db.models import Q
 from django.template.loader import render_to_string
 from apps.cart.models import *
 
+import os
+import sys
+import inspect
+
+currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
+parentdir = os.path.dirname(currentdir)
+sys.path.insert(0, parentdir) 
+
+from active_page import set_page_active
+
 # Create your views here.
 
 def index(request):
+    set_page_active('Home')
     product_list = Product.objects.all()
     # paginator = Paginator(product_list, 2)
     # page_number = request.GET.get('page')
@@ -20,6 +31,7 @@ def index(request):
     return render(request, "home-fashion-store-v2.html", {'product_list': product_list})
 
 def show_all_products(request):
+    set_page_active('Shop')
     product_list = Product.objects.all().order_by('id')
     minprice = Product.objects.all().aggregate(Min('market_price'))['market_price__min']
     maxprice = Product.objects.all().aggregate(Max('market_price'))['market_price__max']

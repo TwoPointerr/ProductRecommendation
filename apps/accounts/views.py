@@ -8,10 +8,18 @@ from apps.accounts.models import *
 from apps.cart.models import *
 
 # Create your views here.
+import os
+import sys
+import inspect
 
+currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
+parentdir = os.path.dirname(currentdir)
+sys.path.insert(0, parentdir) 
+
+from active_page import set_page_active
 
 def signin(request):
-
+    set_page_active("Accounts")
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
@@ -56,7 +64,7 @@ def signup(request):
 def signout(request):
     logout(request)
     messages.success(request,'Logged Out Successfully.')
-    return redirect("apps.main:index")
+    return redirect("apps.accounts:signin")
 
 @login_required
 def profileset(request):
@@ -116,9 +124,9 @@ def shippingset(request):
 def acprofile(request):
     user_id = request.user.id
     user = User.objects.get(id=user_id)
-    profile = Profile.objects.get(user=user)
-    previmg=profile.image
-    if request.user.is_authenticated:
+    if not request.user.is_staff:
+        profile = Profile.objects.get(user=user)
+        previmg=profile.image
         if request.method == 'POST':
             user.first_name = request.POST.get('firstname')
             user.last_name = request.POST.get('lastname')
@@ -127,17 +135,14 @@ def acprofile(request):
             profile.mob_no = request.POST.get('phoneno')
             profile.gender = request.POST.get('gender')
             profile.image = request.FILES.get('img')
-            
-            
             newimg=profile.image
-            
             if str(newimg) == '':
                 profile.image = previmg               
             profile.save(update_fields=['mob_no', 'gender', 'image'])
             messages.info(request,'Profile Updated.')
             return redirect("apps.accounts:address")
     else:
-        messages.warning(request,'You are not signed in.')
+        messages.warning(request,'You are signed in as Seller')
         return redirect("apps.accounts:signin")
     return render(request, "account-profile.html", {'profile': profile, 'user': user})
 

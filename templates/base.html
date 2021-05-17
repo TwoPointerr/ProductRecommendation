@@ -488,7 +488,7 @@ input[type=number] {
             </ul>
             <!-- Primary menu-->
             <ul class="navbar-nav">
-              <li class="nav-item dropdown active"><a class="nav-link" href="{% url 'apps.main:index' %}">Home</a>
+              <li class="nav-item dropdown {{Home}}"><a class="nav-link" href="{% url 'apps.main:index' %}">Home</a>
                 {% comment %} <ul class="dropdown-menu">
                   <li class="dropdown position-static mb-0"><a class="dropdown-item py-2 border-bottom"
                       href="home-fashion-store-v1.html"><span class="d-block text-heading">Fashion Store
@@ -541,7 +541,7 @@ input[type=number] {
                   </li>
                 </ul> {% endcomment %}
               </li>
-              <li class="nav-item dropdown"><a class="nav-link" href="{% url 'apps.main:showallproducts' %}">Shop</a>
+              <li class="nav-item dropdown {{Shop}}"><a class="nav-link" href="{% url 'apps.main:showallproducts' %}">Shop</a>
                 {% comment %} <div class="dropdown-menu p-0">
                   <div class="d-flex flex-wrap flex-sm-nowrap px-2">
                     <div class="mega-dropdown-column pt-1 pt-lg-4 pb-4 px-2 px-lg-3">
@@ -635,7 +635,7 @@ input[type=number] {
                   </div>
                 </div> {% endcomment %}
               </li>
-              <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#"
+              <li class="nav-item dropdown {{Accounts}}"><a class="nav-link dropdown-toggle" href="#"
                   data-bs-toggle="dropdown">Account</a>
                 <ul class="dropdown-menu">
                 {% if user.is_staff %}

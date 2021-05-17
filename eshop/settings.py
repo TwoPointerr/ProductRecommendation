@@ -145,8 +145,8 @@ USE_TZ = True
 
 
 LOGIN_URL = reverse_lazy('apps.accounts:signin')
-LOGIN_REDIRECT_URL = reverse_lazy('apps.main:index')
-LOGOUT_REDIRECT_URL = reverse_lazy('apps.main:index')
+# LOGIN_REDIRECT_URL = reverse_lazy('apps.main:index')
+# LOGOUT_REDIRECT_URL = reverse_lazy('apps.main:index')
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / "static"]
 STATIC_ROOT = BASE_DIR / "static_cdn"
@@ -157,5 +157,6 @@ MEDIA_ROOT =BASE_DIR/"media"
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+ACTIVE_PAGE = {'Home':'active','Accounts':'','Shop':''}
 
 
