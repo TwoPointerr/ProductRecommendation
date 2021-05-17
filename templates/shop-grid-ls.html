@@ -15,7 +15,7 @@
           </nav>
         </div>
         <div class="order-lg-1 pe-lg-4 text-center text-lg-start">
-          <h1 class="h3 text-light mb-0">Shop grid left sidebar</h1>
+          <h1 class="h3 text-light mb-0">Shop</h1>
         </div>
       </div>
     </div>
@@ -383,7 +383,54 @@
                   </li>
                 </ul>
               </div> {% endcomment %}
-
+              {% comment %} Filter by Sorting {% endcomment %}
+              <div class="widget widget-filter mb-4 pb-4 border-bottom">
+                <h3 class="widget-title">Sort By</h3>
+                {% comment %} <div class="input-group input-group-sm mb-2">
+                  <input class="widget-filter-search form-control rounded-end pe-5" type="text" placeholder="Search"><i class="ci-search position-absolute top-50 end-0 translate-middle-y fs-sm me-3"></i>
+                </div> {% endcomment %}
+                <ul class="widget-list widget-filter-list list-unstyled pt-1" style="max-height: 11rem;" data-simplebar data-simplebar-auto-hide="false">
+                  {% comment %} <li class="widget-filter-item d-flex justify-content-between align-items-center mb-1">
+                    <div class="form-check">
+                      <input class="form-check-input" id="l_h_sort_by" data-filter="sort_by" type="radio">
+                      <label class="form-check-label" for="size-xs">Lowest - Highest Price</label>
+                    </div>
+                  </li>
+                  <li class="widget-filter-item d-flex justify-content-between align-items-center mb-1">
+                    <div class="form-check">
+                      <input class="form-check-input" id="h_l_sort_by" data-filter="sort_by" type="radio">
+                      <label class="form-check-label" for="size-xs">Highest - Lowest Price</label>
+                    </div>
+                  </li>
+                  <li class="widget-filter-item d-flex justify-content-between align-items-center mb-1">
+                    <div class="form-check">
+                      <input class="form-check-input" id="a_z_sort_by" data-filter="sort_by" type="radio">
+                      <label class="form-check-label" for="size-xs">A - Z Order</label>
+                    </div>
+                  </li>
+                  <li class="widget-filter-item d-flex justify-content-between align-items-center mb-1">
+                    <div class="form-check">
+                      <input class="form-check-input" id="z_a_sort_by" data-filter="sort_by" type="radio">
+                      <label class="form-check-label" for="size-xs">Z - A Order</label>
+                    </div>
+                  </li> {% endcomment %}
+                  <div class="form-check">
+                      <input class="form-check-input" type="radio" value="l_h_sort_by" id="sort_by" data-filter="sort_by" name="radio">
+                      <label class="form-check-label" for="l_h_sort_by">Lowest - Highest Price</label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" value="h_l_sort_by" id="sort_by" data-filter="sort_by" name="radio">
+                      <label class="form-check-label" for="h_l_sort_by">Highest - Lowest Price</label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" value="a_z_sort_by" id="sort_by" data-filter="sort_by" name="radio">
+                      <label class="form-check-label" for="a_z_sort_by">A - Z</label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" value="z_a_sort_by" id="sort_by" data-filter="sort_by" name="radio">
+                      <label class="form-check-label" for="z_a_sort_by">Z - A</label>
+                    </div>
+                  </div>
               <!-- Filter by Gender-->
               <div class="widget widget-filter mb-4 pb-4 border-bottom">
                 <h3 class="widget-title">Gender</h3>
@@ -533,47 +580,48 @@
 
               <!-- Filter by Color-->
               <div class="widget">
+              <p class="ajaxLoader">Loading...</p>
                 <h3 class="widget-title">Color</h3>
                 <div class="d-flex flex-wrap">
                   <div class="form-check form-option text-center mb-2 mx-1" style="width: 4rem;">
-                    <input class="form-check-input" type="checkbox" id="color-blue-gray">
-                    <label class="form-option-label rounded-circle" for="color-blue-gray"><span class="form-option-color rounded-circle" style="background-color: #b3c8db;"></span></label>
-                    <label class="d-block fs-xs text-muted mt-n1" for="color-blue-gray">Blue-gray</label>
+                    <input class="form-check-input" type="checkbox" id="color_filter" value="color-blue-gray">
+                    <label class="form-option-label rounded-circle" for="color-blue-gray"><span class="form-option-color rounded-circle" style="background-color: #ff1400;"></span></label>
+                    <label class="d-block fs-xs text-muted mt-n1" for="color-blue-gray">Red</label>
                   </div>
                   <div class="form-check form-option text-center mb-2 mx-1" style="width: 4rem;">
-                    <input class="form-check-input" type="checkbox" id="color-burgundy">
-                    <label class="form-option-label rounded-circle" for="color-burgundy"><span class="form-option-color rounded-circle" style="background-color: #ca7295;"></span></label>
-                    <label class="d-block fs-xs text-muted mt-n1" for="color-burgundy">Burgundy</label>
+                    <input class="form-check-input" type="checkbox" id="color_filter" value="color-burgundy">
+                    <label class="form-option-label rounded-circle" for="color-burgundy"><span class="form-option-color rounded-circle" style="background-color: #ffffff;"></span></label>
+                    <label class="d-block fs-xs text-muted mt-n1" for="color-burgundy">White</label>
                   </div>
                   <div class="form-check form-option text-center mb-2 mx-1" style="width: 4rem;">
-                    <input class="form-check-input" type="checkbox" id="color-teal">
-                    <label class="form-option-label rounded-circle" for="color-teal"><span class="form-option-color rounded-circle" style="background-color: #91c2c3;"></span></label>
-                    <label class="d-block fs-xs text-muted mt-n1" for="color-teal">Teal</label>
+                    <input class="form-check-input" type="checkbox" id="color_filter" value="color-teal">
+                    <label class="form-option-label rounded-circle" for="color-teal"><span class="form-option-color rounded-circle" style="background-color: #0012ad;"></span></label>
+                    <label class="d-block fs-xs text-muted mt-n1" for="color-teal">Navy Blue</label>
                   </div>
                   <div class="form-check form-option text-center mb-2 mx-1" style="width: 4rem;">
-                    <input class="form-check-input" type="checkbox" id="color-brown">
-                    <label class="form-option-label rounded-circle" for="color-brown"><span class="form-option-color rounded-circle" style="background-color: #9a8480;"></span></label>
-                    <label class="d-block fs-xs text-muted mt-n1" for="color-brown">Brown</label>
+                    <input class="form-check-input" type="checkbox" id="color_filter" value="color-brown">
+                    <label class="form-option-label rounded-circle" for="color-brown"><span class="form-option-color rounded-circle" style="background-color: #5f00b2;"></span></label>
+                    <label class="d-block fs-xs text-muted mt-n1" for="color-brown">Purple</label>
                   </div>
                   <div class="form-check form-option text-center mb-2 mx-1" style="width: 4rem;">
-                    <input class="form-check-input" type="checkbox" id="color-coral-red">
-                    <label class="form-option-label rounded-circle" for="color-coral-red"><span class="form-option-color rounded-circle" style="background-color: #ff7072;"></span></label>
-                    <label class="d-block fs-xs text-muted mt-n1" for="color-coral-red">Coral red</label>
+                    <input class="form-check-input" type="checkbox" id="color_filter" value="color-coral-red">
+                    <label class="form-option-label rounded-circle" for="color-coral-red"><span class="form-option-color rounded-circle" style="background-color: #04f0f3;"></span></label>
+                    <label class="d-block fs-xs text-muted mt-n1" for="color-coral-red">Cyan</label>
                   </div>
                   <div class="form-check form-option text-center mb-2 mx-1" style="width: 4rem;">
-                    <input class="form-check-input" type="checkbox" id="color-navy">
-                    <label class="form-option-label rounded-circle" for="color-navy"><span class="form-option-color rounded-circle" style="background-color: #696dc8;"></span></label>
-                    <label class="d-block fs-xs text-muted mt-n1" for="color-navy">Navy</label>
+                    <input class="form-check-input" type="checkbox" id="color_filter" value="color-navy">
+                    <label class="form-option-label rounded-circle" for="color-navy"><span class="form-option-color rounded-circle" style="background-color: #f30486;"></span></label>
+                    <label class="d-block fs-xs text-muted mt-n1" for="color-navy">Pink</label>
                   </div>
                   <div class="form-check form-option text-center mb-2 mx-1" style="width: 4rem;">
-                    <input class="form-check-input" type="checkbox" id="color-charcoal">
-                    <label class="form-option-label rounded-circle" for="color-charcoal"><span class="form-option-color rounded-circle" style="background-color: #4e4d4d;"></span></label>
-                    <label class="d-block fs-xs text-muted mt-n1" for="color-charcoal">Charcoal</label>
+                    <input class="form-check-input" type="checkbox" id="color_filter" value="color-charcoal">
+                    <label class="form-option-label rounded-circle" for="color-charcoal"><span class="form-option-color rounded-circle" style="background-color: #000000;"></span></label>
+                    <label class="d-block fs-xs text-muted mt-n1" for="color-charcoal">Black</label>
                   </div>
                   <div class="form-check form-option text-center mb-2 mx-1" style="width: 4rem;">
-                    <input class="form-check-input" type="checkbox" id="color-sky-blue">
-                    <label class="form-option-label rounded-circle" for="color-sky-blue"><span class="form-option-color rounded-circle" style="background-color: #8bcdf5;"></span></label>
-                    <label class="d-block fs-xs text-muted mt-n1" for="color-sky-blue">Sky blue</label>
+                    <input class="form-check-input" type="checkbox" id="color_filter" value="color-sky-blue">
+                    <label class="form-option-label rounded-circle" for="color-sky-blue"><span class="form-option-color rounded-circle" style="background-color: #636060;"></span></label>
+                    <label class="d-block fs-xs text-muted mt-n1" for="color-sky-blue">Grey</label>
                   </div>
                 </div>
               </div>
@@ -588,10 +636,8 @@
               <div class="d-flex align-items-center flex-nowrap me-3 me-sm-4 pb-3">
                 <label class="text-light opacity-75 text-nowrap fs-sm me-2 d-none d-sm-block" for="sorting">Sort by:</label>
                 <select class="form-select" id="sorting">
-                  <option>Popularity</option>
                   <option>Low - Hight Price</option>
                   <option>High - Low Price</option>
-                  <option>Average Rating</option>
                   <option>A - Z Order</option>
                   <option>Z - A Order</option>
                 </select><span class="fs-sm text-light opacity-75 text-nowrap ms-2 d-none d-md-block">of 287 products</span>

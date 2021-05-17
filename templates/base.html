@@ -644,18 +644,14 @@ input[type=number] {
                       User Account</a>
                     <ul class="dropdown-menu"> {% endcomment %}
                     
-                      <li><a class="dropdown-item" href="account-orders.html">Orders History</a></li>
-                      <li><a class="dropdown-item" href="account-profile.html">Profile Settings</a></li>
-                      <li><a class="dropdown-item" href="account-address.html">Account Addresses</a></li>
-                      <li><a class="dropdown-item" href="account-payment.html">Payment Methods</a></li>
-                      <li><a class="dropdown-item" href="account-wishlist.html">Wishlist</a></li>
-                      <li><a class="dropdown-item" href="account-tickets.html">My Tickets</a></li>
-                      <li><a class="dropdown-item" href="account-single-ticket.html">Single Ticket</a></li>
+                      <li><a class="dropdown-item" href="{% url 'apps.accounts:orders' %}">Orders History</a></li>
+                      <li><a class="dropdown-item" href="{% url 'apps.accounts:profile' %}">Profile Settings</a></li>
+                      <li><a class="dropdown-item" href="{% url 'apps.accounts:address' %}">Account Addresses</a></li>
                    {% comment %}  </ul>
                   </li> {% endcomment %}
                   
                   {% endif %}
-                  <li><a class="dropdown-item" href="account-signin.html">Sign In / Sign Up</a></li>
+                  <li><a class="dropdown-item" href="{% url 'apps.accounts:signin' %}">Sign In / Sign Up</a></li>
                   <li><a class="dropdown-item" href="account-password-recovery.html">Password Recovery</a></li>
                 </ul>
               </li>

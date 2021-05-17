@@ -45,3 +45,49 @@
               <hr class="d-sm-none">
             </div>
     {% endfor %}
+      <!-- Pagination-->
+            <nav class="d-flex justify-content-between pt-2" aria-label="Page navigation">
+              {% if product_list.has_previous %}
+              <ul class="pagination">
+                <li class="page-item"><a class="page-link" href="?page={{ product_list.previous_page_number }}"><i class="ci-arrow-left me-2"></i>Prev</a></li>
+              </ul>
+              {% else %}
+              <ul class="pagination" style="visibility:none">
+                <li class="page-item"><a class="page-link" href="#"><i class="ci-arrow-left me-2"></i>Prev</a></li>
+              </ul>
+              {% endif %}
+              <ul class="pagination">
+                {% if product_list.previous_page_number != 1 %}
+                  <li class="page-item d-none d-sm-block" aria-current="page"><a href="?page={{product_list.previous_page_number|add:"-1"}}">
+                  <span class="page-link">{{product_list.previous_page_number|add:"-1"}}<span class="visually-hidden">(current)</span></span></a>
+                  </li>
+                {% endif %}
+                {% if product_list.number != 1 %}
+                  <li class="page-item d-none d-sm-block" aria-current="page"><a href="?page={{product_list.previous_page_number}}">
+                  <span class="page-link">{{product_list.previous_page_number}}<span class="visually-hidden">(current)</span></span></a>
+                  </li>
+                {% endif %}
+                  <li class="page-item active d-none d-sm-block" aria-current="page"><a href="?page={{product_list.number}}">
+                  <span class="page-link">{{product_list.number}}<span class="visually-hidden">(current)</span></span></a>
+                  </li>
+                {% if product_list.number != product_list.paginator.num_pages %}
+                  <li class="page-item d-none d-sm-block" aria-current="page"><a href="?page={{product_list.next_page_number}}">
+                  <span class="page-link">{{product_list.next_page_number}}<span class="visually-hidden">(current)</span></span></a>
+                  </li>
+                {% endif %}
+                {% if product_list.next_page_number != product_list.paginator.num_pages %}
+                  <li class="page-item d-none d-sm-block" aria-current="page"><a href="?page={{product_list.next_page_number|add:"1"}}">
+                  <span class="page-link">{{product_list.next_page_number|add:"1"}}<span class="visually-hidden">(current)</span></span></a>
+                  </li>
+                {% endif %}
+              </ul>
+              {% if product_list.has_next %}
+                <ul class="pagination">
+                  <li class="page-item"><a class="page-link" href="?page={{ product_list.next_page_number }}" aria-label="Next">Next<i class="ci-arrow-right ms-2"></i></a></li>
+                </ul>
+              {% else %}
+                <ul class="pagination" style="visibility:none">
+                  <li class="page-item"><a class="page-link" href="#" aria-label="Next">Next<i class="ci-arrow-right ms-2"></i></a></li>
+                </ul>
+              {% endif %}
+            </nav>

@@ -5,9 +5,9 @@
     <div class="page-title-overlap bg-accent pt-4">
       <div class="container d-flex flex-wrap flex-sm-nowrap justify-content-center justify-content-sm-between align-items-center pt-2">
         <div class="d-flex align-items-center pb-3">
-          <div class="img-thumbnail rounded-circle position-relative flex-shrink-0" style="width: 6.375rem;"><img class="rounded-circle" src="{% static 'img/marketplace/account/avatar.jpg' %}" alt="DSE  Studio"></div>
+          {% comment %} <div class="img-thumbnail rounded-circle position-relative flex-shrink-0" style="width: 6.375rem;"><img class="rounded-circle" src="{% static 'img/marketplace/account/avatar.jpg' %}" alt="DSE  Studio"></div> {% endcomment %}
           <div class="ps-3">
-            <h3 class="text-light fs-lg mb-0">DSE  Studio</h3><span class="d-block text-light fs-ms opacity-60 py-1">Member since November 2019</span>
+            <h1 class="text-light mb-0">{{user.first_name}} {{user.last_name}}</h1><span class="d-block text-light fs-ms opacity-60 py-1">Member since November 2019</span>
           </div>
         </div>
         <div class="d-flex">
