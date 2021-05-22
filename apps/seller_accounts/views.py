@@ -123,8 +123,9 @@ def add_single_product(request):
             product_name = request.POST.get("product_name")
             product_desc = request.POST.get("product_desc")
             product_price = request.POST.get("product_price")
-            product_img = request.FILES.get("product_img")
+            product_img = request.FILES.getlist("product_img")
             product_cat = get_product_cat(product_name)
+            print(product_img)
             product = Product.objects.create(title=product_name,
                                             gender_cat=product_cat['gender'],
                                             sub_cat=product_cat['sub_cat'],

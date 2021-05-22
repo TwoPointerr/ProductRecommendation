@@ -8,6 +8,7 @@ from django.db.models import Count, Min, Sum, Avg, Max
 from django.db.models import Q
 from django.template.loader import render_to_string
 from apps.cart.models import *
+from apps.main.recom_ml_model import *
 
 import os
 import sys
@@ -51,9 +52,6 @@ def category(request):
     productcount = request.session.get('productcount')
     return render(request, "home-fashion-store-v2.html", {'productcount':productcount})
 
-
-
-
 def Search_Result(request, keyword):
 
     search_result = Product.objects.filter(Q(title__icontains = keyword) | Q(description__icontains = keyword))
@@ -72,7 +70,9 @@ def Search_Product(request):
 
 def Single_Product(request, pid):
    single_product = Product.objects.get(id = pid)
-   return render(request, 'shop-single-v2.html', {'single_product':single_product}) 
+   similar_products_set = similar_products(pid,5)
+   print(similar_products_set)
+   return render(request, 'shop-single-v2.html', {'single_product':single_product,'similar_products':similar_products_set}) 
 
 #To Filter Data
 

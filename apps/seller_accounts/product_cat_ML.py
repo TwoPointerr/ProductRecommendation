@@ -13,7 +13,7 @@ bottom_women_articel_type_list = ['Capris', 'Churidar', 'Jeans', 'Jeggings', 'Le
 
 extra_articel_type_list = ['Booties', 'Boxers', 'Bra', 'Briefs', 'Camisoles', 'Caps', 'Casual Shoes', 'Dresses', 'Flats', 'Flip Flops', 'Formal Shoes', 'Hat', 'Headband', 'Heels', 'Innerwear Vests', 'Jumpsuit', 'Sandals', 'Sarees', 'Shapewear', 'Socks', 'Sports Shoes', 'Trunk']
 
-mlModelsFiles = {"gender_model":"lvl1_gender_cat.sav","sub_cat":"lvl2_sub_cat.sav","articel_type":"lvl3_articelType_cat.sav","top_men":"lvl3_top_men_cat.sav","top_women":"lvl3_top_women_cat.sav","bottom_men":"lvl3_bottom_men_cat.sav","bottom_women":"lvl3_bottom_women_cat.sav","extra_articel_type":"lvl3_extra_articel_type.sav"}
+mlModelsFiles = {"gender_model":"lvl1_gender_cat.sav","sub_cat":"lvl2_sub_cat.sav","articel_type":"lvl3_articelType_cat.sav","top_men":"lvl3_men_top_cat_new.sav","top_women":"lvl3_top_women_cat.sav","bottom_men":"lvl3_bottom_men_cat.sav","bottom_women":"lvl3_bottom_women_cat.sav","extra_articel_type":"lvl3_extra_articel_type.sav"}
 
 def get_ml_model_file_path(filename):
     module_dir = os.path.dirname(__file__)   #get current directory
@@ -44,6 +44,7 @@ def get_product_cat(product_name):
     if gender_list[lvl1_gender_cat[0]] == ("Men" or "Boys" or "Unisex") :
         if subCat_list[lvl2_sub_cat[0]] == "Topwear":
             lvl3_men_top_cat = lvl3_top_men_cat_model.predict(product_name_list)
+            print('predict no: ',lvl3_men_top_cat)
             lvl3_articel_cat = top_men_articel_type_list[lvl3_men_top_cat[0]]
             print("Men Top",lvl3_articel_cat)
         elif subCat_list[lvl2_sub_cat[0]] == "Bottomwear":

@@ -112,7 +112,7 @@ def shippingset(request):
                 profile_id=profile.id,addline=addline, city=city, state=state, pincode=pincode,
                 defaults={'addline':addline, 'city':city, 'state':state, 'pincode':pincode, 'isprimary':True},
             )
-            messages.succeess(request,'Address added.')
+            messages.success(request,'Address added.')
             return redirect("apps.main:index")
     else:
         messages.warning(request,'You are not signed in.')
@@ -223,7 +223,6 @@ def manageadd(request, addid):
 
 @login_required
 def orders(request):
-    
     profile = Profile.objects.get(id=request.user.profile.id)
     #cart= Cart.objects.filter(profile=profile)
     #orders = Order.objects.filter(Order.cart.profile==profile).order_by("-id")
