@@ -17,7 +17,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Profile',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('mob_no', models.CharField(blank=True, max_length=12, null=True, unique=True)),
                 ('gender', models.CharField(blank=True, choices=[('M', 'Male'), ('F', 'Female'), ('o', 'Others')], max_length=1, null=True)),
                 ('image', models.ImageField(blank=True, default='profiles/default.jpg', null=True, upload_to='profiles/')),
@@ -28,13 +28,13 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Address',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('isprimary', models.BooleanField(default=False)),
                 ('addline', models.CharField(max_length=200)),
                 ('city', models.CharField(max_length=200)),
                 ('state', models.CharField(max_length=200)),
                 ('pincode', models.PositiveIntegerField()),
-                ('profile', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='accounts.Profile')),
+                ('profile', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='accounts.profile')),
             ],
         ),
     ]

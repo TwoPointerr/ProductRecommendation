@@ -17,7 +17,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='CompanyDetails',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('company_name', models.CharField(max_length=200)),
                 ('company_email', models.EmailField(max_length=254)),
                 ('company_desc', models.TextField()),
@@ -28,13 +28,13 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='CompanyAddress',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('addline', models.CharField(max_length=200)),
                 ('country', models.CharField(max_length=200)),
                 ('city', models.CharField(max_length=200)),
                 ('state', models.CharField(max_length=200)),
                 ('pincode', models.PositiveIntegerField()),
-                ('company', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to='seller_accounts.CompanyDetails')),
+                ('company', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to='seller_accounts.companydetails')),
             ],
         ),
     ]

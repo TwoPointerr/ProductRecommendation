@@ -17,17 +17,17 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Cart',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('total', models.PositiveIntegerField(default=0)),
                 ('ordered', models.BooleanField(default=False)),
                 ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('profile', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='accounts.Profile')),
+                ('profile', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='accounts.profile')),
             ],
         ),
         migrations.CreateModel(
             name='Product',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('title', models.CharField(max_length=200)),
                 ('gender_cat', models.CharField(max_length=50, null=True)),
                 ('sub_cat', models.CharField(max_length=50, null=True)),
@@ -36,18 +36,34 @@ class Migration(migrations.Migration):
                 ('image_url', models.URLField(blank=True)),
                 ('market_price', models.PositiveIntegerField()),
                 ('description', models.TextField()),
-                ('seller', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to='seller_accounts.CompanyDetails')),
+                ('seller', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to='seller_accounts.companydetails')),
             ],
         ),
         migrations.CreateModel(
             name='Sales',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('rate', models.PositiveIntegerField(default=0)),
                 ('quantity', models.PositiveIntegerField(default=0)),
                 ('subtotal', models.PositiveIntegerField(default=0)),
-                ('company', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='seller_accounts.CompanyDetails')),
-                ('product', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='cart.Product')),
+                ('company', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='seller_accounts.companydetails')),
+                ('product', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='cart.product')),
+            ],
+        ),
+        migrations.CreateModel(
+            name='ProductImagesURL',
+            fields=[
+                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('image_url', models.URLField(blank=True, max_length=500)),
+                ('product', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='cart.product')),
+            ],
+        ),
+        migrations.CreateModel(
+            name='ProductImagesFiles',
+            fields=[
+                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('image_file', models.ImageField(blank=True, upload_to='products')),
+                ('product', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='cart.product')),
             ],
         ),
         migrations.CreateModel(
@@ -69,7 +85,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Order',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('ordered_by', models.CharField(max_length=200)),
                 ('shipping_address', models.CharField(max_length=200)),
                 ('mob_no', models.CharField(blank=True, max_length=12, null=True)),
@@ -79,18 +95,18 @@ class Migration(migrations.Migration):
                 ('total', models.PositiveIntegerField(blank=True, null=True)),
                 ('order_status', models.CharField(choices=[('Order Placed', 'Order Placed'), ('Order Processing', 'Order Processing'), ('Order Completed', 'Order Completed'), ('Order Canceled', 'Order Canceled'), ('On the way', 'On the way')], max_length=50)),
                 ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('cart', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to='cart.Cart')),
+                ('cart', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to='cart.cart')),
             ],
         ),
         migrations.CreateModel(
             name='CartProduct',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('rate', models.PositiveIntegerField()),
                 ('quantity', models.PositiveIntegerField()),
                 ('subtotal', models.PositiveIntegerField()),
-                ('cart', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='cart.Cart')),
-                ('product', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='cart.Product')),
+                ('cart', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='cart.cart')),
+                ('product', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='cart.product')),
             ],
         ),
     ]
