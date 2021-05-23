@@ -7,7 +7,7 @@
         <div class="order-lg-2 mb-3 mb-lg-0 pt-lg-2">
           <nav aria-label="breadcrumb">
             <ol class="breadcrumb breadcrumb-light flex-lg-nowrap justify-content-center justify-content-lg-start">
-              <li class="breadcrumb-item"><a class="text-nowrap" href="index.html"><i class="ci-home"></i>Home</a></li>
+              <li class="breadcrumb-item"><a class="text-nowrap" href="{% url 'apps.main:index' %}"><i class="ci-home"></i>Home</a></li>
               <li class="breadcrumb-item text-nowrap"><a href="#">Shop</a>
               </li>
               <li class="breadcrumb-item text-nowrap active fade" aria-current="page">Grid left sidebar</li>
@@ -670,7 +670,7 @@
                   </div>
                   </a>
                   <div class="card-body py-2"><a class="product-meta d-block fs-xs pb-1" href="#">{{product.category}}</a>
-                    <h3 class="product-title fs-sm"><a href="shop-single-v1.html">{{product.title}}</a></h3>
+                    <h3 class="product-title fs-sm"><a href="{% url 'apps.main:single_product' product.id %}">{{product.title}}</a></h3>
                     <div class="d-flex justify-content-between">
                       <div class="product-price"><span class="text-accent">${{product.market_price}}</span></div>
                       <div class="star-rating"><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star"></i>
@@ -678,27 +678,15 @@
                     </div>
                   </div>
                   <div class="card-body card-body-hidden">
-                    <div class="text-center pb-2">
-                      <div class="form-check form-option form-check-inline mb-2">
-                        <input class="form-check-input" type="radio" name="size1" id="s-75">
-                        <label class="form-option-label" for="s-75">7.5</label>
-                      </div>
-                      <div class="form-check form-option form-check-inline mb-2">
-                        <input class="form-check-input" type="radio" name="size1" id="s-80" checked>
-                        <label class="form-option-label" for="s-80">8</label>
-                      </div>
-                      <div class="form-check form-option form-check-inline mb-2">
-                        <input class="form-check-input" type="radio" name="size1" id="s-85">
-                        <label class="form-option-label" for="s-85">8.5</label>
-                      </div>
-                      <div class="form-check form-option form-check-inline mb-2">
-                        <input class="form-check-input" type="radio" name="size1" id="s-90">
-                        <label class="form-option-label" for="s-90">9</label>
-                      </div>
-                    </div>
+                    
                     <a href="{% url 'apps.cart:addtocart' product.id %}">
+                    {% if user.is_staff %}
+                    <button class="btn btn-primary btn-sm d-block w-100 mb-2 fade" type="button"><i class="ci-cart fs-sm me-1"></i>Add to Cart</button>
+                    {% else %}
                     <button class="btn btn-primary btn-sm d-block w-100 mb-2" type="button"><i class="ci-cart fs-sm me-1"></i>Add to Cart</button>
-                    <div class="text-center"><a class="nav-link-style fs-ms" href="#quick-view" data-bs-toggle="modal"><i class="ci-eye align-middle me-1"></i>Quick view</a></div>
+                    {% endif %}
+                    </a>
+                    
                   </div>
                 </div>
                 <hr class="d-sm-none">
