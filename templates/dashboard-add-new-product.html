@@ -90,18 +90,22 @@
                   <form method="POST" action="{% url 'apps.seller_accounts:add_single_product' %}" enctype="multipart/form-data">
                     {% csrf_token %}
                     <div class="mb-3 pb-2">
-                      <label class="form-label" for="unp-product-name">Product name</label>
+                      <label class="form-label" for="unp-product-name">Product name *</label>
                       <input class="form-control" type="text" id="unp-product-name" name="product_name">
                       <div class="form-text">Maximum 100 characters. No HTML or emoji allowed.</div>
                     </div>
                     <div class="file-drop-area mb-3">
                       <div class="file-drop-icon ci-cloud-upload"></div><span class="file-drop-message">Drag and drop here to upload product screenshot</span>
-                      <input class="file-drop-input" type="file" accept="image/*" name="product_img" required>
+                      <input class="file-drop-input" type="file" accept="image/*" name="product_img" multiple>
                       <button class="file-drop-btn btn btn-primary btn-sm mb-2" type="button">Or select file</button>
                       <div class="form-text">1000 x 800px ideal size for hi-res displays</div>
                     </div>
                     <div class="mb-3 py-2">
-                      <label class="form-label" for="unp-product-description">Product description</label>
+                      <label class="form-label" for="unp-product-description">Product Image URL'S </label><spam><i>&nbsp;( Optional )</i></spam>
+                      <textarea class="form-control" rows="6" id="unp-product-img-url" name="product_img_urls" placeholder="Seprate URLS with ' | ' eg. https.url1.jpg | https.url2.jpg"></textarea>
+                    </div>
+                    <div class="mb-3 py-2">
+                      <label class="form-label" for="unp-product-description">Product description *</label>
                       <textarea class="form-control" rows="6" id="unp-product-description" name="product_desc"></textarea>
                     </div>
                     <div class="row">
@@ -113,7 +117,7 @@
                         <div class="form-text">Average marketplace price for this category is $15.</div>
                       </div> {% endcomment %}
                       <div class="col-sm-6 mb-3">
-                        <label class="form-label" for="unp-extended-price">Product price</label>
+                        <label class="form-label" for="unp-extended-price">Product price *</label>
                         <div class="input-group"><span class="input-group-text"><i class="ci-dollar"></i></span>
                           <input class="form-control" type="text" id="unp-extended-price" name="product_price">
                         </div>

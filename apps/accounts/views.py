@@ -223,7 +223,6 @@ def manageadd(request, addid):
 
 @login_required
 def orders(request):
-    
     profile = Profile.objects.get(id=request.user.profile.id)
     #cart= Cart.objects.filter(profile=profile)
     #orders = Order.objects.filter(Order.cart.profile==profile).order_by("-id")

@@ -290,7 +290,11 @@ input[type=number] {
               <div class="navbar-tool-icon-box"><i class="navbar-tool-icon ci-heart"></i></div>
             </a> {% endcomment %}
             {% if user.is_authenticated %}
-            <div class="navbar-tool-icon-box"><a href="{% url 'apps.accounts:profile'%}"><i class="navbar-tool-icon ci-user"></i></div>
+              {% if user.is_staff %}
+                <div class="navbar-tool-icon-box"><a href="{% url 'apps.seller_accounts:profile'%}"><i class="navbar-tool-icon ci-user"></i></div>
+              {% else %}
+                <div class="navbar-tool-icon-box"><a href="{% url 'apps.accounts:profile'%}"><i class="navbar-tool-icon ci-user"></i></div>
+              {% endif %}
             <div class="navbar-tool-text ms-n3"><small>Hello!!</small>{{user.first_name}}</div>
             <a class="navbar-tool ms-1 ms-lg-0 me-n1 me-lg-2" href="{% url 'apps.accounts:signout' %}" data-bs-toggle="modal">
               <button type="button" class="btn btn-sm btn-outline-primary ms-4">Logout</button>

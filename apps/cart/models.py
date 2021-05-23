@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models.deletion import CASCADE
 from apps.accounts.models import *
 from django.contrib.auth.models import User
 from apps.seller_accounts.models import *
@@ -33,6 +34,15 @@ class Product(models.Model):
 
     def __str__(self):
         return self.title
+
+class ProductImagesFiles(models.Model):
+    product = models.ForeignKey(Product,on_delete=CASCADE)
+    image_file = models.ImageField(upload_to="products",blank=True)
+
+class ProductImagesURL(models.Model):
+    product = models.ForeignKey(Product,on_delete=CASCADE)
+    image_url = models.URLField(max_length=500,blank=True)
+    
 
 class Cart (models.Model):
     profile = models.ForeignKey(Profile, on_delete=models.SET_NULL, null=True, blank=True)
@@ -75,6 +85,7 @@ class Order(models.Model):
     cart = models.OneToOneField(Cart, on_delete=models.CASCADE)
     ordered_by =models.CharField(max_length=200)
     shipping_address =models.CharField(max_length=200)
+    
     mob_no = models.CharField(max_length=12, null=True, blank=True)
     email = models.EmailField(blank=True)
     subtotal =models.PositiveIntegerField(null=True, blank=True)

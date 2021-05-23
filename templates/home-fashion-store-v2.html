@@ -74,6 +74,7 @@
                             <div class="row mx-n2">
                                 {% for p in product_list %}
                                 {% if p.gender_cat == "Women" %}
+                                {% if forloop.counter < 14 %}
                                 <div class="col-lg-4 col-6 px-0 px-sm-2 mb-sm-4">
                                     <div class="card product-card card-static">
                                         <button class="btn-wishlist btn-sm" type="button" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to wishlist"><i class="ci-heart"></i></button>
@@ -96,6 +97,7 @@
                                         </div>
                                     </div>
                                 </div>
+                                {% endif %}
                                 {% endif %}
                                 {% endfor %}
                             </div>
@@ -311,6 +313,7 @@
                             <div class="row mx-n2">
                                 {% for p in product_list %}
                                 {% if p.gender_cat == "Men" %}
+                                {% if forloop.counter < 4 %}
                                 <div class="col-lg-4 col-6 px-0 px-sm-2 mb-sm-4">
                                     <div class="card product-card card-static">
                                         <button class="btn-wishlist btn-sm" type="button" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to wishlist"><i class="ci-heart"></i></button>
@@ -332,6 +335,7 @@
                                         </div>
                                     </div>
                                 </div>
+                                {% endif %}
                                 {% endif %}
                                 {% endfor %}
                             </div>

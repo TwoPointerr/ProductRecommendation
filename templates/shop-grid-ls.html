@@ -657,10 +657,14 @@
                 <div class="card product-card">
                   <button class="btn-wishlist btn-sm" type="button" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to wishlist"><i class="ci-heart"></i></button><a class="card-img-top d-block overflow-hidden" href="{% url 'apps.main:single_product' product.id %}">
                   <div style="height:350px">
-                    {% if product.image_file %}
-                      <img src="{{product.image_file.url}}" alt="Product">
+                    {% if product.productimagesfiles_set.all %}
+                      {% for product_img in product.productimagesfiles_set.all|slice:":1" %}
+                        <img src="{{product_img.image_file.url}}" alt="Product">
+                      {%endfor%}
                     {%else%}
-                      <img src="{{product.image_url}}" alt="Product">
+                      {% for product_img in product.productimagesurl_set.all|slice:":1" %}
+                        <img src="{{product_img.image_url}}" alt="Product">
+                      {%endfor%}
                     {% endif %}
                     
                   </div>
