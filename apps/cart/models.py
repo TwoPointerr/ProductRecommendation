@@ -37,15 +37,11 @@ class Product(models.Model):
 
 class ProductImagesFiles(models.Model):
     product = models.ForeignKey(Product,on_delete=CASCADE)
-    image_file1 = models.ImageField(upload_to="products",blank=True)
-    image_file2 = models.ImageField(upload_to="products",blank=True)
-    image_file3 = models.ImageField(upload_to="products",blank=True)
+    image_file = models.ImageField(upload_to="products",blank=True)
 
 class ProductImagesURL(models.Model):
     product = models.ForeignKey(Product,on_delete=CASCADE)
-    image_url1 = models.URLField(blank=True)
-    image_url2 = models.URLField(blank=True)
-    image_url3 = models.URLField(blank=True)
+    image_url = models.URLField(max_length=500,blank=True)
     
 
 class Cart (models.Model):

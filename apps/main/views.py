@@ -113,3 +113,5 @@ def filter_data(request):
     
     template = render_to_string('ajax/product-list.html', {'product_list': product_list})
     return JsonResponse({'data':template})
+
+

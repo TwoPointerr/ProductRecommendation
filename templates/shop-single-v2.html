@@ -40,14 +40,30 @@
                 <div class="col-lg-7 pe-lg-0">
                   <div class="product-gallery">
                     <div class="product-gallery-preview order-sm-2">
-                      {% if single_product.image_file %}
-                        <div class="product-gallery-preview-item active" id="first"><img class="image-zoom" src="{{single_product.image_file.url}}" data-zoom="{{single_product.image_file.url}}" alt="if 1Product image">
-                          <div class="image-zoom-pane"></div>
-                        </div>
+                      {% if single_product.productimagesfiles_set.all %}
+                        {% for product_img in single_product.productimagesfiles_set.all %}
+                          {% if forloop.counter == 1%}
+                            <div class="product-gallery-preview-item active" id="product_img_id_{{product_img.id}}"><img class="image-zoom" src="{{product_img.image_file.url}}" data-zoom="{{product_img.image_file.url}}" alt="if 1Product image">
+                              <div class="image-zoom-pane"></div>
+                            </div>
+                          {% else %}
+                            <div class="product-gallery-preview-item" id="product_img_id_{{product_img.id}}"><img class="image-zoom" src="{{product_img.image_file.url}}" data-zoom="{{product_img.image_file.url}}" alt="if 1Product image">
+                              <div class="image-zoom-pane"></div>
+                            </div>
+                          {% endif %}
+                        {% endfor %}
                       {% else %}
-                        <div class="product-gallery-preview-item active" id="first"><img class="image-zoom" src="{{single_product.image_url}}" data-zoom="{{single_product.image_url}}" alt="if 2 Product image">
-                          <div class="image-zoom-pane"></div>
-                        </div>
+                        {% for product_img in single_product.productimagesurl_set.all %}
+                          {% if forloop.counter == 1%}
+                          <div class="product-gallery-preview-item active" id="product_img_id_{{product_img.id}}"><img class="image-zoom" src="{{product_img.image_url}}" data-zoom="{{product_img.image_url}}" alt="if 2 Product image">
+                            <div class="image-zoom-pane"></div>
+                          </div>
+                          {% else %}
+                           <div class="product-gallery-preview-item" id="product_img_id_{{product_img.id}}"><img class="image-zoom" src="{{product_img.image_url}}" data-zoom="{{product_img.image_url}}" alt="if 2 Product image">
+                            <div class="image-zoom-pane"></div>
+                          </div>
+                          {%endif%}
+                        {% endfor %}
                       {% endif %}
                       {% comment %} <div class="product-gallery-preview-item active" id="first"><img class="image-zoom" src="{{single_product.image.url}}" data-zoom="{{single_product.image.url}}" alt="Product image">
                         <div class="image-zoom-pane"></div>
@@ -66,10 +82,14 @@
                    
                      
                     <div class="product-gallery-thumblist order-sm-1">
-                      {% if single_product.image_file %}
-                      <a class="product-gallery-thumblist-item active" href="#first"><img src="{{single_product.image_file.url}}" alt="Product thumb"></a>
+                      {% if single_product.productimagesfiles_set.all %}
+                        {% for product_img in single_product.productimagesfiles_set.all %}
+                          <a class="product-gallery-thumblist-item" href="#product_img_id_{{product_img.id}}"><img src="{{product_img.image_file.url}}" alt="#{{product_img.id}}"></a>
+                        {% endfor %}
                       {%else%}
-                      <a class="product-gallery-thumblist-item active" href="#first"><img src="{{single_product.image_url}}" alt="Product thumb"></a>
+                        {% for product_img in single_product.productimagesurl_set.all %}
+                          <a class="product-gallery-thumblist-item" href="#product_img_id_{{product_img.id}}"><img src="{{product_img.image_url}}" alt="#{{product_img.id}}"></a>
+                        {% endfor %}
                       {%endif%}
                       
                     </div>
@@ -480,80 +500,47 @@
       <div class="tns-carousel tns-controls-static tns-controls-outside">
         <div class="tns-carousel-inner" data-carousel-options="{&quot;items&quot;: 2, &quot;controls&quot;: true, &quot;nav&quot;: false, &quot;responsive&quot;: {&quot;0&quot;:{&quot;items&quot;:1},&quot;500&quot;:{&quot;items&quot;:2, &quot;gutter&quot;: 18},&quot;768&quot;:{&quot;items&quot;:3, &quot;gutter&quot;: 20}, &quot;1100&quot;:{&quot;items&quot;:4, &quot;gutter&quot;: 30}}}">
           <!-- Product-->
-          <div>
-            <div class="card product-card card-static">
-              <button class="btn-wishlist btn-sm" type="button" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to wishlist"><i class="ci-heart"></i></button><a class="card-img-top d-block overflow-hidden" href="#"><img src="{% static 'img/shop/catalog/66.jpg' %}" alt="Product"></a>
-              <div class="card-body py-2"><a class="product-meta d-block fs-xs pb-1" href="#">Smartwatches</a>
-                <h3 class="product-title fs-sm"><a href="#">Health &amp; Fitness Smartwatch</a></h3>
-                <div class="d-flex justify-content-between">
-                  <div class="product-price"><span class="text-accent">$250.<small>00</small></span></div>
-                  <div class="star-rating"><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star"></i>
+          {% for product in similar_products%}
+            <div>
+              <div class="card product-card card-static">
+                <button class="btn-wishlist btn-sm" type="button" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to wishlist"><i class="ci-heart"></i></button>
+                
+                <a class="card-img-top d-block overflow-hidden" href="#">
+                {% if product.productimagesfiles_set.all %}
+                  {% for product_img in product.productimagesfiles_set.all|slice:":1" %}
+                    <img src="{{product_img.image_file.url}}" alt="Product">
+                  {%endfor%}
+                {%else%}
+                    {% for product_img in product.productimagesurl_set.all|slice:":1" %}
+                      <img src="{{product_img.image_url}}" alt="Product">
+                    {% endfor %}
+                {%endif%}
+
+                </a>
+
+                <div class="card-body py-2"><a class="product-meta d-block fs-xs pb-1" href="#">{{product.articel_type}}</a>
+                  <h3 class="product-title fs-sm"><a href="#">{{product.title}}</a></h3>
+                  <div class="d-flex justify-content-between">
+                    <div class="product-price"><span class="text-accent">${{product.market_price}}.<small>00</small></span></div>
+                    <div class="star-rating"><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star"></i>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
+          {% endfor %}
           <!-- Product-->
-          <div>
-            <div class="card product-card card-static">
-              <button class="btn-wishlist btn-sm" type="button" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to wishlist"><i class="ci-heart"></i></button><a class="card-img-top d-block overflow-hidden" href="#"><img src="{% static 'img/shop/catalog/67.jpg' %}" alt="Product"></a>
-              <div class="card-body py-2"><a class="product-meta d-block fs-xs pb-1" href="#">Smartwatches</a>
-                <h3 class="product-title fs-sm"><a href="#">Heart Rate &amp; Activity Tracker</a></h3>
-                <div class="d-flex justify-content-between">
-                  <div class="product-price text-accent">$26.<small>99</small></div>
-                  <div class="star-rating"><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-half active"></i><i class="star-rating-icon ci-star"></i><i class="star-rating-icon ci-star"></i>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+         
           <!-- Product-->
-          <div>
-            <div class="card product-card card-static">
-              <button class="btn-wishlist btn-sm" type="button" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to wishlist"><i class="ci-heart"></i></button><a class="card-img-top d-block overflow-hidden" href="#"><img src="{% static 'img/shop/catalog/64.jpg' %}" alt="Product"></a>
-              <div class="card-body py-2"><a class="product-meta d-block fs-xs pb-1" href="#">Smartwatches</a>
-                <h3 class="product-title fs-sm"><a href="#">Smart Watch Series 5, Aluminium</a></h3>
-                <div class="d-flex justify-content-between">
-                  <div class="product-price text-accent">$349.<small>99</small></div>
-                  <div class="star-rating"><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star"></i>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+         
           <!-- Product-->
-          <div>
-            <div class="card product-card card-static">
-              <button class="btn-wishlist btn-sm" type="button" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to wishlist"><i class="ci-heart"></i></button><a class="card-img-top d-block overflow-hidden" href="#"><img src="{% static 'img/shop/catalog/68.jpg' %}" alt="Product"></a>
-              <div class="card-body py-2"><a class="product-meta d-block fs-xs pb-1" href="#">Smartwatches</a>
-                <h3 class="product-title fs-sm"><a href="#">Health &amp; Fitness Smartwatch</a></h3>
-                <div class="d-flex justify-content-between">
-                  <div class="product-price text-accent">$118.<small>00</small></div>
-                  <div class="star-rating"><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+          
           <!-- Product-->
-          <div>
-            <div class="card product-card card-static">
-              <button class="btn-wishlist btn-sm" type="button" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to wishlist"><i class="ci-heart"></i></button><a class="card-img-top d-block overflow-hidden" href="#"><img src="{% static 'img/shop/catalog/69.jpg' %}" alt="Product"></a>
-              <div class="card-body py-2"><a class="product-meta d-block fs-xs pb-1" href="#">Smartwatches</a>
-                <h3 class="product-title fs-sm"><a href="#">Heart Rate &amp; Activity Tracker</a></h3>
-                <div class="d-flex justify-content-between">
-                  <div class="product-price text-accent">$25.<small>00</small></div>
-                  <div class="star-rating"><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-half active"></i><i class="star-rating-icon ci-star"></i>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
     </div>
     <!-- Product bundles carousel (Cheaper together)-->
-    <div class="container pt-lg-1 pb-5 mb-md-3">
+    {% comment %} <div class="container pt-lg-1 pb-5 mb-md-3">
       <div class="card card-body pt-5">
         <h2 class="h3 text-center pb-4">Cheaper together</h2>
         <div class="tns-carousel">
@@ -629,6 +616,6 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> {% endcomment %}
     <!-- Footer-->x`
     {% endblock %}

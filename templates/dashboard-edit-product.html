@@ -90,11 +90,15 @@
                       
                     </div>
                     <label class="form-label" for="unp-product-name">Previous Image</label>
-                    <div class="d-flex align-items-center">
-                    {% if product.image_file %}
-                      <img src="{{product.image_file.url}}" width="300" alt="Product">
+                  <div class="d-flex align-items-center">
+                    {% if product.productimagesfiles_set.all %}
+                      {% for product_img in product.productimagesfiles_set.all|slice:":1" %}
+                      <img src="{{product_img.image_file.url}}" width="300" alt="Product">
+                      {%endfor%}
                     {%else%}
-                      <img src="{{product.image_url}}" width="300" alt="Product">
+                      {% for product_img in product.productimagesurl_set.all|slice:":1" %}
+                      <img src="{{product_img.image_url}}" width="300" alt="Product">
+                      {%endfor%}
                     {% endif %}
                     
                             {% comment %} <div class="ps-3">
@@ -105,20 +109,42 @@
                                     <button type="button" class="file-drop-btn btn btn-primary btn-sm">Or select file</button>
                                 </div>
                                  {% endcomment %}
-                           <div class="ps-4">
-
-                    <div class="file-drop-area mb-3">
-                      <div class="file-drop-icon ci-cloud-upload"></div><span class="file-drop-message">Drag and drop here to upload product screenshot</span>
-                      <input class="file-drop-input" type="file" accept="image/*" name="product_img">
-                      <button class="file-drop-btn btn btn-primary btn-sm mb-2" type="button">Or select file</button>
-                      <div class="form-text">1000 x 800px ideal size for hi-res displays</div>
-                    </div>  </div>
-                            </div>
+                    <div class="ps-4">
+                      <div class="file-drop-area mb-3">
+                        <div class="file-drop-icon ci-cloud-upload"></div><span class="file-drop-message">Drag and drop here to upload product screenshot</span>
+                        <input class="file-drop-input" type="file" accept="image/*" name="product_img">
+                        <button class="file-drop-btn btn btn-primary btn-sm mb-2" type="button">Or select file</button>
+                        <div class="form-text">1000 x 800px ideal size for hi-res displays</div>
+                      </div> 
+                    </div>     
+                  </div>
+                    {% if product.productimagesurl_set.all %}
+                      {% for img_url in product.productimagesurl_set.all %}
+                        <div class="mb-3 pb-2">
+                          <label class="form-label" for="unp-product-name">Image {{forloop.counter}} URL</label>
+                          <input class="form-control" type="text" id="unp-product-name" name="product_img_{{forloop.counter}}_url" value="{{img_url.image_url}}">
+                        </div>
+                      {% endfor %}
+                    {% else %}
+                      <div class="mb-3 pb-2">
+                        <label class="form-label" for="unp-product-name">Image 1 URL</label>
+                        <input class="form-control" type="text" id="unp-product-name" name="product_img_1_url" value="{{img_url.image_url}}">
+                      </div>
+                      <div class="mb-3 pb-2">
+                        <label class="form-label" for="unp-product-name">Image 2 URL</label>
+                        <input class="form-control" type="text" id="unp-product-name" name="product_img_2_url" value="{{img_url.image_url}}">
+                      </div>
+                      <div class="mb-3 pb-2">
+                        <label class="form-label" for="unp-product-name">Image 3 URL</label>
+                        <input class="form-control" type="text" id="unp-product-name" name="product_img_3_url" value="{{img_url.image_url}}">
+                      </div>
+                    {% endif %}
                     <div class="mb-3 py-2">
                       <label class="form-label" for="unp-product-description">Product description</label>
                       <textarea class="form-control" rows="6" id="unp-product-description" name="product_desc" value="">{{product.description}}</textarea>
                       
                     </div>
+
                     <div class="row">
                       {% comment %} <div class="col-sm-6 mb-3">
                         <label class="form-label" for="unp-standard-price">Standard license price</label>

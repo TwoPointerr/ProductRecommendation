@@ -79,10 +79,14 @@
               
               <!-- Product-->
               <div class="d-block d-sm-flex align-items-center py-4 border-bottom"><a class="d-block mb-3 mb-sm-0 me-sm-4 ms-sm-0 mx-auto" href="marketplace-single.html" style="width: 12.5rem;">
-              {% if sale.product.image_file %}
-                      <img class="rounded-3" src="{{sale.product.image_file.url}}" width="300" alt="Product">
+                    {% if sale.product.productimagesfiles_set.all %}
+                      {% for product_img in sale.product.productimagesfiles_set.all|slice:":1" %}
+                      <img class="rounded-3" src="{{product_img.image_file.url}}" width="300" alt="Product">
+                      {%endfor%}
                     {%else%}
-                      <img class="rounded-3" src="{{sale.product.image_url}}" width="300" alt="Product">
+                      {% for product_img in sale.product.productimagesurl_set.all|slice:":1" %}
+                      <img class="rounded-3" src="{{product_img.image_url}}" width="300" alt="Product">
+                      {%endfor%}
                     {% endif %}
               </a>
                 <div class="text-center text-sm-start">
