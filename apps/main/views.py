@@ -1,12 +1,17 @@
 from django.shortcuts import render, redirect
 from django.views.generic import TemplateView
 from django.urls import reverse
+from django import template
+from django.contrib.auth.models import User, auth
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
+from django.contrib import messages
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.db.models import Count, Min, Sum, Avg, Max
 from django.db.models import Q
 from django.template.loader import render_to_string
+from apps.seller_accounts.models import *
+from .models import *
 from apps.cart.models import *
 from apps.main.recom_ml_model import *
 
@@ -70,9 +75,10 @@ def Search_Product(request):
 
 def Single_Product(request, pid):
    single_product = Product.objects.get(id = pid)
+   reviews = Reviews.objects.filter(product_id = pid).order_by('-created_at')
    similar_products_set = similar_products(pid,5)
    print(similar_products_set)
-   return render(request, 'shop-single-v2.html', {'single_product':single_product,'similar_products':similar_products_set}) 
+   return render(request, 'shop-single-v2.html', {'single_product':single_product,'similar_products':similar_products_set, 'reviews':reviews}) 
 
 #To Filter Data
 
@@ -114,4 +120,39 @@ def filter_data(request):
     template = render_to_string('ajax/product-list.html', {'product_list': product_list})
     return JsonResponse({'data':template})
 
+@login_required
+def Contact(request):
+    set_page_active('Contact')
+    user=User.objects.get(id=request.user.id)
+    if not request.user.is_staff:        
+        profile=Profile.objects.get(user=user)
+        mob_no=profile.mob_no
+    else:
+        mob_no=""
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        email = request.POST.get('email')
+        phonenumber = request.POST.get('phonenumber')
+        subject = request.POST.get('subject')
+        message = request.POST.get('message')
+        CustomerQueries.objects.create(user=user, name=name, email=email, phonenumber=phonenumber, subject=subject, message=message)
+        messages.success(request,'Your Queries are Submitted')
+    return render(request, 'contacts.html', {'mob_no':mob_no})
 
+def reviews(request, prodid):
+    set_page_active('Shop')
+    user=User.objects.get(id=request.user.id)
+    product=Product.objects.get(id=prodid)
+    print("hello this is product reviews")
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        email = request.POST.get('email')
+        rating = request.POST.get('rating')
+        review = request.POST.get('review')
+        pros = request.POST.get('pros')
+        cons = request.POST.get('cons')
+        Reviews.objects.create(product=product, user=user, name=name, email=email, rating=rating, review=review, pros=pros, cons=cons)
+        messages.success(request,'Your Reviews are Submitted')
+    return redirect('apps.main:single_product', prodid)
+        
+   
