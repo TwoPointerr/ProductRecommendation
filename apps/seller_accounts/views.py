@@ -121,20 +121,33 @@ def add_single_product(request):
     if check_is_seller(request):
         if request.method == 'POST':
             product_name = request.POST.get("product_name")
+            product_brand = request.POST.get("product_brand")
+            product_color = request.POST.get("product_color")
+            product_size = request.POST.get("product_size")
+            product_material = request.POST.get("product_material")
+            product_complete_look = request.POST.get("product_complete_look")
             product_desc = request.POST.get("product_desc")
-            product_img_urls = request.POST.get("product_img_urls")
-            product_price = request.POST.get("product_price")
+            product_market_price = request.POST.get("product_market_price")
+            product_discount_price = request.POST.get("product_discount_price")
             product_img = request.FILES.getlist("product_img")
+            product_img_urls = request.POST.get("product_img_urls")
             product_cat = get_product_cat(product_name)
+            print(product_name,product_brand,product_color,product_size,product_material,product_complete_look,product_desc,product_market_price,product_discount_price,product_img,product_img_urls)
             product = Product.objects.create(title=product_name,
                                             gender_cat=product_cat['gender'],
                                             sub_cat=product_cat['sub_cat'],
                                             articel_type=product_cat['articel_type'],
-                                            market_price=product_price,
+                                            discount_price = product_discount_price,
+                                            market_price= product_market_price,
                                             description=product_desc,
+                                            brand = product_brand,
+                                            color = product_color,
+                                            size = product_size,
+                                            material = product_material,
+                                            completelook = product_complete_look,
                                             seller=CompanyDetails.objects.get(user=request.user))
             upload_multiple_product_img(product,product_img,product_img_urls)
-            sale=Sales.objects.create(company=CompanyDetails.objects.get(user=request.user),product=product, rate= product_price)
+            sale=Sales.objects.create(company=CompanyDetails.objects.get(user=request.user),product=product, rate= product_market_price)
             messages.success(request,'Product Added Succesfully')
             print(product_name)
             print(product_cat['gender'],product_cat['sub_cat'],product_cat['articel_type'])
@@ -153,16 +166,23 @@ def add_multiple_products(request):
                 full_file_path = get_file_path(settings.MEDIA_ROOT,products_file.name)
                 df = pd.read_csv(full_file_path)
                 seller = CompanyDetails.objects.get(user=request.user)
-                for i in range(df.shape[0]):
+                for i in range(20):
                     product_cat = get_product_cat(df['product_name'][i])
-                    product = Product.objects.create(title=df['product_name'][i],
-                                                gender_cat=product_cat['gender'],
-                                                sub_cat=product_cat['sub_cat'],
-                                                articel_type=product_cat['articel_type'],
-                                                image_url=df['product_img_url'][i],
-                                                market_price=df['product_price'][i],
-                                                description=df['product_desc'][i],
-                                                seller=seller)
+                    product = Product.objects.create(title=df["product_name"][i],
+                                            gender_cat=product_cat['gender'],
+                                            sub_cat=product_cat['sub_cat'],
+                                            articel_type=product_cat['articel_type'],
+                                            discount_price = df['discount_price'][i],
+                                            market_price= df['market_price'][i],
+                                            description=df['product_desc'][i],
+                                            brand = df['product_brand'][i],
+                                            color = df['product_colour'][i],
+                                            size = df['product_size'][i],
+                                            material = df['product_material'][i],
+                                            completelook = df['complete_look'][i],
+                                            seller=seller)
+                    upload_multiple_product_img(product,False,df['product_img_url'][i])
+                    sale=Sales.objects.create(company=seller,product=product, rate=df['market_price'][i])
                     print("Product successfully added :",i,product.title)
             else:
                 print("file is not uploaded")
@@ -177,8 +197,8 @@ def editproduct(request, proid):
         seller = CompanyDetails.objects.get(user=request.user)
         product = Product.objects.filter(id=proid, seller=seller).last()
         product_img_urls = ProductImagesURL.objects.filter(product=product).order_by("id")
+        product_img_files = ProductImagesFiles.objects.filter(product=product).order_by("id")
         if product :    
-            previmg=product.image_file
             if request.method == 'POST':
                 product.title = request.POST.get("product_name")
                 product.description = request.POST.get("product_desc")
@@ -186,32 +206,56 @@ def editproduct(request, proid):
                 product.gender_cat=request.POST.get("product_gcat")
                 product.sub_cat=request.POST.get("product_scat")
                 product.articel_type=request.POST.get("product_atype")
-                newimg=product.image_file
-                if str(newimg) == '':
-                    product.image_file = previmg
-                # product.save(update_fields=['title','gender_cat', 'sub_cat', 'articel_type', 'market_price', 'description'])
-                
-                image_files = request.FILES.get("product_img")
+
+                image_files = request.FILES.getlist("product_img")
                 
                 img_url_1 = request.POST.get("product_img_1_url")
                 img_url_2 = request.POST.get("product_img_2_url")
                 img_url_3 = request.POST.get("product_img_3_url")
                 no_pro_img_urls = len(product_img_urls)
+                no_pro_img_files = len(product_img_files)
+
                 if img_url_1 != "":
                     if no_pro_img_urls >= 1:
                         product_img_urls[0].image_url = img_url_1
+                        product_img_urls[0].save(update_fields=['image_url'])
                     else:
                         ProductImagesURL.objects.create(product=product,image_url=img_url_1)
                 if img_url_2 != "":
                     if no_pro_img_urls >= 2:
                         product_img_urls[1].image_url = img_url_2
+                        product_img_urls[1].save(update_fields=['image_url'])
                     else:
                         ProductImagesURL.objects.create(product=product,image_url=img_url_2)
                 if img_url_3 != "":
                     if no_pro_img_urls >= 3:
                         product_img_urls[2].image_url = img_url_3
+                        product_img_urls[2].save(update_fields=['image_url'])
                     else:
                         ProductImagesURL.objects.create(product=product,image_url=img_url_3)
+                
+                if len(image_files) > 0:
+                    if no_pro_img_files > 0:
+                        product_img_files[0].image_file = image_files[0]
+                        product_img_files[0].save(update_fields=['image_file'])
+                    else:
+                        ProductImagesFiles.objects.create(product=product,image_file=image_files[0])
+                
+                if len(image_files) > 1:
+                    if no_pro_img_files > 1:
+                        product_img_files[1].image_file = image_files[1]
+                        product_img_files[1].save(update_fields=['image_file'])
+                    else:
+                        ProductImagesFiles.objects.create(product=product,image_file=image_files[1])
+
+                if len(image_files) > 2:
+                    if no_pro_img_files > 2:
+                        product_img_files[2].image_file = image_files[2]
+                        product_img_files[2].save(update_fields=['image_file'])
+                    else:
+                        ProductImagesFiles.objects.create(product=product,image_file=image_files[2])   
+
+                product.save(update_fields=['title','gender_cat', 'sub_cat', 'articel_type', 'market_price', 'description'])
                 # messages.success(request,'Product updated.')
                 # return redirect("apps.seller_accounts:companyproducts")
         else:

@@ -20,18 +20,16 @@ class Product(models.Model):
     gender_cat = models.CharField(max_length=50,null=True)
     sub_cat = models.CharField(max_length=50,null=True)
     articel_type = models.CharField(max_length=50,null=True)
-    image_file = models.ImageField(upload_to="products",blank=True)
-    image_url = models.URLField(blank=True)
-    market_price =models.PositiveIntegerField()
+    market_price = models.PositiveIntegerField()
+    discount_price = models.PositiveIntegerField(default=0)
     description = models.TextField()
     seller = models.ForeignKey(CompanyDetails, on_delete=models.SET_NULL,null=True)
-    # slug = models.SlugField(unique=True)
-    # category = models.ForeignKey(Category, on_delete=models.CASCADE)
-    # selling_price =models.PositiveIntegerField()
-    # warranty = models.CharField(max_length=300, null=True, blank=True)
-    # return_policy = models.CharField(max_length=300, null=True, blank=True)
-    # view_count =models.PositiveIntegerField(default=0)
-
+    brand = models.CharField(max_length=200,null=True)
+    color = models.CharField(max_length=200,null=True)
+    size = models.CharField(max_length=5,default="S")
+    material = models.CharField(max_length=200,null=True)
+    completelook = models.TextField(null=True)
+    
     def __str__(self):
         return self.title
 

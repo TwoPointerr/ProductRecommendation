@@ -75,14 +75,10 @@ def Search_Product(request):
 
 def Single_Product(request, pid):
    single_product = Product.objects.get(id = pid)
-<<<<<<< HEAD
-   reviews = Reviews.objects.filter(product_id = pid).order_by('-created_at')
-   return render(request, 'shop-single-v2.html', {'single_product':single_product, 'reviews':reviews, 'rating':range(2)}) 
-=======
+   reviews = Reviews.objects.filter(product_id = pid).order_by('-created_at') 
    similar_products_set = similar_products(pid,5)
    print(similar_products_set)
-   return render(request, 'shop-single-v2.html', {'single_product':single_product,'similar_products':similar_products_set}) 
->>>>>>> cb73fada0d9f75de429c6ef54e0a462cf62973cf
+   return render(request, 'shop-single-v2.html', {'single_product':single_product,'similar_products':similar_products_set,'reviews':reviews}) 
 
 #To Filter Data
 
@@ -124,7 +120,6 @@ def filter_data(request):
     template = render_to_string('ajax/product-list.html', {'product_list': product_list})
     return JsonResponse({'data':template})
 
-<<<<<<< HEAD
 @login_required
 def Contact(request):
     set_page_active('Contact')
@@ -161,6 +156,3 @@ def reviews(request, prodid):
     return redirect('apps.main:single_product', prodid)
         
    
-=======
-
->>>>>>> cb73fada0d9f75de429c6ef54e0a462cf62973cf

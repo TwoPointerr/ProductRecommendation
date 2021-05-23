@@ -121,13 +121,6 @@
                       <div class="product-badge product-available mt-n1"><i class="ci-security-check"></i>Product available</div>
                     </div>
                     <div class="d-flex align-items-center pt-2 pb-4">
-                      <select class="form-select me-3" style="width: 5rem;">
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                      </select>
                       <a class="w-100" href="{% url 'apps.cart:addtocart' single_product.id %}">
                       <button class="btn btn-primary btn-shadow d-block w-100" type="button"><i class="ci-cart fs-lg me-2"></i>Add to Cart</button>
                       </a>
@@ -197,21 +190,24 @@
             <!-- Tech specs tab-->
             <div class="tab-pane fade" id="specs" role="tabpanel">
               <div class="d-md-flex justify-content-between align-items-start pb-4 mb-4 border-bottom">
-                <div class="d-flex align-items-center me-md-3"><img src="{% static 'img/shop/single/gallery/th05.jpg' %}" width="90" alt="Product thumb">
+                <div class="d-flex align-items-center me-md-3">
+                  {% if single_product.productimagesfiles_set.all %}
+                    {% for product_img in single_product.productimagesfiles_set.all|slice:":1" %}
+                      <img src="{{product_img.image_file.url}}" width="90" alt="Product">
+                    {%endfor%}
+                  {%else%}
+                    {% for product_img in single_product.productimagesurl_set.all|slice:":1" %}
+                      <img src="{{product_img.image_url}}" width="90" alt="Product">
+                    {%endfor%}
+                  {% endif %}
+                  
                   <div class="ps-3">
-                    <h6 class="fs-base mb-2">Smartwatch Youth Edition</h6>
-                    <div class="h4 fw-normal text-accent">$124.<small>99</small></div>
+                    <h6 class="fs-base mb-2">{{single_product.title}}</h6>
+                    <div class="h4 fw-normal text-accent">${{single_product.market_price}}.<small>00</small></div>
                   </div>
                 </div>
                 <div class="d-flex align-items-center pt-3">
-                  <select class="form-select me-2" style="width: 5rem;">
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                  </select>
-                  <button class="btn btn-primary btn-shadow me-2" type="button"><i class="ci-cart fs-lg me-sm-2"></i><span class="d-none d-sm-inline">Add to Cart</span></button>
+                  <a href="{% url 'apps.cart:addtocart' single_product.id %}"><button class="btn btn-primary btn-shadow me-2" type="button"><i class="ci-cart fs-lg me-sm-2"></i><span class="d-none d-sm-inline">Add to Cart</span></button></a>
                   <div class="me-2">
                     <button class="btn btn-secondary btn-icon" type="button" data-bs-toggle="tooltip" title="Add to Wishlist"><i class="ci-heart fs-lg"></i></button>
                   </div>
@@ -269,11 +265,15 @@
             <div class="tab-pane fade" id="reviews" role="tabpanel">
               <div class="d-md-flex justify-content-between align-items-start pb-4 mb-4 border-bottom">
                 <div class="d-flex align-items-center me-md-3">
-                {% if single_product.image_file %}
-                      <img src="{{single_product.image_file.url}}" width="90" alt="Product thumb">
-                      {%else%}
-                      <img src="{{single_product.image_url}}" width="90" alt="Product thumb">
-                      {%endif%}
+                  {% if single_product.productimagesfiles_set.all %}
+                    {% for product_img in single_product.productimagesfiles_set.all|slice:":1" %}
+                      <img src="{{product_img.image_file.url}}" width="90" alt="Product">
+                    {%endfor%}
+                  {%else%}
+                    {% for product_img in single_product.productimagesurl_set.all|slice:":1" %}
+                      <img src="{{product_img.image_url}}" width="90" alt="Product">
+                    {%endfor%}
+                  {% endif %}
                   <div class="ps-3">
                     <h6 class="fs-base mb-2">{{single_product.title}}</h6>
                     <div class="h4 fw-normal text-accent">${{single_product.market_price}}</div>
@@ -554,88 +554,8 @@
       </div>
     </div>
     <!-- Product bundles carousel (Cheaper together)-->
-<<<<<<< HEAD
     <div class="container pt-lg-1 pb-5 mb-md-3">
       
     </div>
-=======
-    {% comment %} <div class="container pt-lg-1 pb-5 mb-md-3">
-      <div class="card card-body pt-5">
-        <h2 class="h3 text-center pb-4">Cheaper together</h2>
-        <div class="tns-carousel">
-          <div class="tns-carousel-inner" data-carousel-options="{&quot;items&quot;: 1, &quot;controls&quot;: false, &quot;nav&quot;: true}">
-            <div>
-              <div class="row align-items-center">
-                <div class="col-md-3 col-sm-5">
-                  <div class="card product-card card-static text-center mx-auto" style="max-width: 20rem;"><a class="card-img-top d-block overflow-hidden" href="#"><img src="{% static 'img/shop/catalog/70.jpg' %}" alt="Product"></a>
-                    <div class="card-body py-2"><span class="d-inline-block bg-secondary fs-ms rounded-1 py-1 px-2 mb-3">Your product</span>
-                      <h3 class="product-title fs-sm"><a href="#">Smartwatch Youth Edition</a></h3>
-                      <div class="product-price text-accent">$124.<small>99</small></div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-1 col-sm-2 text-center">
-                  <div class="display-4 fw-light text-muted px-4">+</div>
-                </div>
-                <div class="col-md-3 col-sm-5">
-                  <div class="card product-card card-static text-center mx-auto" style="max-width: 20rem;"><a class="card-img-top d-block overflow-hidden" href="#"><img src="{% static 'img/shop/catalog/72.jpg' %}" alt="Product"></a>
-                    <div class="card-body py-2"><span class="d-inline-block bg-danger fs-ms text-white rounded-1 py-1 px-2 mb-3">-20%</span>
-                      <h3 class="product-title fs-sm"><a href="#">Smartwatch Wireless Charger</a></h3>
-                      <div class="product-price"><span class="text-accent">$16.<small>00</small></span>
-                        <del class="fs-sm text-muted">$20.<small>00</small></del>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="d-none d-md-block col-md-1 text-center">
-                  <div class="display-4 fw-light text-muted px-4">=</div>
-                </div>
-                <div class="col-md-4 pt-3 pt-md-0">
-                  <div class="bg-secondary p-4 rounded-3 text-center mx-auto" style="max-width: 20rem;">
-                    <div class="h3 fw-normal text-accent mb-3 me-1">$140.<small>99</small></div>
-                    <button class="btn btn-primary" type="button">Purchase together</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div>
-              <div class="row align-items-center">
-                <div class="col-md-3 col-sm-5">
-                  <div class="card product-card card-static text-center mx-auto" style="max-width: 20rem;"><a class="card-img-top d-block overflow-hidden" href="#"><img src="{% static 'img/shop/catalog/70.jpg' %}" alt="Product"></a>
-                    <div class="card-body py-2"><span class="d-inline-block bg-secondary fs-ms rounded-1 py-1 px-2 mb-3">Your product</span>
-                      <h3 class="product-title fs-sm"><a href="#">Smartwatch Youth Edition</a></h3>
-                      <div class="product-price text-accent">$124.<small>99</small></div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-1 col-sm-2 text-center">
-                  <div class="display-4 fw-light text-muted px-4">+</div>
-                </div>
-                <div class="col-md-3 col-sm-5">
-                  <div class="card product-card card-static text-center mx-auto" style="max-width: 20rem;"><a class="card-img-top d-block overflow-hidden" href="#"><img src="{% static 'img/shop/catalog/71.jpg' %}" alt="Product"></a>
-                    <div class="card-body py-2"><span class="d-inline-block bg-danger fs-ms text-white rounded-1 py-1 px-2 mb-3">-15%</span>
-                      <h3 class="product-title fs-sm"><a href="#">Bluetooth Headset Air (White)</a></h3>
-                      <div class="product-price"><span class="text-accent">$59.<small>00</small></span>
-                        <del class="fs-sm text-muted">$69.<small>00</small></del>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="d-none d-md-block col-md-1 text-center">
-                  <div class="display-4 fw-light text-muted px-4">=</div>
-                </div>
-                <div class="col-md-4 pt-3 pt-md-0">
-                  <div class="bg-secondary p-4 rounded-3 text-center mx-auto" style="max-width: 20rem;">
-                    <div class="h3 fw-normal text-accent mb-3 me-1">$183.<small>99</small></div>
-                    <button class="btn btn-primary" type="button">Purchase together</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div> {% endcomment %}
->>>>>>> cb73fada0d9f75de429c6ef54e0a462cf62973cf
     <!-- Footer-->x`
     {% endblock %}
