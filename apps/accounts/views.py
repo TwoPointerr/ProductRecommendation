@@ -218,7 +218,7 @@ def manageadd(request, addid):
             messages.warning(request,'You are not log in.')
             return redirect("apps.accounts:signin")
         
-        return render(request, "account-edit-address.html",{'address': address})
+        return render(request, "account-edit-address.html",{'address': address,'profile':profile})
 
 
 @login_required

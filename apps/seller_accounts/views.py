@@ -116,6 +116,7 @@ def addnewproduct(request):
         return render(request, "dashboard-add-new-product.html")
     else:
         return redirect('apps.seller_accounts:signin')
+        
 @login_required
 def add_single_product(request):
     if check_is_seller(request):
@@ -268,12 +269,12 @@ def companyinfo(request):
         return redirect('apps.seller_accounts:signin')
     return render(request, "seller_account_company_info.html",{'company_info': company_info, 'address_info': addressinfo})
 
-@login_required
+""" @login_required
 def companysales(request):
     if check_is_seller(request):
-        return render(request, "dashboard-sales.html")
+        orders(request)
     else:
-        return redirect('apps.seller_accounts:signin')
+        return redirect('apps.seller_accounts:signin') """
 
 @login_required
 def companyproducts(request):

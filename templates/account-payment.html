@@ -7,7 +7,7 @@
         <div class="order-lg-2 mb-3 mb-lg-0 pt-lg-2">
           <nav aria-label="breadcrumb">
             <ol class="breadcrumb breadcrumb-light flex-lg-nowrap justify-content-center justify-content-lg-start">
-              <li class="breadcrumb-item"><a class="text-nowrap" href="index.html"><i class="ci-home"></i>Home</a></li>
+              <li class="breadcrumb-item"><a class="text-nowrap" href="{% url 'apps.main:index' %}"><i class="ci-home"></i>Home</a></li>
               <li class="breadcrumb-item text-nowrap"><a href="#">Account</a>
               </li>
               <li class="breadcrumb-item text-nowrap active" aria-current="page">Payment methods</li>
@@ -45,10 +45,10 @@
                 <h3 class="fs-sm mb-0 text-muted">Account settings</h3>
               </div>
               <ul class="list-unstyled mb-0">
-                <li class="border-bottom mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3" href="account-profile.html"><i class="ci-user opacity-60 me-2"></i>Profile info</a></li>
-                <li class="border-bottom mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3" href="account-address.html"><i class="ci-location opacity-60 me-2"></i>Addresses</a></li>
+                <li class="border-bottom mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3" href="{% url 'apps.accounts:profile' %}"><i class="ci-user opacity-60 me-2"></i>Profile info</a></li>
+                <li class="border-bottom mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3" href="{% url 'apps.accounts:address' %}"><i class="ci-location opacity-60 me-2"></i>Address</a></li>
                 <li class="mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3 active" href="account-payment.html"><i class="ci-card opacity-60 me-2"></i>Payment methods</a></li>
-                <li class="d-lg-none border-top mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3" href="account-signin.html"><i class="ci-sign-out opacity-60 me-2"></i>Sign out</a></li>
+                <li class="d-lg-none border-top mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3" href="{% url 'apps.accounts:signout' %}"><i class="ci-sign-out opacity-60 me-2"></i>Sign out</a></li>
               </ul>
             </div>
           </div>

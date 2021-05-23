@@ -7,21 +7,10 @@
         <div class="d-flex align-items-center pb-3">
           <div class="img-thumbnail rounded-circle position-relative flex-shrink-0" style="width: 6.375rem;"><img class="rounded-circle" src="{% static 'img/marketplace/account/avatar.png' %}" alt="DSE  Studio"></div>
           <div class="ps-3">
-            <h1 class="text-light mb-0">{{user.first_name}} {{user.last_name}}</h1><span class="d-block text-light fs-ms opacity-60 py-1">Member since November 2019</span>
+            <h1 class="text-light mb-0">{{user.first_name}} {{user.last_name}}</h1>
           </div>
         </div>
-        <div class="d-flex">
-          <div class="text-sm-end me-5">
-            <div class="text-light fs-base">Total sales</div>
-            <h3 class="text-light">426</h3>
-          </div>
-          <div class="text-sm-end">
-            <div class="text-light fs-base">Seller rating</div>
-            <div class="star-rating"><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star"></i>
-            </div>
-            <div class="text-light opacity-60 fs-xs">Based on 98 reviews</div>
-          </div>
-        </div>
+        
       </div>
     </div>
     <div class="container mb-5 pb-3">
@@ -46,7 +35,7 @@
                   <h3 class="fs-sm mb-0 text-muted">Seller Dashboard</h3>
                 </div>
                 <ul class="list-unstyled mb-0">
-                  <li class="border-bottom mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3 active" href="{% url 'apps.seller_accounts:companysales' %}"><i class="ci-dollar opacity-60 me-2"></i>Sales</a></li>
+                  <li class="border-bottom mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3 active" href="{% url 'apps.seller_accounts:sellerorders' %}"><i class="ci-dollar opacity-60 me-2"></i>Sales</a></li>
                   <li class="border-bottom mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3" href="{% url 'apps.seller_accounts:companyproducts' %}"><i class="ci-package opacity-60 me-2"></i>Products</a></li>
                   <li class="border-bottom mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3" href="{% url 'apps.seller_accounts:add_new_product' %}"><i class="ci-cloud-upload opacity-60 me-2"></i>Add New Product</a></li>
                   {% comment %} <li class="border-bottom mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3" href="dashboard-payouts.html"><i class="ci-currency-exchange opacity-60 me-2"></i>Payouts</a></li> {% endcomment %}

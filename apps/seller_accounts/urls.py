@@ -12,7 +12,6 @@ urlpatterns = [
     path('profile/',views.profile, name="profile"),
     path('company_info/',views.companyinfo, name="companyinfo"),
     path('company_details/',views.company_details, name="company_details"),
-    path('company_sales/',views.companysales, name="companysales"),
     path('company_products/',views.companyproducts, name="companyproducts"),
     path('add_new_product/',views.addnewproduct, name="add_new_product"),
     path('edit_product/<int:proid>/',views.editproduct, name="edit_product"),
