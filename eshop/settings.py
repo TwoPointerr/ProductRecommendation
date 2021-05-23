@@ -157,6 +157,6 @@ MEDIA_ROOT =BASE_DIR/"media"
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-ACTIVE_PAGE = {'Home':'active','Accounts':'','Shop':''}
+ACTIVE_PAGE = {'Home':'active','Accounts':'','Shop':'','Contact':''}
 
 

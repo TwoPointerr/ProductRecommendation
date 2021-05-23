@@ -16,5 +16,8 @@ urlpatterns = [
     path("search_result/<str:keyword>", views.Search_Result,  name = "search_result"),
     path("search/", views.Search_Product,  name = "search_product"),
     path("single_product/<int:pid>/", views.Single_Product,  name = "single_product"),
+
+    path("contact", views.Contact,  name = "contact"),
+    path("reviews/<int:prodid>/", views.reviews, name="reviews")
 ]
 #urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

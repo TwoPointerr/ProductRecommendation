@@ -112,7 +112,7 @@ def shippingset(request):
                 profile_id=profile.id,addline=addline, city=city, state=state, pincode=pincode,
                 defaults={'addline':addline, 'city':city, 'state':state, 'pincode':pincode, 'isprimary':True},
             )
-            messages.succeess(request,'Address added.')
+            messages.success(request,'Address added.')
             return redirect("apps.main:index")
     else:
         messages.warning(request,'You are not signed in.')
