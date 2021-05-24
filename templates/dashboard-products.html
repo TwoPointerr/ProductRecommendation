@@ -67,7 +67,7 @@
               {% for sale in sale %}
               
               <!-- Product-->
-              <div class="d-block d-sm-flex align-items-center py-4 border-bottom"><a class="d-block mb-3 mb-sm-0 me-sm-4 ms-sm-0 mx-auto" href="marketplace-single.html" style="width: 12.5rem;">
+              <div class="d-block d-sm-flex align-items-center py-4 border-bottom"><a class="d-block mb-3 mb-sm-0 me-sm-4 ms-sm-0 mx-auto" href="{% url 'apps.main:single_product' sale.product.id %}" style="width: 12.5rem;">
                     {% if sale.product.productimagesfiles_set.all %}
                       {% for product_img in sale.product.productimagesfiles_set.all|slice:":1" %}
                       <img class="rounded-3" src="{{product_img.image_file.url}}" width="300" alt="Product">

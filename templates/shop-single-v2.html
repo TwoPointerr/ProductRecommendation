@@ -100,7 +100,7 @@
                   <div class="product-details ms-auto pb-3">
                     <h1 class="h3 text-dark mb-2">{{single_product.title}}</h1>
                     <div class="h3 fw-normal text-accent mb-3 me-1">${{single_product.market_price}}</div>
-                    <div class="fs-sm mb-4"><span class="text-heading fw-medium me-1">Color:</span><span class="text-muted" id="colorOption">Dark blue/Orange</span></div>
+                    <div class="fs-sm mb-4"><span class="text-heading fw-medium me-1">Color:</span><span class="text-muted" id="colorOption">{{single_product.color}}</span></div>
                     <div class="position-relative me-n4 mb-3">
                       <div class="form-check form-option form-check-inline mb-2">
                         <input class="form-check-input" type="radio" name="color" id="color1" data-bs-label="colorOption" value="Dark blue/Orange" checked>
@@ -121,13 +121,6 @@
                       <div class="product-badge product-available mt-n1"><i class="ci-security-check"></i>Product available</div>
                     </div>
                     <div class="d-flex align-items-center pt-2 pb-4">
-                      <select class="form-select me-3" style="width: 5rem;">
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                      </select>
                       <a class="w-100" href="{% url 'apps.cart:addtocart' single_product.id %}">
                       <button class="btn btn-primary btn-shadow d-block w-100" type="button"><i class="ci-cart fs-lg me-2"></i>Add to Cart</button>
                       </a>
@@ -197,21 +190,24 @@
             <!-- Tech specs tab-->
             <div class="tab-pane fade" id="specs" role="tabpanel">
               <div class="d-md-flex justify-content-between align-items-start pb-4 mb-4 border-bottom">
-                <div class="d-flex align-items-center me-md-3"><img src="{% static 'img/shop/single/gallery/th05.jpg' %}" width="90" alt="Product thumb">
+                <div class="d-flex align-items-center me-md-3">
+                  {% if single_product.productimagesfiles_set.all %}
+                    {% for product_img in single_product.productimagesfiles_set.all|slice:":1" %}
+                      <img src="{{product_img.image_file.url}}" width="90" alt="Product">
+                    {%endfor%}
+                  {%else%}
+                    {% for product_img in single_product.productimagesurl_set.all|slice:":1" %}
+                      <img src="{{product_img.image_url}}" width="90" alt="Product">
+                    {%endfor%}
+                  {% endif %}
+                  
                   <div class="ps-3">
-                    <h6 class="fs-base mb-2">Smartwatch Youth Edition</h6>
-                    <div class="h4 fw-normal text-accent">$124.<small>99</small></div>
+                    <h6 class="fs-base mb-2">{{single_product.title}}</h6>
+                    <div class="h4 fw-normal text-accent">${{single_product.market_price}}.<small>00</small></div>
                   </div>
                 </div>
                 <div class="d-flex align-items-center pt-3">
-                  <select class="form-select me-2" style="width: 5rem;">
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                  </select>
-                  <button class="btn btn-primary btn-shadow me-2" type="button"><i class="ci-cart fs-lg me-sm-2"></i><span class="d-none d-sm-inline">Add to Cart</span></button>
+                  <a href="{% url 'apps.cart:addtocart' single_product.id %}"><button class="btn btn-primary btn-shadow me-2" type="button"><i class="ci-cart fs-lg me-sm-2"></i><span class="d-none d-sm-inline">Add to Cart</span></button></a>
                   <div class="me-2">
                     <button class="btn btn-secondary btn-icon" type="button" data-bs-toggle="tooltip" title="Add to Wishlist"><i class="ci-heart fs-lg"></i></button>
                   </div>
@@ -225,38 +221,38 @@
                 <div class="col-lg-5 col-sm-6">
                   <h3 class="h6">General specs</h3>
                   <ul class="list-unstyled fs-sm pb-2">
-                    <li class="d-flex justify-content-between pb-2 border-bottom"><span class="text-muted">Brand:</span><span>Amazfit Smartwatch</span></li>
-                    <li class="d-flex justify-content-between pb-2 border-bottom"><span class="text-muted">Gender:</span><span>Unisex</span></li>
-                    <li class="d-flex justify-content-between pb-2 border-bottom"><span class="text-muted">Price</span><span>Amazfit Watch</span></li>
+                    <li class="d-flex justify-content-between pb-2 border-bottom"><span class="text-muted">Brand:</span><span>{{single_product.brand}}</span></li>
+                    <li class="d-flex justify-content-between pb-2 border-bottom"><span class="text-muted">Gender:</span><span>{{single_product.gender_cat}}</span></li>
+                    <li class="d-flex justify-content-between pb-2 border-bottom"><span class="text-muted">Price</span><span>{{single_product.market_price}}</span></li>
                     
     
                   </ul>
                   <h3 class="h6">Physical specs</h3>
                   <ul class="list-unstyled fs-sm pb-2">
-                    <li class="d-flex justify-content-between pb-2 border-bottom"><span class="text-muted">Size</span><span>Amazfit Watch</span></li>
-                    <li class="d-flex justify-content-between pb-2 border-bottom"><span class="text-muted">Material:</span><span>Plastics / Ceramics</span></li>
+                    <li class="d-flex justify-content-between pb-2 border-bottom"><span class="text-muted">Size</span><span>{{single_product.size}}</span></li>
+                    <li class="d-flex justify-content-between pb-2 border-bottom"><span class="text-muted">Material:</span><span>{{single_product.material}}</span></li>
                     
                   </ul>
                   <h3 class="h6">Display</h3>
                   <ul class="list-unstyled fs-sm pb-2">
-                    <li class="d-flex justify-content-between pb-2 border-bottom"><span class="text-muted">Gender:</span><span>Male</span></li>
-                    <li class="d-flex justify-content-between pb-2 border-bottom"><span class="text-muted">Sub Category:</span><span>Topwear</span></li>
-                    <li class="d-flex justify-content-between pb-2 border-bottom"><span class="text-muted">Article Type:</span><span>T-shirts</span></li>
+                    <li class="d-flex justify-content-between pb-2 border-bottom"><span class="text-muted">Gender:</span><span>{{single_product.gender_cat}}</span></li>
+                    <li class="d-flex justify-content-between pb-2 border-bottom"><span class="text-muted">Sub Category:</span><span>{{single_product.sub_cat}}</span></li>
+                    <li class="d-flex justify-content-between pb-2 border-bottom"><span class="text-muted">Article Type:</span><span>{{single_product.articel_type}}</span></li>
                     
                   </ul>
                   <h3 class="h6">Details</h3>
                   <ul class="list-unstyled fs-sm pb-2">
-                    <li class="d-flex justify-content-between pb-2 border-bottom"><span class="text-muted">Description:</span><span>Color</span></li>
-                    <li class="d-flex justify-content-between pb-2 border-bottom"><span class="text-muted">Complete Look:</span><span>1.28"</span></li>
+                    <li class="d-flex justify-content-between pb-2 border-bottom"><span class="text-muted">Description:</span><span>{{single_product.description}}</span></li>
+                    <li class="d-flex justify-content-between pb-2 border-bottom"><span class="text-muted">Complete Look:</span><span>{{single_product.completelook}}</span></li>
                   </ul>
                 </div>
                 <div class="col-lg-5 col-sm-6 offset-lg-1">
                   <h3 class="h6">Seller Info</h3>
                   <ul class="list-unstyled fs-sm pb-2">
-                    <li class="d-flex justify-content-between pb-2 border-bottom"><span class="text-muted">Seller Name:</span><span>Name</span></li>
-                    <li class="d-flex justify-content-between pb-2 border-bottom"><span class="text-muted">Seller Company:</span><span>Company</span></li>
-                    <li class="d-flex justify-content-between pb-2 border-bottom"><span class="text-muted">Contact:</span><span>1234567891</span></li>
-                    <li class="d-flex justify-content-between pb-2 border-bottom"><span class="text-muted">Address:</span><span>Area</span></li>
+                    <li class="d-flex justify-content-between pb-2 border-bottom"><span class="text-muted">Seller Name:</span><span>{{single_product.seller.user.first_name}} {{single_product.seller.user.last_name}}</span></li>
+                    <li class="d-flex justify-content-between pb-2 border-bottom"><span class="text-muted">Seller Company:</span><span>{{single_product.seller.company_name}}</span></li>
+                    <li class="d-flex justify-content-between pb-2 border-bottom"><span class="text-muted">Contact:</span><span>{{single_product.seller.company_number}}</span></li>
+                    <li class="d-flex justify-content-between pb-2 border-bottom"><span class="text-muted">Address:</span><span>{{single_product.seller.company_name}}</span></li>
                   </ul>
                   
                 </div>
@@ -266,11 +262,15 @@
             <div class="tab-pane fade" id="reviews" role="tabpanel">
               <div class="d-md-flex justify-content-between align-items-start pb-4 mb-4 border-bottom">
                 <div class="d-flex align-items-center me-md-3">
-                {% if single_product.image_file %}
-                      <img src="{{single_product.image_file.url}}" width="90" alt="Product thumb">
-                      {%else%}
-                      <img src="{{single_product.image_url}}" width="90" alt="Product thumb">
-                      {%endif%}
+                  {% if single_product.productimagesfiles_set.all %}
+                    {% for product_img in single_product.productimagesfiles_set.all|slice:":1" %}
+                      <img src="{{product_img.image_file.url}}" width="90" alt="Product">
+                    {%endfor%}
+                  {%else%}
+                    {% for product_img in single_product.productimagesurl_set.all|slice:":1" %}
+                      <img src="{{product_img.image_url}}" width="90" alt="Product">
+                    {%endfor%}
+                  {% endif %}
                   <div class="ps-3">
                     <h6 class="fs-base mb-2">{{single_product.title}}</h6>
                     <div class="h4 fw-normal text-accent">${{single_product.market_price}}</div>
@@ -510,7 +510,7 @@
               <div class="card product-card card-static">
                 <button class="btn-wishlist btn-sm" type="button" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to wishlist"><i class="ci-heart"></i></button>
                 
-                <a class="card-img-top d-block overflow-hidden" href="#">
+                <a class="card-img-top d-block overflow-hidden" href="{% url 'apps.main:single_product' product.id%}">
                 {% if product.productimagesfiles_set.all %}
                   {% for product_img in product.productimagesfiles_set.all|slice:":1" %}
                     <img src="{{product_img.image_file.url}}" alt="Product">
@@ -523,7 +523,7 @@
 
                 </a>
 
-                <div class="card-body py-2"><a class="product-meta d-block fs-xs pb-1" href="#">{{product.articel_type}}</a>
+                <div class="card-body py-2"><a class="product-meta d-block fs-xs pb-1" href="{% url 'apps.main:single_product' product.id%}">{{product.articel_type}}</a>
                   <h3 class="product-title fs-sm"><a href="#">{{product.title}}</a></h3>
                   <div class="d-flex justify-content-between">
                     <div class="product-price"><span class="text-accent">${{product.market_price}}.<small>00</small></span></div>

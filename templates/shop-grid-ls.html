@@ -227,13 +227,14 @@
                         <p class="ajaxLoader">Loading...</p>
                         <h3 class="widget-title">Color</h3>
                         <div class="d-flex flex-wrap">
-                            <div class="form-check form-option text-center mb-2 mx-1" style="width: 4rem;">
-                                <input class="form-check-input" type="checkbox" id="color_filter" value="color-blue-gray">
-                                <label class="form-option-label rounded-circle" for="color-blue-gray"><span
-                    class="form-option-color rounded-circle" style="background-color: #ff1400;"></span></label>
-                                <label class="d-block fs-xs text-muted mt-n1" for="color-blue-gray">Red</label>
-                            </div>
-                            <div class="form-check form-option text-center mb-2 mx-1" style="width: 4rem;">
+                            {% for color in colors%}
+                                <div class="form-check form-option text-center mb-2 mx-1" style="width: 4rem;">
+                                    <input class="form-check-input" type="checkbox" id="color_filter" value="color-blue-gray">
+                                    <label class="form-option-label rounded-circle" for="color-blue-gray"><span class="form-option-color rounded-circle" style="background-color:{{color}};"></span></label>
+                                    <label class="d-block fs-xs text-muted mt-n1" for="color-blue-gray">{{color}}</label>
+                                </div>
+                            {% endfor %}
+                            {% comment %} <div class="form-check form-option text-center mb-2 mx-1" style="width: 4rem;">
                                 <input class="form-check-input" type="checkbox" id="color_filter" value="color-burgundy">
                                 <label class="form-option-label rounded-circle" for="color-burgundy"><span
                     class="form-option-color rounded-circle" style="background-color: #ffffff;"></span></label>
@@ -274,7 +275,7 @@
                                 <label class="form-option-label rounded-circle" for="color-sky-blue"><span
                     class="form-option-color rounded-circle" style="background-color: #636060;"></span></label>
                                 <label class="d-block fs-xs text-muted mt-n1" for="color-sky-blue">Grey</label>
-                            </div>
+                            </div> {% endcomment %}
                         </div>
                     </div>
                 </div>

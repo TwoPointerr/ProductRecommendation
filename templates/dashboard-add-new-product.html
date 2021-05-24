@@ -83,6 +83,56 @@
                       <input class="form-control" type="text" id="unp-product-name" name="product_name">
                       <div class="form-text">Maximum 100 characters. No HTML or emoji allowed.</div>
                     </div>
+                    <div class="mb-3 pb-2">
+                      <label class="form-label" for="unp-product-name">Brand *</label>
+                      <input class="form-control" type="text" id="unp-product-name" name="product_brand">
+                      <div class="form-text">Maximum 100 characters. No HTML or emoji allowed.</div>
+                    </div>
+                    <div class="row">
+                      <div class="col-sm-6 mb-3">
+                        <label class="form-label" for="unp-extended-price">Product Market price *</label>
+                          <div class="input-group"><span class="input-group-text"><i class="ci-dollar"></i></span>
+                            <input class="form-control" type="text" id="unp-extended-price" name="product_market_price">
+                          </div>
+                      </div>
+                      <div class="col-sm-6 mb-3">
+                          <label class="form-label" for="unp-extended-price">Product Discount price *</label>
+                          <div class="input-group"><span class="input-group-text"><i class="ci-dollar"></i></span>
+                            <input class="form-control" type="text" id="unp-extended-price" name="product_discount_price">
+                          </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-sm-6 mb-3">
+                        <label class="form-label" for="unp-extended-price">Product Color *</label>
+                        <div class="input-group">
+                          <input class="form-control" type="text" id="unp-extended-price" name="product_color">
+                        </div>
+                      </div>
+                      <div class="col-sm-6 mb-3">
+                        <label class="form-label" for="unp-extended-price">Product Size *</label>
+                        <select class="form-select me-2" style="width: 5rem;" name="product_size">
+                          <option value="S">S</option>
+                          <option value="M">M</option>
+                          <option value="L">L</option>
+                          <option value="XL">XL</option>
+                          <option value="XXL">XXL</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="mb-3 pb-2">
+                      <label class="form-label" for="unp-product-name">Product Material</label>
+                      <input class="form-control" type="text" id="unp-product-name" name="product_material">
+                      <div class="form-text">Maximum 100 characters. No HTML or emoji allowed.</div>
+                    </div>
+                    <div class="mb-3 py-2">
+                      <label class="form-label" for="unp-product-description">Product description *</label>
+                      <textarea class="form-control" rows="6" id="unp-product-description" name="product_desc"></textarea>
+                    </div>
+                    <div class="mb-3 py-2">
+                      <label class="form-label" for="unp-product-description">Complete Look</label><spam><i>&nbsp;( Optional )</i></spam>
+                      <textarea class="form-control" rows="6" id="unp-product-description" name="product_complete_look"></textarea>
+                    </div>
                     <div class="file-drop-area mb-3">
                       <div class="file-drop-icon ci-cloud-upload"></div><span class="file-drop-message">Drag and drop here to upload product screenshot</span>
                       <input class="file-drop-input" type="file" accept="image/*" name="product_img" multiple>
@@ -93,10 +143,7 @@
                       <label class="form-label" for="unp-product-description">Product Image URL'S </label><spam><i>&nbsp;( Optional )</i></spam>
                       <textarea class="form-control" rows="6" id="unp-product-img-url" name="product_img_urls" placeholder="Seprate URLS with ' | ' eg. https.url1.jpg | https.url2.jpg"></textarea>
                     </div>
-                    <div class="mb-3 py-2">
-                      <label class="form-label" for="unp-product-description">Product description *</label>
-                      <textarea class="form-control" rows="6" id="unp-product-description" name="product_desc"></textarea>
-                    </div>
+                    
                     <div class="row">
                       {% comment %} <div class="col-sm-6 mb-3">
                         <label class="form-label" for="unp-standard-price">Standard license price</label>
@@ -105,13 +152,7 @@
                         </div>
                         <div class="form-text">Average marketplace price for this category is $15.</div>
                       </div> {% endcomment %}
-                      <div class="col-sm-6 mb-3">
-                        <label class="form-label" for="unp-extended-price">Product price *</label>
-                        <div class="input-group"><span class="input-group-text"><i class="ci-dollar"></i></span>
-                          <input class="form-control" type="text" id="unp-extended-price" name="product_price">
-                        </div>
-                        
-                      </div>
+                      
                     </div>
                     {% comment %} <div class="mb-3 py-2">
                       <label class="form-label" for="unp-product-tags">Product tags</label>
