@@ -9,7 +9,7 @@
                 class="ci-home"></i>Home</a></li>
                     <li class="breadcrumb-item text-nowrap"><a href="#">Shop</a>
                     </li>
-                    <li class="breadcrumb-item text-nowrap active" aria-current="page">Grid left sidebar</li>
+                    
                 </ol>
             </nav>
         </div>
@@ -89,7 +89,7 @@
                                 <div class="form-check">
                                     <input class="form-check-input" id="gender_cat" data-filter="gender_category" value="{{category.title}}" type="checkbox" id="size-xs">
                                     <label class="form-check-label widget-filter-item-text" for="size-xs">{{category.title}}</label>
-                                </div><span class="fs-xs text-muted">34</span>
+                                </div>
                             </li>
                             {% endfor %}
                     </div>
@@ -104,7 +104,7 @@
                                 <div class="form-check">
                                     <input class="form-check-input" id="sub_cat" data-filter="sub_category" value="{{category.title}}" type="checkbox" id="size-xs">
                                     <label class="form-check-label widget-filter-item-text" for="size-xs">{{category.title}}</label>
-                                </div><span class="fs-xs text-muted">34</span>
+                                </div>
                             </li>
                             {% endfor %}
                     </div>
@@ -119,7 +119,7 @@
                                 <div class="form-check">
                                     <input class="form-check-input" id="article_type" data-filter="article_category" value="{{category.title}}" type="checkbox" id="size-xs">
                                     <label class="form-check-label widget-filter-item-text" for="size-xs">{{category.title}}</label>
-                                </div><span class="fs-xs text-muted">34</span>
+                                </div>
                             </li>
                             {% endfor %} {% comment %}
                             <li class="widget-filter-item d-flex justify-content-between align-items-center mb-1">
@@ -332,13 +332,14 @@
                   </div>
                   <div class="card-body card-body-hidden">
                     
-                    <a href="{% url 'apps.cart:addtocart' product.id %}">
+                    
                     {% if user.is_staff %}
-                    <button class="btn btn-primary btn-sm d-block w-100 mb-2 fade" type="button"><i class="ci-cart fs-sm me-1"></i>Add to Cart</button>
+                    <button class="btn btn-primary btn-sm d-block w-100 mb-2 disabled" type="button"><i class="ci-cart fs-sm me-1"></i>Add to Cart</button>
                     {% else %}
+                    <a href="{% url 'apps.cart:addtocart' product.id %}">
                     <button class="btn btn-primary btn-sm d-block w-100 mb-2" type="button"><i class="ci-cart fs-sm me-1"></i>Add to Cart</button>
-                    {% endif %}
                     </a>
+                    {% endif %}
                     
                   </div>
                 </div>

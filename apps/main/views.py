@@ -64,7 +64,6 @@ def Search_Result(request, keyword):
     paginator = Paginator(search_result, 2)
     page_number = request.GET.get('page')
     search_result = paginator.get_page(page_number)
-    print(keyword, search_result)
     return render(request, 'search_result.html', {'keyword':keyword, 'search_result': search_result})
 
 def Search_Product(request):
@@ -78,7 +77,6 @@ def Single_Product(request, pid):
    single_product = Product.objects.get(id = pid)
    reviews = Reviews.objects.filter(product_id = pid).order_by('-created_at') 
    similar_products_set = similar_products(pid,15)
-   print(similar_products_set)
    return render(request, 'shop-single-v2.html', {'single_product':single_product,'similar_products':similar_products_set,'reviews':reviews}) 
 
 #To Filter Data
@@ -89,7 +87,6 @@ def filter_data(request):
     article_categories= request.GET.getlist('article_category[]')
     sort_by_categories= request.GET.getlist('sort_by[]')
     color_filter= request.GET.getlist('color_filter[]')
-    print(color_filter)
     
     product_list = Product.objects.all().order_by('id')
     min_price = request.GET.get('minPrice')
@@ -116,13 +113,50 @@ def filter_data(request):
         # product_list = product_list.all().order_by('title')
     if len(color_filter)>0:
         product_list = product_list.filter(color__in=color_filter)
-    # prod_list = product_list
-    # paginator = Paginator(product_list, 4)
-    # page_number = request.GET.get('page')
-    # product_list = paginator.get_page(page_number)
+    
     
     template = render_to_string('ajax/product-list.html', {'product_list': product_list})
     return JsonResponse({'data':template})
+
+
+def filter_auto(request):
+    productlist=[]
+    products = request.GET.get("prod")
+    if not products:
+        products=''
+    
+    productlist = list(products.split("-"))
+    gender_categories= productlist[1:2]
+    sub_categories= productlist[2:3]
+    article_categories= productlist[3:4]
+   
+    
+
+    product_list = Product.objects.all().order_by('id')
+    
+    if len(gender_categories)>0:
+        # category = Category.objects.filter(title__in=categories)
+        product_list = product_list.filter(gender_cat__in=gender_categories)
+    if len(sub_categories)>0:
+        product_list = product_list.filter(sub_cat__in=sub_categories)
+    if len(article_categories)>0:
+        product_list = product_list.filter(articel_type__in=article_categories)
+    
+    set_page_active('Shop')
+    minprice = Product.objects.all().aggregate(Min('market_price'))['market_price__min']
+    maxprice = Product.objects.all().aggregate(Max('market_price'))['market_price__max']
+    subCategory_list = ['Topwear', 'Bottomwear', 'Dress', 'Saree', 'Shoes', 'Innerwear', 'Headwear', 'Socks', 'Flip Flops']
+    all_articel_type_list = ['Belts', 'Blazers', 'Booties', 'Boxers', 'Bra', 'Briefs', 'Camisoles', 'Capris', 'Caps', 'Casual Shoes', 'Churidar', 'Dresses', 'Dupatta', 'Flats', 'Flip Flops', 'Formal Shoes', 'Hat', 'Headband', 'Heels', 'Innerwear Vests', 'Jackets', 'Jeans', 'Jeggings', 'Jumpsuit', 'Kurtas', 'Kurtis', 'Leggings', 'Lehenga Choli', 'Nehru Jackets', 'Patiala', 'Rain Jacket', 'Rain Trousers', 'Rompers', 'Salwar', 'Salwar and Dupatta', 'Sandals', 'Sarees', 'Shapewear', 'Shirts', 'Shorts', 'Shrug', 'Skirts', 'Socks', 'Sports Shoes', 'Stockings', 'Suits', 'Suspenders', 'Sweaters', 'Sweatshirts', 'Swimwear', 'Tights', 'Tops', 'Track Pants', 'Tracksuits', 'Trousers', 'Trunk', 'Tshirts', 'Tunics', 'Waistcoat']
+    # all_category = Category.objects.all()
+    gender_cat = Product.objects.values_list('gender_cat',flat=True).distinct()
+    sub_cat = Product.objects.values_list('sub_cat',flat=True).distinct()
+    articel_type = Product.objects.values_list('articel_type',flat=True).distinct()
+    color = Product.objects.values_list('color',flat=True).distinct()
+    paginator = Paginator(product_list, 6)
+    page_number = request.GET.get('page')
+    product_list = paginator.get_page(page_number)
+    return render(request, "shop-grid-ls.html", {'product_list': product_list,'gender_cat':list(gender_cat),'sub_category':list(sub_cat),'article_type':list(articel_type), 'minprice':minprice, 'maxprice':maxprice, 'colors':list(color)})
+    
 
 @login_required
 def Contact(request):
@@ -147,7 +181,6 @@ def reviews(request, prodid):
     set_page_active('Shop')
     user=User.objects.get(id=request.user.id)
     product=Product.objects.get(id=prodid)
-    print("hello this is product reviews")
     if request.method == 'POST':
         name = request.POST.get('name')
         email = request.POST.get('email')
@@ -160,3 +193,5 @@ def reviews(request, prodid):
     return redirect('apps.main:single_product', prodid)
         
    
+def error_404_view(request, exception):
+    return render(request, '404-illustration.html')

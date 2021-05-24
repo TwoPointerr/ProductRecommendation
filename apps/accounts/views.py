@@ -25,7 +25,6 @@ def signin(request):
         password = request.POST.get('password')
         # user = authenticate(username= email, password= password)
         user = auth.authenticate(username = username, password = password)
-        print(user)
         if user is not None:
             login(request, user)
             # productcount = request.session.get('productcount')
@@ -224,11 +223,8 @@ def manageadd(request, addid):
 @login_required
 def orders(request):
     profile = Profile.objects.get(id=request.user.profile.id)
-    #cart= Cart.objects.filter(profile=profile)
-    #orders = Order.objects.filter(Order.cart.profile==profile).order_by("-id")
     orders = Order.objects.filter(cart__profile=profile).order_by("-id")
-    # print(orders)
-    #print(orders.last().ordered_by)
+    
     return render(request, 'account-orders.html', {'orders': orders,'profile':profile})
 
 
@@ -241,7 +237,6 @@ def orderdetail(request, orderid):
             order = Order.objects.get(id=order_id)
             if request.user.profile != order.cart.profile:
                 return redirect("apps.accounts:orders")
-            print(order.ordered_by)
     else:
         return redirect("apps.accounts:signin")
     return render(request, 'account-order-detail.html', {'order':order,'profile':profile})

@@ -8,9 +8,12 @@
           <nav aria-label="breadcrumb">
             <ol class="breadcrumb breadcrumb-light flex-lg-nowrap justify-content-center justify-content-lg-start">
               <li class="breadcrumb-item"><a class="text-nowrap" href="{% url 'apps.main:index' %}"><i class="ci-home"></i>Home</a></li>
-              <li class="breadcrumb-item text-nowrap"><a href="#">{{single_product.gender_cat}}</a></li>
-              <li class="breadcrumb-item text-nowrap"><a href="#">{{single_product.sub_cat}}</a></li>
-              <li class="breadcrumb-item text-nowrap active" aria-current="page">{{single_product.articel_type}}</li>
+              
+                                
+              <li class="breadcrumb-item text-nowrap"><a href="{% url 'apps.main:filter_auto' %}?prod=-{{single_product.gender_cat}}">{{single_product.gender_cat}}</a></li>
+           
+              <li class="breadcrumb-item text-nowrap"><a href="{% url 'apps.main:filter_auto' %}?prod=-{{single_product.gender_cat}}-{{single_product.sub_cat}}">{{single_product.sub_cat}}</a></li>
+              <li class="breadcrumb-item text-nowrap active" aria-current="page"><a href="{% url 'apps.main:filter_auto' %}?prod=-{{single_product.gender_cat}}-{{single_product.sub_cat}}-{{single_product.articel_type}}">{{single_product.articel_type}}</a></li>
             </ol>
           </nav>
         </div>
@@ -284,7 +287,9 @@
                     <option value="4">4</option>
                     <option value="5">5</option>
                   </select>
+                  <a class="w-100" href="{% url 'apps.cart:addtocart' single_product.id %}">
                   <button class="btn btn-primary btn-shadow me-2" type="button"><i class="ci-cart fs-lg me-sm-2"></i><span class="d-none d-sm-inline">Add to Cart</span></button>
+                  </a>
                   <div class="me-2">
                     <button class="btn btn-secondary btn-icon" type="button" data-bs-toggle="tooltip" title="Add to Wishlist"><i class="ci-heart fs-lg"></i></button>
                   </div>

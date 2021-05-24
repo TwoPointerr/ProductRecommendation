@@ -39,36 +39,26 @@ def get_product_cat(product_name):
     lvl2_sub_cat = lvl2_sub_cat_model.predict(product_name_list)
 
     lvl3_articel_cat = ""
-    print(gender_list[lvl1_gender_cat[0]] == ("Men" or "Boys" or "Unisex"),"Check Men")
-    print(gender_list[lvl1_gender_cat[0]] == ("Women" or "Girls" or "Unisex"),"Check Women")
     if gender_list[lvl1_gender_cat[0]] == ("Men" or "Boys" or "Unisex") :
         if subCat_list[lvl2_sub_cat[0]] == "Topwear":
             lvl3_men_top_cat = lvl3_top_men_cat_model.predict(product_name_list)
-            print('predict no: ',lvl3_men_top_cat)
             lvl3_articel_cat = top_men_articel_type_list[lvl3_men_top_cat[0]]
-            print("Men Top",lvl3_articel_cat)
         elif subCat_list[lvl2_sub_cat[0]] == "Bottomwear":
             lvl3_men_bottom_cat = lvl3_bottom_men_cat_model.predict(product_name_list)
             lvl3_articel_cat = bottom_men_articel_type_list[lvl3_men_bottom_cat[0]]
-            print("Men Bottom",lvl3_articel_cat)
         else:
             lvl3_articelType_cat = lvl3_extra_articel_type_model.predict(product_name_list)
             lvl3_articel_cat = extra_articel_type_list[lvl3_articelType_cat[0]]
-            print("Men extra",lvl3_articel_cat)
     elif gender_list[lvl1_gender_cat[0]] == ("Women" or "Girls" or "Unisex"):
-        print(subCat_list[lvl2_sub_cat[0]])
         if subCat_list[lvl2_sub_cat[0]] == "Topwear":
             lvl3_women_top_cat = lvl3_top_women_cat_model.predict(product_name_list)
             lvl3_articel_cat = top_women_articel_type_list[lvl3_women_top_cat[0]]
-            print("Women Top",lvl3_articel_cat)
         elif subCat_list[lvl2_sub_cat[0]] == "Bottomwear":
             lvl3_women_bottom_cat = lvl3_bottom_women_cat_model.predict(product_name_list)
             lvl3_articel_cat = bottom_women_articel_type_list[lvl3_women_bottom_cat[0]]
-            print("Women Bottom",lvl3_articel_cat)
         else:
             lvl3_articelType_cat = lvl3_extra_articel_type_model.predict(product_name_list)
             lvl3_articel_cat = extra_articel_type_list[lvl3_articelType_cat[0]]
-            print("Women extra",lvl3_articel_cat)
 
     product_cat = {'gender':gender_list[lvl1_gender_cat[0]],'sub_cat':subCat_list[lvl2_sub_cat[0]],'articel_type':lvl3_articel_cat}
 

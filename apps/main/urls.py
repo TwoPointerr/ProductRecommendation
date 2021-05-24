@@ -12,6 +12,7 @@ urlpatterns = [
     
     path('allproducts', views.show_all_products, name="showallproducts"),
     path('filter-data/', views.filter_data, name="filter_data"),
+    path('filter-auto/', views.filter_auto, name="filter_auto"),
 
     path("search_result/<str:keyword>", views.Search_Result,  name = "search_result"),
     path("search/", views.Search_Product,  name = "search_product"),

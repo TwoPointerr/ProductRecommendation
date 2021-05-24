@@ -30,6 +30,7 @@ def signup(request):
         
         user.save()
         login(request, user)
+        messages.info(request,'Enter Company Details.')
         return redirect("apps.seller_accounts:company_details")
     return render(request, "seller_account_signup.html")
 
@@ -40,17 +41,14 @@ def signin(request):
         password = request.POST.get('password')
         # user = authenticate(username= email, password= password)
         user = auth.authenticate(username = username, password = password)
-        print(user)
         if user is not None:
             if user.is_staff:
                 login(request, user)
-                print("logged in")
-                return redirect("apps.seller_accounts:profile")
-            else:
-                print("user is not staff")
-            
+                messages.info(request,'Welcome')
+                return redirect("apps.seller_accounts:profile")            
         else:
-            print("not logged in")
+            messages.warning(request,'Username and Password mismatch.')
+            return redirect("apps.seller_accounts:signin")
     return render(request, "seller_account_signin.html")
 
 @login_required
@@ -69,11 +67,11 @@ def profile(request):
             lastname = request.POST.get('lastname')
             username = request.POST.get('username')
             email = request.POST.get('email')
-            print(firstname, lastname, username, email)
             user = User.objects.create_user(id=user_id, first_name=firstname, last_name=lastname, username=username, email=email, is_staff=True)
             user.save()
             login(request, user)
     else:
+        messages.warning(request,'Login as Seller Account.')
         return redirect('apps.seller_accounts:signin')
     return render(request, "seller_account_profile.html", {'seller_user':user})
 
@@ -88,8 +86,10 @@ def company_details(request):
             company_desc = request.POST.get('description')
             companynumber = request.POST.get('companynumber')
             companydetail = CompanyDetails.objects.get_or_create(user=user, company_name=companyname, company_email=companyemail, company_desc=company_desc, company_number=companynumber)
+            messages.success(request,'Information Updated.')
             return redirect("apps.seller_accounts:address_info")
     else:
+        messages.warning(request,'Login as Seller Account.')
         return redirect('apps.seller_accounts:signin')
     return render(request, "seller_account_company_detail.html")
 
@@ -107,6 +107,7 @@ def address_info(request):
             addressinfo = CompanyAddress.objects.get_or_create(company=company, addline=addline, country=country, state=state, city=city, pincode=pincode)
             return redirect("apps.seller_accounts:profile")
     else:
+        messages.warning(request,'Login as Seller Account.')
         return redirect('apps.seller_accounts:signin')
     return render(request, "seller_account_address_info.html")
 
@@ -115,6 +116,7 @@ def addnewproduct(request):
     if check_is_seller(request):
         return render(request, "dashboard-add-new-product.html")
     else:
+        messages.warning(request,'Login as Seller Account.')
         return redirect('apps.seller_accounts:signin')
         
 @login_required
@@ -133,7 +135,6 @@ def add_single_product(request):
             product_img = request.FILES.getlist("product_img")
             product_img_urls = request.POST.get("product_img_urls")
             product_cat = get_product_cat(product_name)
-            print(product_name,product_brand,product_color,product_size,product_material,product_complete_look,product_desc,product_market_price,product_discount_price,product_img,product_img_urls)
             product = Product.objects.create(title=product_name,
                                             gender_cat=product_cat['gender'],
                                             sub_cat=product_cat['sub_cat'],
@@ -150,9 +151,9 @@ def add_single_product(request):
             upload_multiple_product_img(product,product_img,product_img_urls)
             sale=Sales.objects.create(company=CompanyDetails.objects.get(user=request.user),product=product, rate= product_market_price)
             messages.success(request,'Product Added Succesfully')
-            print(product_name)
-            print(product_cat['gender'],product_cat['sub_cat'],product_cat['articel_type'])
+           
     else:
+        messages.warning(request,'Login as Seller Account.')
         return redirect('apps.seller_accounts:signin')
     return render(request, "dashboard-add-new-product.html")
 
@@ -184,10 +185,10 @@ def add_multiple_products(request):
                                             seller=seller)
                     upload_multiple_product_img(product,False,df['product_img_url'][i])
                     sale=Sales.objects.create(company=seller,product=product, rate=df['market_price'][i])
-                    print("Product successfully added :",i,product.title)
             else:
-                print("file is not uploaded")
+                pass
     else:
+        messages.warning(request,'Login as Seller Account.')
         return redirect('apps.seller_accounts:signin')
     return render(request, "dashboard-add-new-product.html")
 
@@ -420,5 +421,4 @@ def upload_multiple_product_img(product,product_img,product_img_urls):
         img_url_list = product_img_urls.split("|")
         for url in img_url_list:
             img_urls = ProductImagesURL.objects.create(product=product,image_url=url)
-    else:
-        print("No img")
+    

@@ -86,8 +86,7 @@ def managecart(request, cpid):
             cart_obj.save()
             if cp_obj.quantity == 0:
                 cp_obj.delete()
-                #productcount = CartProduct.objects.filter(cart=cart_obj).count()
-                #print(productcount)
+                
         
         messages.info(request,'Cart Updated.')
         return redirect('apps.cart:mycart')
@@ -117,7 +116,6 @@ def checkoutdetails(request):
     
     if request.user.is_authenticated:
         if cart:
-            print(cart)
             if request.method == 'POST':
                 addr = request.POST.get('address')
                 if addr == 'new':
@@ -159,11 +157,7 @@ def checkoutdetails(request):
                     sale= Sales.objects.filter(product=cp.product, rate=cp.rate).last()
                     sale.quantity += cp.quantity
                     sale.subtotal += cp.subtotal
-                    print(sale)
                     sale.save(update_fields=['quantity','subtotal'])
-                    print(sale)
-                    
-
                 
                 messages.success(request,'Order Placed.')
                 return redirect("apps.accounts:orders")
