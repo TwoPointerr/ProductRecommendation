@@ -5,9 +5,9 @@
     <div class="page-title-overlap bg-accent pt-4">
       <div class="container d-flex flex-wrap flex-sm-nowrap justify-content-center justify-content-sm-between align-items-center pt-2">
         <div class="d-flex align-items-center pb-3">
-          <div class="img-thumbnail rounded-circle position-relative flex-shrink-0" style="width: 6.375rem;"><img class="rounded-circle" src="{% static 'img/marketplace/account/avatar.png' %}" alt="DSE  Studio"></div>
+          {% comment %} <div class="img-thumbnail rounded-circle position-relative flex-shrink-0" style="width: 6.375rem;"><img class="rounded-circle" src="{% static 'img/marketplace/account/avatar.png' %}" alt="DSE  Studio"></div> {% endcomment %}
            <div class="ps-3">
-                <h3 class="text-light fs-lg mb-0">{{user.first_name}} {{user.last_name}}</h3>
+                <h1 class="text-light fs-lg mb-0">{{user.first_name}} {{user.last_name}}</h1>
             </div>
         </div>
         
@@ -50,7 +50,7 @@
             <div class="pt-2 px-4 ps-lg-0 pe-xl-5">
               <!-- Title-->
               <div class="d-sm-flex flex-wrap justify-content-between align-items-center border-bottom">
-                <h2 class="h3 py-2 me-2 text-center text-sm-start">Your products<span class="badge bg-faded-accent fs-sm text-body align-middle ms-2">{{sale|length}}</span></h2>
+                <h2 class="h3 py-2 me-2 text-center text-sm-start">Your products<span class="badge bg-faded-accent fs-sm text-body align-middle ms-2">{{sale_no_products}}</span></h2>
                 
                 <div class="py-2">
                   <div class="d-flex flex-nowrap align-items-center pb-3">
@@ -64,21 +64,38 @@
                   </div>
                 </div>
               </div>
+              <form class="input-group d-none d-lg-flex flex-nowrap" method="POST" action="{% url 'apps.seller_accounts:companyproducts' %}">
+              {% csrf_token %}
+                <div class="input-group d-none d-lg-flex py-4 ">
+                  <input class="form-control rounded-end pe-5" type="text" name ="product_name" placeholder="Search for products" required>
+                  {% comment %} <button type="submit" class="btn btn-sm btn-outline-dark">Search</button> {% endcomment %}
+                  <button type="submit" class="btn btn-outline-dark btn-icon">
+                  <i class="ci-search"></i>
+                  </button>
+                </div>
+              </form>
               {% for sale in sale %}
               
               <!-- Product-->
               <div class="d-block d-sm-flex align-items-center py-4 border-bottom"><a class="d-block mb-3 mb-sm-0 me-sm-4 ms-sm-0 mx-auto" href="{% url 'apps.main:single_product' sale.product.id %}" style="width: 12.5rem;">
-                    {% if sale.product.productimagesfiles_set.all %}
-                      {% for product_img in sale.product.productimagesfiles_set.all|slice:":1" %}
-                      <img class="rounded-3" src="{{product_img.image_file.url}}" width="300" alt="Product">
-                      {%endfor%}
-                    {%else%}
-                      {% for product_img in sale.product.productimagesurl_set.all|slice:":1" %}
-                      <img class="rounded-3" src="{{product_img.image_url}}" width="300" alt="Product">
-                      {%endfor%}
-                    {% endif %}
+                {% if sale.product.productimagesfiles_set.all %}
+                  {% for product_img in sale.product.productimagesfiles_set.all|slice:":1" %}
+                  <img class="rounded-3" src="{{product_img.image_file.url}}" width="300" alt="Product">
+                  {%endfor%}
+                {%else%}
+                  {% for product_img in sale.product.productimagesurl_set.all|slice:":1" %}
+                  <img class="rounded-3" src="{{product_img.image_url}}" width="300" alt="Product">
+                  {%endfor%}
+                {% endif %}
               </a>
                 <div class="text-center text-sm-start">
+                  <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                      <li class="breadcrumb-item"><a href="#">{{sale.product.gender_cat}}</a></li>
+                      <li class="breadcrumb-item"><a href="#">{{sale.product.sub_cat}}</a></li>
+                      <li class="breadcrumb-item"><a href="#">{{sale.product.articel_type}}</a></li>
+                    </ol>
+                  </nav>
                   <h3 class="h6 product-title mb-2"><a href="{% url 'apps.main:single_product' sale.product.id %}">{{sale.product.title}}</a></h3>
                   <div class="d-inline-block text-accent">${{sale.product.market_price}}</div>
                   <div class="d-inline-block text-muted fs-ms border-start ms-2 ps-2">Sales: <span class="fw-medium">{{sale.quantity}}</span></div>
@@ -96,6 +113,52 @@
               {% endfor %}
              
             </div>
+            <!-- Pagination-->
+            <nav class="d-flex justify-content-between pt-2" aria-label="Page navigation">
+              {% if sale.has_previous %}
+              <ul class="pagination">
+                <li class="page-item"><a class="page-link" href="?page={{ sale.previous_page_number }}"><i class="ci-arrow-left me-2"></i>Prev</a></li>
+              </ul>
+              {% else %}
+              <ul class="pagination" style="visibility:none">
+                <li class="page-item"><a class="page-link" href="#"><i class="ci-arrow-left me-2"></i>Prev</a></li>
+              </ul>
+              {% endif %}
+              <ul class="pagination">
+                {% if sale.previous_page_number != 1 %}
+                  <li class="page-item d-none d-sm-block" aria-current="page"><a href="?page={{sale.previous_page_number|add:"-1"}}">
+                  <span class="page-link">{{sale.previous_page_number|add:"-1"}}<span class="visually-hidden">(current)</span></span></a>
+                  </li>
+                {% endif %}
+                {% if sale.number != 1 %}
+                  <li class="page-item d-none d-sm-block" aria-current="page"><a href="?page={{sale.previous_page_number}}">
+                  <span class="page-link">{{sale.previous_page_number}}<span class="visually-hidden">(current)</span></span></a>
+                  </li>
+                {% endif %}
+                  <li class="page-item active d-none d-sm-block" aria-current="page"><a href="?page={{sale.number}}">
+                  <span class="page-link">{{sale.number}}<span class="visually-hidden">(current)</span></span></a>
+                  </li>
+                {% if sale.number != sale.paginator.num_pages %}
+                  <li class="page-item d-none d-sm-block" aria-current="page"><a href="?page={{sale.next_page_number}}">
+                  <span class="page-link">{{sale.next_page_number}}<span class="visually-hidden">(current)</span></span></a>
+                  </li>
+                {% endif %}
+                {% if sale.next_page_number != sale.paginator.num_pages %}
+                  <li class="page-item d-none d-sm-block" aria-current="page"><a href="?page={{sale.next_page_number|add:"1"}}">
+                  <span class="page-link">{{sale.next_page_number|add:"1"}}<span class="visually-hidden">(current)</span></span></a>
+                  </li>
+                {% endif %}
+              </ul>
+              {% if sale.has_next %}
+                <ul class="pagination">
+                  <li class="page-item"><a class="page-link" href="?page={{ sale.next_page_number }}" aria-label="Next">Next<i class="ci-arrow-right ms-2"></i></a></li>
+                </ul>
+              {% else %}
+                <ul class="pagination" style="visibility:none">
+                  <li class="page-item"><a class="page-link" href="#" aria-label="Next">Next<i class="ci-arrow-right ms-2"></i></a></li>
+                </ul>
+              {% endif %}
+            </nav>
           </section>
         </div>
       </div>

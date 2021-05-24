@@ -60,16 +60,16 @@ $(document).ready(function() {
         console.log(_filterObj)
             //Ajax Functionality
         $.ajax({
-            url: '/filter-data',
+            url: '/filter-search-data',
             data: _filterObj,
             dataType: 'json',
             beforeSend: function() {
-                $(".ajaxLoader").show();
+                $(".ajaxSearchLoader").show();
             },
             success: function(res) {
                 console.log(res);
-                $("#filteredProducts").html(res.data);
-                $(".ajaxLoader").hide();
+                $("#search_result_filtered").html(res.data);
+                $(".ajaxSearchLoader").hide();
             }
         });
 
