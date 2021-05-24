@@ -441,12 +441,9 @@ input[type=number] {
                      <ul class="dropdown-menu"> {% endcomment %}
                      
                       <li><a class="dropdown-item" href="{% url 'apps.seller_accounts:profile' %}">Settings</a></li>
-                      <li><a class="dropdown-item" href="dashboard-purchases.html">Purchases</a></li>
-                      <li><a class="dropdown-item" href="dashboard-favorites.html">Favorites</a></li>
-                      <li><a class="dropdown-item" href="{% url 'apps.seller_accounts:sellerorders' %}">Sales</a></li>
+                      <li><a class="dropdown-item" href="{% url 'apps.seller_accounts:sellerorders' %}">Orders</a></li>
                       <li><a class="dropdown-item" href="{% url 'apps.seller_accounts:companyproducts' %}">Products</a></li>
                       <li><a class="dropdown-item" href="{% url 'apps.seller_accounts:add_new_product' %}">Add New Product</a></li>
-                      <li><a class="dropdown-item" href="dashboard-payouts.html">Payouts</a></li>
                     {% comment %} </ul> 
                   </li>{% endcomment %}
                   {% else %}
@@ -456,13 +453,17 @@ input[type=number] {
                     
                       <li><a class="dropdown-item" href="{% url 'apps.accounts:orders' %}">Orders History</a></li>
                       <li><a class="dropdown-item" href="{% url 'apps.accounts:profile' %}">Profile Settings</a></li>
-                      <li><a class="dropdown-item" href="{% url 'apps.accounts:address' %}">Account Addresses</a></li>
+                      <li><a class="dropdown-item" href="{% url 'apps.accounts:address' %}">Account Address</a></li>
                    {% comment %}  </ul>
                   </li> {% endcomment %}
                   
                   {% endif %}
+                  {% if user.is_authenticated %}
+                  <li><a class="dropdown-item" href="{% url 'apps.accounts:signout' %}">Sign Out</a></li>
+                  {% else %}
                   <li><a class="dropdown-item" href="{% url 'apps.accounts:signin' %}">Sign In / Sign Up</a></li>
-                  <li><a class="dropdown-item" href="account-password-recovery.html">Password Recovery</a></li> 
+                  {% endif %}
+                  
                 </ul>
               </li>
               <li class="nav-item dropdown {{Contact}}"><a class="nav-link" href="{% url 'apps.main:contact' %}">Contact Us</a></li>
@@ -485,39 +486,32 @@ input[type=number] {
 {% endblock %}
 {% include 'messages.html' %}
 
-<footer class="bg-dark pt-5">
-    <div class="container">
+<footer class="bg-dark">
+    {% comment %} <div class="container">
       <div class="row pb-2">
-        <div class="col-md-4 col-sm-6">
+        <div class="col-md-5 col-sm-6">
           <div class="widget widget-links widget-light pb-2 mb-4">
             <h3 class="widget-title text-light">Shop departments</h3>
             <ul class="widget-list">
-              <li class="widget-list-item"><a class="widget-list-link" href="#">Sneakers &amp; Athletic</a></li>
-              <li class="widget-list-item"><a class="widget-list-link" href="#">Athletic Apparel</a></li>
+              <li class="widget-list-item"><a class="widget-list-link" href="#">Sneakers</a></li>
               <li class="widget-list-item"><a class="widget-list-link" href="#">Sandals</a></li>
               <li class="widget-list-item"><a class="widget-list-link" href="#">Jeans</a></li>
               <li class="widget-list-item"><a class="widget-list-link" href="#">Shirts &amp; Tops</a></li>
               <li class="widget-list-item"><a class="widget-list-link" href="#">Shorts</a></li>
               <li class="widget-list-item"><a class="widget-list-link" href="#">T-Shirts</a></li>
-              <li class="widget-list-item"><a class="widget-list-link" href="#">Swimwear</a></li>
-              <li class="widget-list-item"><a class="widget-list-link" href="#">Clogs &amp; Mules</a></li>
-              <li class="widget-list-item"><a class="widget-list-link" href="#">Bags &amp; Wallets</a></li>
               <li class="widget-list-item"><a class="widget-list-link" href="#">Accessories</a></li>
-              <li class="widget-list-item"><a class="widget-list-link" href="#">Sunglasses &amp; Eyewear</a></li>
-              <li class="widget-list-item"><a class="widget-list-link" href="#">Watches</a></li>
             </ul>
           </div>
         </div>
-        <div class="col-md-4 col-sm-6">
+        <div class="col-md-2 col-sm-6"></div>
+        <div class="col-md-5 col-sm-6">
           <div class="widget widget-links widget-light pb-2 mb-4">
             <h3 class="widget-title text-light">Account &amp; shipping info</h3>
             <ul class="widget-list">
               <li class="widget-list-item"><a class="widget-list-link" href="#">Your account</a></li>
-              <li class="widget-list-item"><a class="widget-list-link" href="#">Shipping rates &amp; policies</a></li>
               <li class="widget-list-item"><a class="widget-list-link" href="#">Refunds &amp; replacements</a></li>
               <li class="widget-list-item"><a class="widget-list-link" href="#">Order tracking</a></li>
               <li class="widget-list-item"><a class="widget-list-link" href="#">Delivery info</a></li>
-              <li class="widget-list-item"><a class="widget-list-link" href="#">Taxes &amp; fees</a></li>
             </ul>
           </div>
           <div class="widget widget-links widget-light pb-2 mb-4">
@@ -525,46 +519,12 @@ input[type=number] {
             <ul class="widget-list">
               <li class="widget-list-item"><a class="widget-list-link" href="#">About company</a></li>
               <li class="widget-list-item"><a class="widget-list-link" href="#">Our team</a></li>
-              <li class="widget-list-item"><a class="widget-list-link" href="#">Careers</a></li>
-              <li class="widget-list-item"><a class="widget-list-link" href="#">News</a></li>
             </ul>
           </div>
         </div>
-        <div class="col-md-4">
-          <div class="widget pb-2 mb-4">
-            <h3 class="widget-title text-light pb-1">Stay informed</h3>
-            <form class="subscription-form validate"
-              action="https://studio.us12.list-manage.com/subscribe/post?u=c7103e2c981361a6639545bd5&amp;amp;id=29ca296126"
-              method="post" name="mc-embedded-subscribe-form" target="_blank" novalidate>
-              <div class="input-group flex-nowrap"><i
-                  class="ci-mail position-absolute top-50 translate-middle-y text-muted fs-base ms-3"></i>
-                <input class="form-control rounded-start" type="email" name="EMAIL" placeholder="Your email" required>
-                <button class="btn btn-primary" type="submit" name="subscribe">Subscribe*</button>
-              </div>
-              <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
-              <div style="position: absolute; left: -5000px;" aria-hidden="true">
-                <input class="subscription-form-antispam" type="text" name="b_c7103e2c981361a6639545bd5_29ca296126"
-                  tabindex="-1">
-              </div>
-              <div class="form-text text-light opacity-50">*Subscribe to our newsletter to receive early discount
-                offers, updates and new products info.</div>
-              <div class="subscription-status"></div>
-            </form>
-          </div>
-          <div class="widget pb-2 mb-4">
-            <h3 class="widget-title text-light pb-1">Download our app</h3>
-            <div class="d-flex flex-wrap">
-              <div class="me-2 mb-2"><a class="btn-market btn-apple" href="#" role="button"><span
-                    class="btn-market-subtitle">Download on the</span><span class="btn-market-title">App
-                    Store</span></a></div>
-              <div class="mb-2"><a class="btn-market btn-google" href="#" role="button"><span
-                    class="btn-market-subtitle">Download on the</span><span class="btn-market-title">Google
-                    Play</span></a></div>
-            </div>
-          </div>
-        </div>
+        
       </div>
-    </div>
+    </div> {% endcomment %}
     <div class="pt-5 bg-darker">
       <div class="container">
         <div class="row pb-3">
@@ -606,27 +566,7 @@ input[type=number] {
           <div class="col-md-6 text-center text-md-start mb-4">
             <div class="text-nowrap mb-4"><a class="d-inline-block align-middle mt-n1 me-3" href="#"><img
                   class="d-block" src="{% static 'img/footer-logo-light.png' %}" width="117" alt="Cartzilla"></a>
-              <div class="btn-group dropdown disable-autohide">
-                <button class="btn btn-outline-light border-light btn-sm dropdown-toggle px-2" type="button"
-                  data-bs-toggle="dropdown"><img class="me-2" src="{% static 'img/flags/en.png' %}" width="20"
-                    alt="English">Eng / $</button>
-                <ul class="dropdown-menu my-1">
-                  <li class="dropdown-item">
-                    <select class="form-select form-select-sm">
-                      <option value="usd">$ USD</option>
-                      <option value="eur">€ EUR</option>
-                      <option value="ukp">£ UKP</option>
-                      <option value="jpy">¥ JPY</option>
-                    </select>
-                  </li>
-                  <li><a class="dropdown-item pb-1" href="#"><img class="me-2" src="{% static 'img/flags/fr.png' %}"
-                        width="20" alt="Français">Français</a></li>
-                  <li><a class="dropdown-item pb-1" href="#"><img class="me-2" src="{% static 'img/flags/de.png' %}"
-                        width="20" alt="Deutsch">Deutsch</a></li>
-                  <li><a class="dropdown-item" href="#"><img class="me-2" src="{% static 'img/flags/it.png' %}"
-                        width="20" alt="Italiano">Italiano</a></li>
-                </ul>
-              </div>
+              
             </div>
             <div class="widget widget-links widget-light">
               <ul class="widget-list d-flex flex-wrap justify-content-center justify-content-md-start">
@@ -638,15 +578,7 @@ input[type=number] {
               </ul>
             </div>
           </div>
-          <div class="col-md-6 text-center text-md-end mb-4">
-            <div class="mb-3"><a class="btn-social bs-light bs-twitter ms-2 mb-2" href="#"><i
-                  class="ci-twitter"></i></a><a class="btn-social bs-light bs-facebook ms-2 mb-2" href="#"><i
-                  class="ci-facebook"></i></a><a class="btn-social bs-light bs-instagram ms-2 mb-2" href="#"><i
-                  class="ci-instagram"></i></a><a class="btn-social bs-light bs-pinterest ms-2 mb-2" href="#"><i
-                  class="ci-pinterest"></i></a><a class="btn-social bs-light bs-youtube ms-2 mb-2" href="#"><i
-                  class="ci-youtube"></i></a></div><img class="d-inline-block" src="{% static 'img/cards-alt.png' %}"
-              width="187" alt="Payment methods">
-          </div>
+          
         </div>
         <div class="pb-4 fs-xs text-light opacity-50 text-center text-md-start">© All rights reserved. Made by <a
             class="text-light" href="https://DSE .studio/" target="_blank" rel="noopener">DSE Studio</a></div>

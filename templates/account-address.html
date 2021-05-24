@@ -1,5 +1,62 @@
 {% extends 'base.html' %} {% load static %} {% block content %}
 <!-- Page Title-->
+ <form class="needs-validation modal fade" enctype="multipart/form-data" method="post" id="add-address" tabindex="-1" novalidate>
+        {% csrf_token %}
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add a new address</h5>
+                    <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="mb-3">
+                                <label class="form-label" for="checkout-address-1">Address</label>
+                                <input class="form-control" type="text" name="addline" value="" id="checkout-address-1">
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="mb-3">
+                                <label class="form-label" for="checkout-zip">City</label>
+                                <input class="form-control" type="text" name="city" value="" id="checkout-zip">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="mb-3">
+                                <label class="form-label" for="checkout-address-1">State</label>
+                                <input class="form-control" type="text" name="state" value="" id="checkout-address-1">
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="mb-3">
+                                <label class="form-label" for="checkout-zip">ZIP Code</label>
+                                <input class="form-control" type="text" name="zipcode" value="" id="checkout-zip">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="primary" id="address-primary">
+                            <label class="form-check-label" for="address-primary">Make this address primary</label>
+                        </div>
+                    </div>
+
+
+
+
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Close</button>
+                    <button class="btn btn-primary btn-shadow" type="submit">Add address</button>
+                </div>
+            </div>
+        </div>
+    </form>
 <div class="page-title-overlap bg-dark pt-4">
     <div class="container d-lg-flex justify-content-between py-2 py-lg-3">
         <div class="order-lg-2 mb-3 mb-lg-0 pt-lg-2">
@@ -85,23 +142,7 @@
                                 {% endif %}
                             </td>
                         </tr>
-                        {% endif %} {% endfor %} {% comment %}
-                        <tr>
-                            <td class="py-3 align-middle">769, Industrial, West Chicago, IL 60185, USA</td>
-                            <td class="py-3 align-middle"><a class="nav-link-style me-2" href="#" data-bs-toggle="tooltip" title="Edit"><i class="ci-edit"></i></a>
-                                <a class="nav-link-style text-danger" href="#" data-bs-toggle="tooltip" title="Remove">
-                                    <div class="ci-trash"></div>
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="py-3 align-middle">514 S. Magnolia St. Orlando, FL 32806, USA</td>
-                            <td class="py-3 align-middle"><a class="nav-link-style me-2" href="#" data-bs-toggle="tooltip" title="Edit"><i class="ci-edit"></i></a>
-                                <a class="nav-link-style text-danger" href="#" data-bs-toggle="tooltip" title="Remove">
-                                    <div class="ci-trash"></div>
-                                </a>
-                            </td>
-                        </tr> {% endcomment %}
+                        {% endif %} {% endfor %} 
                     </tbody>
                 </table>
             </div>
