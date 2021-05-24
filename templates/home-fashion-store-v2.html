@@ -74,15 +74,19 @@
                             <div class="row mx-n2">
                                 {% for p in product_list %}
                                 {% if p.gender_cat == "Women" %}
-                                {% if forloop.counter < 14 %}
+                                {% if forloop.counter < 103 %}
                                 <div class="col-lg-4 col-6 px-0 px-sm-2 mb-sm-4">
                                     <div class="card product-card card-static">
                                         <button class="btn-wishlist btn-sm" type="button" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to wishlist"><i class="ci-heart"></i></button>
                                         <a class="card-img-top d-block overflow-hidden" href="{% url 'apps.main:single_product' p.id%}">
-                                        {% if p.image_file %}
-                                            <img src="{{p.image_file.url}}" alt="Product">
-                                        {% else %}
-                                            <img src="{{p.image_url}}" alt="Product">
+                                        {% if p.productimagesfiles_set.all %}
+                                            {% for product_img in p.productimagesfiles_set.all|slice:":1" %}
+                                                <img src="{{product_img.image_file.url}}" alt="Product">
+                                            {%endfor%}
+                                        {%else%}
+                                            {% for product_img in p.productimagesurl_set.all|slice:":1" %}
+                                                <img src="{{product_img.image_url}}" alt="Product">
+                                            {% endfor %}
                                         {% endif %}
                                         </a>
                                         <div class="card-body py-2"><a class="product-meta d-block fs-xs pb-1" href="{% url 'apps.main:single_product' p.id%}">Cosmetics</a>
@@ -318,10 +322,14 @@
                                     <div class="card product-card card-static">
                                         <button class="btn-wishlist btn-sm" type="button" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to wishlist"><i class="ci-heart"></i></button>
                                         <a class="card-img-top d-block overflow-hidden" href="{% url 'apps.main:single_product' p.id%}">
-                                        {% if p.image_file %}
-                                            <img src="{{p.image_file.url}}" alt="Product">
-                                        {% else %}
-                                            <img src="{{p.image_url}}" alt="Product">
+                                        {% if p.productimagesfiles_set.all %}
+                                            {% for product_img in p.productimagesfiles_set.all|slice:":1" %}
+                                                <img src="{{product_img.image_file.url}}" alt="Product">
+                                            {%endfor%}
+                                        {%else%}
+                                            {% for product_img in p.productimagesurl_set.all|slice:":1" %}
+                                                <img src="{{product_img.image_url}}" alt="Product">
+                                            {% endfor %}
                                         {% endif %}
                                         </a>
                                         <div class="card-body py-2"><a class="product-meta d-block fs-xs pb-1" href="{% url 'apps.main:single_product' p.id%}">Cosmetics</a>

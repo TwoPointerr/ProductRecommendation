@@ -47,10 +47,11 @@ def show_all_products(request):
     gender_cat = Product.objects.values_list('gender_cat',flat=True).distinct()
     sub_cat = Product.objects.values_list('sub_cat',flat=True).distinct()
     articel_type = Product.objects.values_list('articel_type',flat=True).distinct()
+    color = Product.objects.values_list('color',flat=True).distinct()
     paginator = Paginator(product_list, 6)
     page_number = request.GET.get('page')
     product_list = paginator.get_page(page_number)
-    return render(request, "shop-grid-ls.html", {'product_list': product_list,'gender_cat':list(gender_cat),'sub_category':list(sub_cat),'article_type':list(articel_type), 'minprice':minprice, 'maxprice':maxprice})
+    return render(request, "shop-grid-ls.html", {'product_list': product_list,'gender_cat':list(gender_cat),'sub_category':list(sub_cat),'article_type':list(articel_type), 'minprice':minprice, 'maxprice':maxprice, 'colors':list(color)})
 
 def category(request):
     # allcat = Category.objects.all()
@@ -76,7 +77,7 @@ def Search_Product(request):
 def Single_Product(request, pid):
    single_product = Product.objects.get(id = pid)
    reviews = Reviews.objects.filter(product_id = pid).order_by('-created_at') 
-   similar_products_set = similar_products(pid,5)
+   similar_products_set = similar_products(pid,15)
    print(similar_products_set)
    return render(request, 'shop-single-v2.html', {'single_product':single_product,'similar_products':similar_products_set,'reviews':reviews}) 
 
@@ -88,6 +89,7 @@ def filter_data(request):
     article_categories= request.GET.getlist('article_category[]')
     sort_by_categories= request.GET.getlist('sort_by[]')
     color_filter= request.GET.getlist('color_filter[]')
+    print(color_filter)
     
     product_list = Product.objects.all().order_by('id')
     min_price = request.GET.get('minPrice')
@@ -112,10 +114,12 @@ def filter_data(request):
         elif(sort_by_categories[0] == 'z_a_sort_by'):
             product_list = product_list.all().order_by('-title')
         # product_list = product_list.all().order_by('title')
+    if len(color_filter)>0:
+        product_list = product_list.filter(color__in=color_filter)
     # prod_list = product_list
-    paginator = Paginator(product_list, 4)
-    page_number = request.GET.get('page')
-    product_list = paginator.get_page(page_number)
+    # paginator = Paginator(product_list, 4)
+    # page_number = request.GET.get('page')
+    # product_list = paginator.get_page(page_number)
     
     template = render_to_string('ajax/product-list.html', {'product_list': product_list})
     return JsonResponse({'data':template})

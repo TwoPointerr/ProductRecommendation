@@ -167,7 +167,7 @@ def add_multiple_products(request):
                 full_file_path = get_file_path(settings.MEDIA_ROOT,products_file.name)
                 df = pd.read_csv(full_file_path)
                 seller = CompanyDetails.objects.get(user=request.user)
-                for i in range(20):
+                for i in range(df.shape[0]):
                     product_cat = get_product_cat(df['product_name'][i])
                     product = Product.objects.create(title=df["product_name"][i],
                                             gender_cat=product_cat['gender'],

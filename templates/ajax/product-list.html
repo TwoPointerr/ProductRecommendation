@@ -50,7 +50,7 @@
             </div>
     {% endfor %}
       <!-- Pagination-->
-            <nav class="d-flex justify-content-between pt-2" aria-label="Page navigation">
+            {% comment %} <nav class="d-flex justify-content-between pt-2" aria-label="Page navigation">
               {% if product_list.has_previous %}
               <ul class="pagination">
                 <li class="page-item"><a class="page-link" href="?page={{ product_list.previous_page_number }}"><i class="ci-arrow-left me-2"></i>Prev</a></li>
@@ -94,4 +94,4 @@
                   <li class="page-item"><a class="page-link" href="#" aria-label="Next">Next<i class="ci-arrow-right ms-2"></i></a></li>
                 </ul>
               {% endif %}
-            </nav>
+            </nav> {% endcomment %}
