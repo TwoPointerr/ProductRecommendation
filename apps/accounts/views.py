@@ -229,12 +229,13 @@ def orders(request):
     orders = Order.objects.filter(cart__profile=profile).order_by("-id")
     # print(orders)
     #print(orders.last().ordered_by)
-    return render(request, 'account-orders.html', {'orders': orders})
+    return render(request, 'account-orders.html', {'orders': orders,'profile':profile})
 
 
 
 @login_required
 def orderdetail(request, orderid):
+    profile= Profile.objects.get(user=request.user)
     if request.user.is_authenticated and Profile.objects.filter(user=request.user).exists():
             order_id = orderid
             order = Order.objects.get(id=order_id)
@@ -243,4 +244,4 @@ def orderdetail(request, orderid):
             print(order.ordered_by)
     else:
         return redirect("apps.accounts:signin")
-    return render(request, 'account-order-detail.html', {'order':order})
+    return render(request, 'account-order-detail.html', {'order':order,'profile':profile})

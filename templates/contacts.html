@@ -20,13 +20,14 @@
     <!-- Contact detail cards-->
     <section class="container-fluid pt-grid-gutter">
       <div class="row">
-        <div class="col-xl-3 col-sm-6 mb-grid-gutter"><a class="card h-100" href="#map" data-scroll>
+        <div class="col-xl-6 col-sm-6 mb-grid-gutter"><a class="card h-100" href="#map" data-scroll>
             <div class="card-body text-center"><i class="ci-location h3 mt-2 mb-4 text-primary"></i>
               <h3 class="h6 mb-2">Main store address</h3>
               <p class="fs-sm text-muted">396 Lillian Blvd, Holbrook, NY 11741, USA</p>
               <div class="fs-sm text-primary">Click to see map<i class="ci-arrow-right align-middle ms-1"></i></div>
-            </div></a></div>
-        <div class="col-xl-3 col-sm-6 mb-grid-gutter">
+            </div></a>
+          </div>
+        <div class="col-xl-6 col-sm-6 mb-grid-gutter">
           <div class="card h-100">
             <div class="card-body text-center"><i class="ci-time h3 mt-2 mb-4 text-primary"></i>
               <h3 class="h6 mb-3">Working hours</h3>
@@ -37,7 +38,9 @@
             </div>
           </div>
         </div>
-        <div class="col-xl-3 col-sm-6 mb-grid-gutter">
+        </div>
+        <div class="row">
+        <div class="col-xl-6 col-sm-6 mb-grid-gutter">
           <div class="card h-100">
             <div class="card-body text-center"><i class="ci-phone h3 mt-2 mb-4 text-primary"></i>
               <h3 class="h6 mb-3">Phone numbers</h3>
@@ -48,7 +51,7 @@
             </div>
           </div>
         </div>
-        <div class="col-xl-3 col-sm-6 mb-grid-gutter">
+        <div class="col-xl-6 col-sm-6 mb-grid-gutter">
           <div class="card h-100">
             <div class="card-body text-center"><i class="ci-mail h3 mt-2 mb-4 text-primary"></i>
               <h3 class="h6 mb-3">Email addresses</h3>
@@ -62,7 +65,7 @@
       </div>
     </section>
     <!-- Outlet stores-->
-    <section class="container pt-4 mt-md-4 mb-5 align-center">
+    <section class="container-fluid pt-4 mt-md-4 mb-5 align-center">
       <h2 class="h3 text-center mb-3">Partner outlet stores</h2>
       <div class="row pt-4">
         {% comment %} <div class="col-md-4 col-sm-6 mb-grid-gutter">
@@ -122,6 +125,7 @@
       </div> {% endcomment %}
     </section>
     <!-- Split section: Map + Contact form-->
+    <section class="container-fluid pt-4 mt-md-4 mb-5 align-center">
     <div class="container-fluid px-0" id="map">
       <div class="row g-0">
         <div class="col-lg-6 iframe-full-height-wrap">
@@ -162,5 +166,6 @@
         </div>
       </div>
     </div>
+    </section>
     <!-- Footer-->
     {% endblock %}
