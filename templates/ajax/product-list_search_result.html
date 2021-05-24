@@ -1,0 +1,50 @@
+{% for product in search_result %}
+          <div class="card product-card product-list">
+            <button class="btn-wishlist btn-sm" type="button" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to wishlist"><i class="ci-heart"></i></button>
+            <div class="d-sm-flex align-items-center"><a class="product-list-thumb" href="{% url 'apps.main:single_product' product.id %}">
+            {% if product.productimagesfiles_set.all %}
+              {% for product_img in product.productimagesfiles_set.all|slice:":1" %}
+                <img src="{{product_img.image_file.url}}" alt="Product">
+              {%endfor%}
+            {%else%}
+              {% for product_img in product.productimagesurl_set.all|slice:":1" %}
+                <img src="{{product_img.image_url}}" alt="Product">
+              {% endfor %}
+            {% endif %}
+            
+            </a>
+              <div class="card-body py-2"><a class="product-meta d-block fs-xs pb-1" href="#">{{product.category}}</a>
+                <h3 class="product-title fs-base"><a href="{% url 'apps.main:single_product' product.id %}">{{product.title}}</a></h3>
+                <div class="d-flex justify-content-between">
+                  <div class="product-price"><span class="text-accent">${{product.market_price}}</span></div>
+                  <div class="star-rating"><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star"></i>
+                  </div>
+                </div>
+                <div class="card-body card-body-hidden">
+                  <div class="pb-2">
+                    <div class="form-check form-option form-check-inline mb-2">
+                      <input class="form-check-input" type="radio" name="size1" id="s-75">
+                      <label class="form-option-label" for="s-75">7.5</label>
+                    </div>
+                    <div class="form-check form-option form-check-inline mb-2">
+                      <input class="form-check-input" type="radio" name="size1" id="s-80" checked>
+                      <label class="form-option-label" for="s-80">8</label>
+                    </div>
+                    <div class="form-check form-option form-check-inline mb-2">
+                      <input class="form-check-input" type="radio" name="size1" id="s-85">
+                      <label class="form-option-label" for="s-85">8.5</label>
+                    </div>
+                    <div class="form-check form-option form-check-inline mb-2">
+                      <input class="form-check-input" type="radio" name="size1" id="s-90">
+                      <label class="form-option-label" for="s-90">9</label>
+                    </div>
+                  </div>
+                  <a href="{% url 'apps.cart:addtocart' product.id %}">
+                  <button class="btn btn-primary btn-sm mb-2" type="button"><i class="ci-cart fs-sm me-1"></i>Add to Cart</button></a>
+                  <div class="text-start"><a class="nav-link-style fs-ms" href="#quick-view" data-bs-toggle="modal"><i class="ci-eye align-middle me-1"></i>Quick view</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="border-top pt-3 mt-3"></div>
+        {% endfor %}

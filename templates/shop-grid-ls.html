@@ -220,64 +220,40 @@
                             </li> {% endcomment %}
                         </ul>
                     </div>
-
-
+                    <div class="widget widget-filter mb-4 pb-4 border-bottom">
+                        <h3 class="widget-title">Brands</h3>
+                        <div class="input-group input-group-sm mb-2">
+                            <input class="widget-filter-search form-control rounded-end pe-5" type="text" placeholder="Search"><i class="ci-search position-absolute top-50 end-0 translate-middle-y fs-sm me-3"></i>
+                        </div>
+                        <ul class="widget-list widget-filter-list list-unstyled pt-1" style="max-height: 11rem;" data-simplebar data-simplebar-auto-hide="false">
+                            {% for category in brands %}
+                            <li class="widget-filter-item d-flex justify-content-between align-items-center mb-1">
+                                <div class="form-check">
+                                    <input class="form-check-input" id="brand_cat" data-filter="brand_category" value="{{category.title}}" type="checkbox" id="size-xs">
+                                    <label class="form-check-label widget-filter-item-text" for="size-xs">{{category.title}}</label>
+                                </div><span class="fs-xs text-muted">34</span>
+                            </li>
+                            {% endfor %}
+                    </div>
                     <!-- Filter by Color-->
-                    <div class="widget">
-                        <p class="ajaxLoader">Loading...</p>
+                    {% comment %} <div class="widget">
                         <h3 class="widget-title">Color</h3>
                         <div class="d-flex flex-wrap">
                             {% for color in colors%}
-                                <div class="form-check form-option text-center mb-2 mx-1" style="width: 4rem;">
-                                    <input class="form-check-input" type="checkbox" id="color_filter" value="color-blue-gray">
+                                <div class="form-check form-option form-check-inline mb-2">
+                                    <input class="form-check-input" type="checkbox" name="color" id="blue" checked>
+                                    <label class="form-option-label rounded-circle" for="blue">
+                                    <span class="form-option-color rounded-circle" style="background-color: #d1dceb;"></span>
+                                    </label>
+                                </div>
+                                 <div class="form-check form-option text-center mb-2 mx-1" style="width: 4rem;">
+                                    <input class="form-check-input" type="checkbox" id="color_filter" data-filter="color_filters" value="{{color}}">
                                     <label class="form-option-label rounded-circle" for="color-blue-gray"><span class="form-option-color rounded-circle" style="background-color:{{color}};"></span></label>
                                     <label class="d-block fs-xs text-muted mt-n1" for="color-blue-gray">{{color}}</label>
                                 </div>
                             {% endfor %}
-                            {% comment %} <div class="form-check form-option text-center mb-2 mx-1" style="width: 4rem;">
-                                <input class="form-check-input" type="checkbox" id="color_filter" value="color-burgundy">
-                                <label class="form-option-label rounded-circle" for="color-burgundy"><span
-                    class="form-option-color rounded-circle" style="background-color: #ffffff;"></span></label>
-                                <label class="d-block fs-xs text-muted mt-n1" for="color-burgundy">White</label>
-                            </div>
-                            <div class="form-check form-option text-center mb-2 mx-1" style="width: 4rem;">
-                                <input class="form-check-input" type="checkbox" id="color_filter" value="color-teal">
-                                <label class="form-option-label rounded-circle" for="color-teal"><span
-                    class="form-option-color rounded-circle" style="background-color: #0012ad;"></span></label>
-                                <label class="d-block fs-xs text-muted mt-n1" for="color-teal">Navy Blue</label>
-                            </div>
-                            <div class="form-check form-option text-center mb-2 mx-1" style="width: 4rem;">
-                                <input class="form-check-input" type="checkbox" id="color_filter" value="color-brown">
-                                <label class="form-option-label rounded-circle" for="color-brown"><span
-                    class="form-option-color rounded-circle" style="background-color: #5f00b2;"></span></label>
-                                <label class="d-block fs-xs text-muted mt-n1" for="color-brown">Purple</label>
-                            </div>
-                            <div class="form-check form-option text-center mb-2 mx-1" style="width: 4rem;">
-                                <input class="form-check-input" type="checkbox" id="color_filter" value="color-coral-red">
-                                <label class="form-option-label rounded-circle" for="color-coral-red"><span
-                    class="form-option-color rounded-circle" style="background-color: #04f0f3;"></span></label>
-                                <label class="d-block fs-xs text-muted mt-n1" for="color-coral-red">Cyan</label>
-                            </div>
-                            <div class="form-check form-option text-center mb-2 mx-1" style="width: 4rem;">
-                                <input class="form-check-input" type="checkbox" id="color_filter" value="color-navy">
-                                <label class="form-option-label rounded-circle" for="color-navy"><span
-                    class="form-option-color rounded-circle" style="background-color: #f30486;"></span></label>
-                                <label class="d-block fs-xs text-muted mt-n1" for="color-navy">Pink</label>
-                            </div>
-                            <div class="form-check form-option text-center mb-2 mx-1" style="width: 4rem;">
-                                <input class="form-check-input" type="checkbox" id="color_filter" value="color-charcoal">
-                                <label class="form-option-label rounded-circle" for="color-charcoal"><span
-                    class="form-option-color rounded-circle" style="background-color: #000000;"></span></label>
-                                <label class="d-block fs-xs text-muted mt-n1" for="color-charcoal">Black</label>
-                            </div>
-                            <div class="form-check form-option text-center mb-2 mx-1" style="width: 4rem;">
-                                <input class="form-check-input" type="checkbox" id="color_filter" value="color-sky-blue">
-                                <label class="form-option-label rounded-circle" for="color-sky-blue"><span
-                    class="form-option-color rounded-circle" style="background-color: #636060;"></span></label>
-                                <label class="d-block fs-xs text-muted mt-n1" for="color-sky-blue">Grey</label>
-                            </div> {% endcomment %}
                         </div>
-                    </div>
+                    </div> {% endcomment %}
                 </div>
             </div>
         </aside>
@@ -300,7 +276,7 @@
             </div>
             {% comment %} <div class="d-flex pb-3"><a class="nav-link-style nav-link-light me-3" href="#"><i class="ci-arrow-left"></i></a><span class="fs-md text-light">1 / 5</span><a class="nav-link-style nav-link-light ms-3" href="#"><i class="ci-arrow-right"></i></a></div>
             <div class="d-none d-sm-flex pb-3"><a class="btn btn-icon nav-link-style bg-light text-dark disabled opacity-100 me-2" href="#"><i class="ci-view-grid"></i></a><a class="btn btn-icon nav-link-style nav-link-light" href="shop-list-ls.html"><i class="ci-view-list"></i></a></div> {% endcomment %}
-          </div>
+            </div>
           <!-- Products grid-->
           <div class="row mx-n2" id="filteredProducts">
             <p class="ajaxLoader">Loading...</p>

@@ -23,158 +23,218 @@
       <div class="row">
         <!-- Sidebar-->
         <aside class="col-lg-4">
-          <!-- Sidebar-->
-          <div class="offcanvas offcanvas-collapse bg-white w-100 rounded-3 shadow-lg py-1" id="shop-sidebar" style="max-width: 22rem;">
-            <div class="offcanvas-cap align-items-center shadow-sm">
-              <h2 class="h5 mb-0">Filters</h2>
-              <button class="btn-close ms-auto" type="button" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-            </div>
-            <div class="offcanvas-body py-grid-gutter px-lg-grid-gutter">
-              <!-- Categories-->
-              <div class="widget widget-categories mb-4 pb-4 border-bottom">
-                <h3 class="widget-title">Categories</h3>
-                <div class="accordion mt-n1" id="shop-categories">
-                  <!-- Shoes-->
-                  <div class="accordion-item">
-                    <h3 class="accordion-header"><a class="accordion-button collapsed" href="#shoes" role="button" data-bs-toggle="collapse" aria-expanded="false" aria-controls="shoes">Shoes</a></h3>
-                    <div class="accordion-collapse collapse" id="shoes" data-bs-parent="#shop-categories">
-                      <div class="accordion-body">
-                        <div class="widget widget-links widget-filter">
-                          <div class="input-group input-group-sm mb-2">
-                            <input class="widget-filter-search form-control rounded-end" type="text" placeholder="Search"><i class="ci-search position-absolute top-50 end-0 translate-middle-y fs-sm me-3"></i>
-                          </div>
-                          <ul class="widget-list widget-filter-list pt-1" style="height: 12rem;" data-simplebar data-simplebar-auto-hide="false">
-                            <li class="widget-list-item widget-filter-item"><a class="widget-list-link d-flex justify-content-between align-items-center" href="#"><span class="widget-filter-item-text">View all</span><span class="fs-xs text-muted ms-3">1,953</span></a></li>
-                            <li class="widget-list-item widget-filter-item"><a class="widget-list-link d-flex justify-content-between align-items-center" href="#"><span class="widget-filter-item-text">Pumps &amp; High Heels</span><span class="fs-xs text-muted ms-3">247</span></a></li>
-                            <li class="widget-list-item widget-filter-item"><a class="widget-list-link d-flex justify-content-between align-items-center" href="#"><span class="widget-filter-item-text">Ballerinas &amp; Flats</span><span class="fs-xs text-muted ms-3">156</span></a></li>
-                            <li class="widget-list-item widget-filter-item"><a class="widget-list-link d-flex justify-content-between align-items-center" href="#"><span class="widget-filter-item-text">Sandals</span><span class="fs-xs text-muted ms-3">310</span></a></li>
-                            <li class="widget-list-item widget-filter-item"><a class="widget-list-link d-flex justify-content-between align-items-center" href="#"><span class="widget-filter-item-text">Sneakers</span><span class="fs-xs text-muted ms-3">402</span></a></li>
-                            <li class="widget-list-item widget-filter-item"><a class="widget-list-link d-flex justify-content-between align-items-center" href="#"><span class="widget-filter-item-text">Boots</span><span class="fs-xs text-muted ms-3">393</span></a></li>
-                            <li class="widget-list-item widget-filter-item"><a class="widget-list-link d-flex justify-content-between align-items-center" href="#"><span class="widget-filter-item-text">Ankle Boots</span><span class="fs-xs text-muted ms-3">50</span></a></li>
-                            <li class="widget-list-item widget-filter-item"><a class="widget-list-link d-flex justify-content-between align-items-center" href="#"><span class="widget-filter-item-text">Loafers</span><span class="fs-xs text-muted ms-3">93</span></a></li>
-                            <li class="widget-list-item widget-filter-item"><a class="widget-list-link d-flex justify-content-between align-items-center" href="#"><span class="widget-filter-item-text">Slip-on</span><span class="fs-xs text-muted ms-3">122</span></a></li>
-                            <li class="widget-list-item widget-filter-item"><a class="widget-list-link d-flex justify-content-between align-items-center" href="#"><span class="widget-filter-item-text">Flip Flops</span><span class="fs-xs text-muted ms-3">116</span></a></li>
-                            <li class="widget-list-item widget-filter-item"><a class="widget-list-link d-flex justify-content-between align-items-center" href="#"><span class="widget-filter-item-text">Clogs &amp; Mules</span><span class="fs-xs text-muted ms-3">24</span></a></li>
-                            <li class="widget-list-item widget-filter-item"><a class="widget-list-link d-flex justify-content-between align-items-center" href="#"><span class="widget-filter-item-text">Athletic Shoes</span><span class="fs-xs text-muted ms-3">31</span></a></li>
-                            <li class="widget-list-item widget-filter-item"><a class="widget-list-link d-flex justify-content-between align-items-center" href="#"><span class="widget-filter-item-text">Oxfords</span><span class="fs-xs text-muted ms-3">9</span></a></li>
-                            <li class="widget-list-item widget-filter-item"><a class="widget-list-link d-flex justify-content-between align-items-center" href="#"><span class="widget-filter-item-text">Smart Shoes</span><span class="fs-xs text-muted ms-3">18</span></a></li>
-                          </ul>
+            <!-- Sidebar-->
+            <div class="offcanvas offcanvas-collapse bg-white w-100 rounded-3 shadow-lg py-1" id="shop-sidebar" style="max-width: 22rem;">
+                <div class="offcanvas-cap align-items-center shadow-sm">
+                    <h2 class="h5 mb-0">Filters</h2>
+                    <button class="btn-close ms-auto" type="button" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body py-grid-gutter px-lg-grid-gutter">
+                   
+                    <!-- Price range-->
+                    <div class="widget mb-4 pb-4 border-bottom">
+                        <h3 class="widget-title">Price</h3>
+                        <div class="range-slider" id="rangeFilter" data-start-min="{{minprice}}" data-start-max="{{maxprice}}" data-min="{{minprice}}" data-max="{{maxprice}}" data-step="1">
+                            <div class="range-slider-ui"></div>
+                            <div class="d-flex pb-1">
+                                <div class="w-50 pe-2 me-2">
+                                    <div class="input-group input-group-sm"><span class="input-group-text">$</span>
+                                        <input class="form-control range-slider-value-min" id="minPrice" name="minPrice" type="text">
+                                    </div>
+                                </div>
+                                <div class="w-50 ps-2">
+                                    <div class="input-group input-group-sm"><span class="input-group-text">$</span>
+                                        <input class="form-control range-slider-value-max" id="maxPrice" name="maxPrice" type="text">
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <button class="btn btn-primary d-block w-100" id="priceFilterBtn">Filter</button>
                         </div>
-                      </div>
                     </div>
-                  </div>
-                  <!-- Clothing-->
-                  <div class="accordion-item">
-                    <h3 class="accordion-header"><a class="accordion-button" href="#clothing" role="button" data-bs-toggle="collapse" aria-expanded="true" aria-controls="clothing">Clothing</a></h3>
-                    <div class="accordion-collapse collapse show" id="clothing" data-bs-parent="#shop-categories">
-                      <div class="accordion-body">
-                        <div class="widget widget-links widget-filter">
-                          <div class="input-group input-group-sm mb-2">
-                            <input class="widget-filter-search form-control rounded-end" type="text" placeholder="Search"><i class="ci-search position-absolute top-50 end-0 translate-middle-y fs-sm me-3"></i>
-                          </div>
-                          <ul class="widget-list widget-filter-list pt-1" style="height: 12rem;" data-simplebar data-simplebar-auto-hide="false">
-                            <li class="widget-list-item widget-filter-item"><a class="widget-list-link d-flex justify-content-between align-items-center" href="#"><span class="widget-filter-item-text">View all</span><span class="fs-xs text-muted ms-3">2,548</span></a></li>
-                            <li class="widget-list-item widget-filter-item"><a class="widget-list-link d-flex justify-content-between align-items-center" href="#"><span class="widget-filter-item-text">Blazers &amp; Suits</span><span class="fs-xs text-muted ms-3">235</span></a></li>
-                            <li class="widget-list-item widget-filter-item"><a class="widget-list-link d-flex justify-content-between align-items-center" href="#"><span class="widget-filter-item-text">Blouses</span><span class="fs-xs text-muted ms-3">410</span></a></li>
-                            <li class="widget-list-item widget-filter-item"><a class="widget-list-link d-flex justify-content-between align-items-center" href="#"><span class="widget-filter-item-text">Cardigans &amp; Jumpers</span><span class="fs-xs text-muted ms-3">107</span></a></li>
-                            <li class="widget-list-item widget-filter-item"><a class="widget-list-link d-flex justify-content-between align-items-center" href="#"><span class="widget-filter-item-text">Dresses</span><span class="fs-xs text-muted ms-3">93</span></a></li>
-                            <li class="widget-list-item widget-filter-item"><a class="widget-list-link d-flex justify-content-between align-items-center" href="#"><span class="widget-filter-item-text">Hoodie &amp; Sweatshirts</span><span class="fs-xs text-muted ms-3">122</span></a></li>
-                            <li class="widget-list-item widget-filter-item"><a class="widget-list-link d-flex justify-content-between align-items-center" href="#"><span class="widget-filter-item-text">Jackets &amp; Coats</span><span class="fs-xs text-muted ms-3">116</span></a></li>
-                            <li class="widget-list-item widget-filter-item"><a class="widget-list-link d-flex justify-content-between align-items-center" href="#"><span class="widget-filter-item-text">Jeans</span><span class="fs-xs text-muted ms-3">215</span></a></li>
-                            <li class="widget-list-item widget-filter-item"><a class="widget-list-link d-flex justify-content-between align-items-center" href="#"><span class="widget-filter-item-text">Lingerie</span><span class="fs-xs text-muted ms-3">150</span></a></li>
-                            <li class="widget-list-item widget-filter-item"><a class="widget-list-link d-flex justify-content-between align-items-center" href="#"><span class="widget-filter-item-text">Maternity Wear</span><span class="fs-xs text-muted ms-3">8</span></a></li>
-                            <li class="widget-list-item widget-filter-item"><a class="widget-list-link d-flex justify-content-between align-items-center" href="#"><span class="widget-filter-item-text">Nightwear</span><span class="fs-xs text-muted ms-3">26</span></a></li>
-                            <li class="widget-list-item widget-filter-item"><a class="widget-list-link d-flex justify-content-between align-items-center" href="#"><span class="widget-filter-item-text">Shirts</span><span class="fs-xs text-muted ms-3">164</span></a></li>
-                            <li class="widget-list-item widget-filter-item"><a class="widget-list-link d-flex justify-content-between align-items-center" href="#"><span class="widget-filter-item-text">Shorts</span><span class="fs-xs text-muted ms-3">147</span></a></li>
-                            <li class="widget-list-item widget-filter-item"><a class="widget-list-link d-flex justify-content-between align-items-center" href="#"><span class="widget-filter-item-text">Socks &amp; Tights</span><span class="fs-xs text-muted ms-3">139</span></a></li>
-                            <li class="widget-list-item widget-filter-item"><a class="widget-list-link d-flex justify-content-between align-items-center" href="#"><span class="widget-filter-item-text">Sportswear</span><span class="fs-xs text-muted ms-3">65</span></a></li>
-                            <li class="widget-list-item widget-filter-item"><a class="widget-list-link d-flex justify-content-between align-items-center" href="#"><span class="widget-filter-item-text">Swimwear</span><span class="fs-xs text-muted ms-3">18</span></a></li>
-                            <li class="widget-list-item widget-filter-item"><a class="widget-list-link d-flex justify-content-between align-items-center" href="#"><span class="widget-filter-item-text">T-shirts &amp; Vests</span><span class="fs-xs text-muted ms-3">209</span></a></li>
-                            <li class="widget-list-item widget-filter-item"><a class="widget-list-link d-flex justify-content-between align-items-center" href="#"><span class="widget-filter-item-text">Tops</span><span class="fs-xs text-muted ms-3">132</span></a></li>
-                            <li class="widget-list-item widget-filter-item"><a class="widget-list-link d-flex justify-content-between align-items-center" href="#"><span class="widget-filter-item-text">Trousers</span><span class="fs-xs text-muted ms-3">105</span></a></li>
-                            <li class="widget-list-item widget-filter-item"><a class="widget-list-link d-flex justify-content-between align-items-center" href="#"><span class="widget-filter-item-text">Underwear</span><span class="fs-xs text-muted ms-3">87</span></a></li>
-                          </ul>
-                        </div>
-                      </div>
+                   
+                    <div class="widget widget-filter mb-4 pb-4 border-bottom">
+                        <h3 class="widget-title">Sort By</h3>
+                        {% comment %}
+                        <div class="input-group input-group-sm mb-2">
+                            <input class="widget-filter-search form-control rounded-end pe-5" type="text" placeholder="Search"><i class="ci-search position-absolute top-50 end-0 translate-middle-y fs-sm me-3"></i>
+                        </div> {% endcomment %}
+                        <ul class="widget-list widget-filter-list list-unstyled pt-1" style="max-height: 11rem;" data-simplebar data-simplebar-auto-hide="false">
+                            
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" value="l_h_sort_by" id="sort_by" data-filter="sort_by" name="radio">
+                                <label class="form-check-label" for="l_h_sort_by">Lowest - Highest Price</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" value="h_l_sort_by" id="sort_by" data-filter="sort_by" name="radio">
+                                <label class="form-check-label" for="h_l_sort_by">Highest - Lowest Price</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" value="a_z_sort_by" id="sort_by" data-filter="sort_by" name="radio">
+                                <label class="form-check-label" for="a_z_sort_by">A - Z</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" value="z_a_sort_by" id="sort_by" data-filter="sort_by" name="radio">
+                                <label class="form-check-label" for="z_a_sort_by">Z - A</label>
+                            </div>
                     </div>
-                  </div>
-                  <!-- Bags-->
-                  <div class="accordion-item">
-                    <h3 class="accordion-header"><a class="accordion-button collapsed" href="#bags" role="button" data-bs-toggle="collapse" aria-expanded="false" aria-controls="bags">Bags</a></h3>
-                    <div class="accordion-collapse collapse" id="bags" data-bs-parent="#shop-categories">
-                      <div class="accordion-body">
-                        <div class="widget widget-links widget-filter">
-                          <div class="input-group input-group-sm mb-2">
-                            <input class="widget-filter-search form-control rounded-end" type="text" placeholder="Search"><i class="ci-search position-absolute top-50 end-0 translate-middle-y fs-sm me-3"></i>
-                          </div>
-                          <ul class="widget-list widget-filter-list pt-1" style="height: 12rem;" data-simplebar data-simplebar-auto-hide="false">
-                            <li class="widget-list-item widget-filter-item"><a class="widget-list-link d-flex justify-content-between align-items-center" href="#"><span class="widget-filter-item-text">View all</span><span class="fs-xs text-muted ms-3">801</span></a></li>
-                            <li class="widget-list-item widget-filter-item"><a class="widget-list-link d-flex justify-content-between align-items-center" href="#"><span class="widget-filter-item-text">Handbags</span><span class="fs-xs text-muted ms-3">238</span></a></li>
-                            <li class="widget-list-item widget-filter-item"><a class="widget-list-link d-flex justify-content-between align-items-center" href="#"><span class="widget-filter-item-text">Backpacks</span><span class="fs-xs text-muted ms-3">116</span></a></li>
-                            <li class="widget-list-item widget-filter-item"><a class="widget-list-link d-flex justify-content-between align-items-center" href="#"><span class="widget-filter-item-text">Wallets</span><span class="fs-xs text-muted ms-3">104</span></a></li>
-                            <li class="widget-list-item widget-filter-item"><a class="widget-list-link d-flex justify-content-between align-items-center" href="#"><span class="widget-filter-item-text">Luggage</span><span class="fs-xs text-muted ms-3">115</span></a></li>
-                            <li class="widget-list-item widget-filter-item"><a class="widget-list-link d-flex justify-content-between align-items-center" href="#"><span class="widget-filter-item-text">Lumbar Packs</span><span class="fs-xs text-muted ms-3">17</span></a></li>
-                            <li class="widget-list-item widget-filter-item"><a class="widget-list-link d-flex justify-content-between align-items-center" href="#"><span class="widget-filter-item-text">Duffle Bags</span><span class="fs-xs text-muted ms-3">9</span></a></li>
-                            <li class="widget-list-item widget-filter-item"><a class="widget-list-link d-flex justify-content-between align-items-center" href="#"><span class="widget-filter-item-text">Bag / Travel Accessories</span><span class="fs-xs text-muted ms-3">93</span></a></li>
-                            <li class="widget-list-item widget-filter-item"><a class="widget-list-link d-flex justify-content-between align-items-center" href="#"><span class="widget-filter-item-text">Diaper Bags</span><span class="fs-xs text-muted ms-3">5</span></a></li>
-                            <li class="widget-list-item widget-filter-item"><a class="widget-list-link d-flex justify-content-between align-items-center" href="#"><span class="widget-filter-item-text">Lunch Bags</span><span class="fs-xs text-muted ms-3">8</span></a></li>
-                            <li class="widget-list-item widget-filter-item"><a class="widget-list-link d-flex justify-content-between align-items-center" href="#"><span class="widget-filter-item-text">Messenger Bags</span><span class="fs-xs text-muted ms-3">2</span></a></li>
-                            <li class="widget-list-item widget-filter-item"><a class="widget-list-link d-flex justify-content-between align-items-center" href="#"><span class="widget-filter-item-text">Laptop Bags</span><span class="fs-xs text-muted ms-3">31</span></a></li>
-                            <li class="widget-list-item widget-filter-item"><a class="widget-list-link d-flex justify-content-between align-items-center" href="#"><span class="widget-filter-item-text">Briefcases</span><span class="fs-xs text-muted ms-3">45</span></a></li>
-                            <li class="widget-list-item widget-filter-item"><a class="widget-list-link d-flex justify-content-between align-items-center" href="#"><span class="widget-filter-item-text">Sport Bags</span><span class="fs-xs text-muted ms-3">18</span></a></li>
-                          </ul>
+                    <!-- Filter by Gender-->
+                    <div class="widget widget-filter mb-4 pb-4 border-bottom">
+                        <h3 class="widget-title">Gender</h3>
+                        <div class="input-group input-group-sm mb-2">
+                            <input class="widget-filter-search form-control rounded-end pe-5" type="text" placeholder="Search"><i class="ci-search position-absolute top-50 end-0 translate-middle-y fs-sm me-3"></i>
                         </div>
-                      </div>
+                        <ul class="widget-list widget-filter-list list-unstyled pt-1" style="max-height: 11rem;" data-simplebar data-simplebar-auto-hide="false">
+                            {% for category in gender_cat %}
+                            <li class="widget-filter-item d-flex justify-content-between align-items-center mb-1">
+                                <div class="form-check">
+                                    <input class="form-check-input" id="gender_cat" data-filter="gender_category" value="{{category.title}}" type="checkbox" id="size-xs">
+                                    <label class="form-check-label widget-filter-item-text" for="size-xs">{{category.title}}</label>
+                                </div><span class="fs-xs text-muted">34</span>
+                            </li>
+                            {% endfor %}
                     </div>
-                  </div>
-                  <!-- Sunglasses-->
-                  <div class="accordion-item">
-                    <h3 class="accordion-header"><a class="accordion-button collapsed" href="#sunglasses" role="button" data-bs-toggle="collapse" aria-expanded="false" aria-controls="sunglasses">Sunglasses</a></h3>
-                    <div class="collapse" id="sunglasses" data-bs-parent="#shop-categories">
-                      <div class="accordion-body">
-                        <div class="widget widget-links">
-                          <ul class="widget-list">
-                            <li class="widget-list-item"><a class="widget-list-link d-flex justify-content-between align-items-center" href="#"><span>View all</span><span class="fs-xs text-muted ms-3">1,842</span></a></li>
-                            <li class="widget-list-item"><a class="widget-list-link d-flex justify-content-between align-items-center" href="#"><span>Fashion Sunglasses</span><span class="fs-xs text-muted ms-3">953</span></a></li>
-                            <li class="widget-list-item"><a class="widget-list-link d-flex justify-content-between align-items-center" href="#"><span>Sport Sunglasses</span><span class="fs-xs text-muted ms-3">589</span></a></li>
-                            <li class="widget-list-item"><a class="widget-list-link d-flex justify-content-between align-items-center" href="#"><span>Classic Sunglasses</span><span class="fs-xs text-muted ms-3">300</span></a></li>
-                          </ul>
+                    <div class="widget widget-filter mb-4 pb-4 border-bottom">
+                        <h3 class="widget-title">Sub Category</h3>
+                        <div class="input-group input-group-sm mb-2">
+                            <input class="widget-filter-search form-control rounded-end pe-5" type="text" placeholder="Search"><i class="ci-search position-absolute top-50 end-0 translate-middle-y fs-sm me-3"></i>
                         </div>
-                      </div>
+                        <ul class="widget-list widget-filter-list list-unstyled pt-1" style="max-height: 11rem;" data-simplebar data-simplebar-auto-hide="false">
+                            {% for category in sub_category %}
+                            <li class="widget-filter-item d-flex justify-content-between align-items-center mb-1">
+                                <div class="form-check">
+                                    <input class="form-check-input" id="sub_cat" data-filter="sub_category" value="{{category.title}}" type="checkbox" id="size-xs">
+                                    <label class="form-check-label widget-filter-item-text" for="size-xs">{{category.title}}</label>
+                                </div><span class="fs-xs text-muted">34</span>
+                            </li>
+                            {% endfor %}
                     </div>
-                  </div>
-                  <!-- Watches-->
-                  <div class="accordion-item">
-                    <h3 class="accordion-header"><a class="accordion-button collapsed" href="#watches" role="button" data-bs-toggle="collapse" aria-expanded="false" aria-controls="watches">Watches</a></h3>
-                    <div class="accordion-collapse collapse" id="watches" data-bs-parent="#shop-categories">
-                      <div class="accordion-body">
-                        <div class="widget widget-links">
-                          <ul class="widget-list">
-                            <li class="widget-list-item"><a class="widget-list-link d-flex justify-content-between align-items-center" href="#"><span>View all</span><span class="fs-xs text-muted ms-3">734</span></a></li>
-                            <li class="widget-list-item"><a class="widget-list-link d-flex justify-content-between align-items-center" href="#"><span>Fashion Watches</span><span class="fs-xs text-muted ms-3">572</span></a></li>
-                            <li class="widget-list-item"><a class="widget-list-link d-flex justify-content-between align-items-center" href="#"><span>Casual Watches</span><span class="fs-xs text-muted ms-3">110</span></a></li>
-                            <li class="widget-list-item"><a class="widget-list-link d-flex justify-content-between align-items-center" href="#"><span>Luxury Watches</span><span class="fs-xs text-muted ms-3">34</span></a></li>
-                            <li class="widget-list-item"><a class="widget-list-link d-flex justify-content-between align-items-center" href="#"><span>Sport Watches</span><span class="fs-xs text-muted ms-3">18</span></a></li>
-                          </ul>
+                    <div class="widget widget-filter mb-4 pb-4 border-bottom">
+                        <h3 class="widget-title">Article Type</h3>
+                        <div class="input-group input-group-sm mb-2">
+                            <input class="widget-filter-search form-control rounded-end pe-5" type="text" placeholder="Search"><i class="ci-search position-absolute top-50 end-0 translate-middle-y fs-sm me-3"></i>
                         </div>
-                      </div>
+                        <ul class="widget-list widget-filter-list list-unstyled pt-1" style="max-height: 11rem;" data-simplebar data-simplebar-auto-hide="false">
+                            {% for category in article_type %}
+                            <li class="widget-filter-item d-flex justify-content-between align-items-center mb-1">
+                                <div class="form-check">
+                                    <input class="form-check-input" id="article_type" data-filter="article_category" value="{{category.title}}" type="checkbox" id="size-xs">
+                                    <label class="form-check-label widget-filter-item-text" for="size-xs">{{category.title}}</label>
+                                </div><span class="fs-xs text-muted">34</span>
+                            </li>
+                            {% endfor %} {% comment %}
+                            <li class="widget-filter-item d-flex justify-content-between align-items-center mb-1">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="size-s">
+                                    <label class="form-check-label widget-filter-item-text" for="size-s">Womens</label>
+                                </div><span class="fs-xs text-muted">57</span>
+                            </li>
+                            <li class="widget-filter-item d-flex justify-content-between align-items-center mb-1">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="size-m">
+                                    <label class="form-check-label widget-filter-item-text" for="size-m">Boys</label>
+                                </div><span class="fs-xs text-muted">198</span>
+                            </li>
+                            <li class="widget-filter-item d-flex justify-content-between align-items-center mb-1">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="size-l">
+                                    <label class="form-check-label widget-filter-item-text" for="size-l">Girls</label>
+                                </div><span class="fs-xs text-muted">72</span>
+                            </li>
+                            <li class="widget-filter-item d-flex justify-content-between align-items-center mb-1">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="size-xl">
+                                    <label class="form-check-label widget-filter-item-text" for="size-xl">Unisex</label>
+                                </div><span class="fs-xs text-muted">46</span>
+                            </li> {% endcomment %} {% comment %}
+                            <li class="widget-filter-item d-flex justify-content-between align-items-center mb-1">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="size-39">
+                                    <label class="form-check-label widget-filter-item-text" for="size-39">39</label>
+                                </div><span class="fs-xs text-muted">112</span>
+                            </li>
+                            <li class="widget-filter-item d-flex justify-content-between align-items-center mb-1">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="size-40">
+                                    <label class="form-check-label widget-filter-item-text" for="size-40">40</label>
+                                </div><span class="fs-xs text-muted">85</span>
+                            </li>
+                            <li class="widget-filter-item d-flex justify-content-between align-items-center mb-1">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="size-41">
+                                    <label class="form-check-label widget-filter-item-text" for="size-40">41</label>
+                                </div><span class="fs-xs text-muted">210</span>
+                            </li>
+                            <li class="widget-filter-item d-flex justify-content-between align-items-center mb-1">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="size-42">
+                                    <label class="form-check-label widget-filter-item-text" for="size-42">42</label>
+                                </div><span class="fs-xs text-muted">57</span>
+                            </li>
+                            <li class="widget-filter-item d-flex justify-content-between align-items-center mb-1">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="size-43">
+                                    <label class="form-check-label widget-filter-item-text" for="size-43">43</label>
+                                </div><span class="fs-xs text-muted">30</span>
+                            </li>
+                            <li class="widget-filter-item d-flex justify-content-between align-items-center mb-1">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="size-44">
+                                    <label class="form-check-label widget-filter-item-text" for="size-44">44</label>
+                                </div><span class="fs-xs text-muted">61</span>
+                            </li>
+                            <li class="widget-filter-item d-flex justify-content-between align-items-center mb-1">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="size-45">
+                                    <label class="form-check-label widget-filter-item-text" for="size-45">45</label>
+                                </div><span class="fs-xs text-muted">23</span>
+                            </li>
+                            <li class="widget-filter-item d-flex justify-content-between align-items-center mb-1">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="size-46">
+                                    <label class="form-check-label widget-filter-item-text" for="size-46">46</label>
+                                </div><span class="fs-xs text-muted">19</span>
+                            </li>
+                            <li class="widget-filter-item d-flex justify-content-between align-items-center mb-1">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="size-47">
+                                    <label class="form-check-label widget-filter-item-text" for="size-47">47</label>
+                                </div><span class="fs-xs text-muted">15</span>
+                            </li>
+                            <li class="widget-filter-item d-flex justify-content-between align-items-center mb-1">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="size-48">
+                                    <label class="form-check-label widget-filter-item-text" for="size-48">48</label>
+                                </div><span class="fs-xs text-muted">12</span>
+                            </li>
+                            <li class="widget-filter-item d-flex justify-content-between align-items-center mb-1">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="size-49">
+                                    <label class="form-check-label widget-filter-item-text" for="size-49">49</label>
+                                </div><span class="fs-xs text-muted">8</span>
+                            </li>
+                            <li class="widget-filter-item d-flex justify-content-between align-items-center">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="size-50">
+                                    <label class="form-check-label widget-filter-item-text" for="size-50">50</label>
+                                </div><span class="fs-xs text-muted">6</span>
+                            </li> {% endcomment %}
+                        </ul>
                     </div>
-                  </div>
-                  <!-- Accessories-->
-                  <div class="accordion-item">
-                    <h3 class="accordion-header"><a class="accordion-button collapsed" href="#accessories" role="button" data-bs-toggle="collapse" aria-expanded="false" aria-controls="accessories">Accessories</a></h3>
-                    <div class="accordion-collapse collapse" id="accessories" data-bs-parent="#shop-categories">
-                      <div class="accordion-body">
-                        <div class="widget widget-links">
-                          <ul class="widget-list">
-                            <li class="widget-list-item"><a class="widget-list-link d-flex justify-content-between align-items-center" href="#"><span>View all</span><span class="fs-xs text-muted ms-3">920</span></a></li>
-                            <li class="widget-list-item"><a class="widget-list-link d-flex justify-content-between align-items-center" href="#"><span>Belts</span><span class="fs-xs text-muted ms-3">364</span></a></li>
-                            <li class="widget-list-item"><a class="widget-list-link d-flex justify-content-between align-items-center" href="#"><span>Hats</span><span class="fs-xs text-muted ms-3">405</span></a></li>
-                            <li class="widget-list-item"><a class="widget-list-link d-flex justify-content-between align-items-center" href="#"><span>Jewelry</span><span class="fs-xs text-muted ms-3">131</span></a></li>
-                            <li class="widget-list-item"><a class="widget-list-link d-flex justify-content-between align-items-center" href="#"><span>Cosmetics</span><span class="fs-xs text-muted ms-3">20</span></a></li>
-                          </ul>
+                    <div class="widget widget-filter mb-4 pb-4 border-bottom">
+                        <h3 class="widget-title">Brands</h3>
+                        <div class="input-group input-group-sm mb-2">
+                            <input class="widget-filter-search form-control rounded-end pe-5" type="text" placeholder="Search"><i class="ci-search position-absolute top-50 end-0 translate-middle-y fs-sm me-3"></i>
                         </div>
-                      </div>
+                        <ul class="widget-list widget-filter-list list-unstyled pt-1" style="max-height: 11rem;" data-simplebar data-simplebar-auto-hide="false">
+                            {% for category in brands %}
+                            <li class="widget-filter-item d-flex justify-content-between align-items-center mb-1">
+                                <div class="form-check">
+                                    <input class="form-check-input" id="brand_cat" data-filter="brand_category" value="{{category.title}}" type="checkbox" id="size-xs">
+                                    <label class="form-check-label widget-filter-item-text" for="size-xs">{{category.title}}</label>
+                                </div><span class="fs-xs text-muted">34</span>
+                            </li>
+                            {% endfor %}
                     </div>
                   </div>
                 </div>
@@ -537,9 +597,7 @@
                     <label class="d-block fs-xs text-muted mt-n1" for="color-sky-blue">Sky blue</label>
                   </div>
                 </div>
-              </div>
             </div>
-          </div>
         </aside>
         <!-- Content  -->
         <section class="col-lg-8">
@@ -563,100 +621,98 @@
           </div>
           <!-- Products list-->
           <!-- Product-->
-          {% for product in search_result %}
-          <div class="card product-card product-list">
-            <button class="btn-wishlist btn-sm" type="button" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to wishlist"><i class="ci-heart"></i></button>
-            <div class="d-sm-flex align-items-center"><a class="product-list-thumb" href="{% url 'apps.main:single_product' product.id %}">
-            {% if product.image_file %}
-              <img src="{{product.image_file.url}}" alt="Product">
-            {% else %}
-              <img src="{{product.image_url}}" alt="Product">
-            {% endif %}
-            
-            </a>
-              <div class="card-body py-2"><a class="product-meta d-block fs-xs pb-1" href="#">{{product.category}}</a>
-                <h3 class="product-title fs-base"><a href="{% url 'apps.main:single_product' product.id %}">{{product.title}}</a></h3>
-                <div class="d-flex justify-content-between">
-                  <div class="product-price"><span class="text-accent">${{product.market_price}}</span></div>
-                  <div class="star-rating"><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star"></i>
+          <div class="row mx-n2" id="search_result_filtered">
+            <p class="ajaxSearchLoader">Loading...</p>
+            {% for product in search_result %}
+              <div class="col-md-4 col-sm-6 px-2 mb-4">
+                <div class="card product-card">
+                  <button class="btn-wishlist btn-sm" type="button" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to wishlist"><i class="ci-heart"></i></button><a class="card-img-top d-block overflow-hidden" href="{% url 'apps.main:single_product' product.id %}">
+                  <div style="height:350px">
+                    {% if product.productimagesfiles_set.all %}
+                      {% for product_img in product.productimagesfiles_set.all|slice:":1" %}
+                        <img src="{{product_img.image_file.url}}" alt="Product">
+                      {%endfor%}
+                    {%else%}
+                      {% for product_img in product.productimagesurl_set.all|slice:":1" %}
+                        <img src="{{product_img.image_url}}" alt="Product">
+                      {%endfor%}
+                    {% endif %}
+                    
                   </div>
-                </div>
-                <div class="card-body card-body-hidden">
-                  <div class="pb-2">
-                    <div class="form-check form-option form-check-inline mb-2">
-                      <input class="form-check-input" type="radio" name="size1" id="s-75">
-                      <label class="form-option-label" for="s-75">7.5</label>
-                    </div>
-                    <div class="form-check form-option form-check-inline mb-2">
-                      <input class="form-check-input" type="radio" name="size1" id="s-80" checked>
-                      <label class="form-option-label" for="s-80">8</label>
-                    </div>
-                    <div class="form-check form-option form-check-inline mb-2">
-                      <input class="form-check-input" type="radio" name="size1" id="s-85">
-                      <label class="form-option-label" for="s-85">8.5</label>
-                    </div>
-                    <div class="form-check form-option form-check-inline mb-2">
-                      <input class="form-check-input" type="radio" name="size1" id="s-90">
-                      <label class="form-option-label" for="s-90">9</label>
+                  </a>
+                  <div class="card-body py-2"><a class="product-meta d-block fs-xs pb-1" href="#">{{product.category}}</a>
+                    <h3 class="product-title fs-sm"><a href="{% url 'apps.main:single_product' product.id %}">{{product.title}}</a></h3>
+                    <div class="d-flex justify-content-between">
+                      <div class="product-price"><span class="text-accent">${{product.market_price}}</span></div>
+                      <div class="star-rating"><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star"></i>
+                      </div>
                     </div>
                   </div>
-                  <a href="{% url 'apps.cart:addtocart' product.id %}">
-                  <button class="btn btn-primary btn-sm mb-2" type="button"><i class="ci-cart fs-sm me-1"></i>Add to Cart</button></a>
-                  <div class="text-start"><a class="nav-link-style fs-ms" href="#quick-view" data-bs-toggle="modal"><i class="ci-eye align-middle me-1"></i>Quick view</a></div>
+                  <div class="card-body card-body-hidden">
+                    
+                    <a href="{% url 'apps.cart:addtocart' product.id %}">
+                    {% if user.is_staff %}
+                    <button class="btn btn-primary btn-sm d-block w-100 mb-2 fade" type="button"><i class="ci-cart fs-sm me-1"></i>Add to Cart</button>
+                    {% else %}
+                    <button class="btn btn-primary btn-sm d-block w-100 mb-2" type="button"><i class="ci-cart fs-sm me-1"></i>Add to Cart</button>
+                    {% endif %}
+                    </a>
+                    
+                  </div>
                 </div>
+                <hr class="d-sm-none">
               </div>
-            </div>
-          </div>
-          <div class="border-top pt-3 mt-3"></div>
-          {% endfor %}
-          <!-- Pagination-->
-          <nav class="d-flex justify-content-between pt-2" aria-label="Page navigation">
-            {% if search_result.has_previous %}
-            <ul class="pagination">
-              <li class="page-item"><a class="page-link" href="?page={{ search_result.previous_page_number }}"><i class="ci-arrow-left me-2"></i>Prev</a></li>
-            </ul>
+            {% endfor %}
+          
+            <!-- Pagination-->
+            <nav class="d-flex justify-content-between pt-2" aria-label="Page navigation">
+              {% if search_result.has_previous %}
+              <ul class="pagination">
+                <li class="page-item"><a class="page-link" href="?page={{ search_result.previous_page_number }}"><i class="ci-arrow-left me-2"></i>Prev</a></li>
+              </ul>
+              {% else %}
+              <ul class="pagination" style="visibility:none">
+                <li class="page-item"><a class="page-link" href="#"><i class="ci-arrow-left me-2"></i>Prev</a></li>
+              </ul>
+              {% endif %}
+
+
+              <ul class="pagination">
+                {% if search_result.previous_page_number != 1 %}
+                  <li class="page-item d-none d-sm-block" aria-current="page"><a href="?page={{search_result.previous_page_number|add:"-1"}}">
+                  <span class="page-link">{{search_result.previous_page_number|add:"-1"}}<span class="visually-hidden">(current)</span></span></a>
+                  </li>
+                {% endif %}
+                {% if search_result.number != 1 %}
+                  <li class="page-item d-none d-sm-block" aria-current="page"><a href="?page={{search_result.previous_page_number}}">
+                  <span class="page-link">{{search_result.previous_page_number}}<span class="visually-hidden">(current)</span></span></a>
+                  </li>
+                {% endif %}
+                  <li class="page-item active d-none d-sm-block" aria-current="page"><a href="?page={{search_result.number}}">
+                  <span class="page-link">{{search_result.number}}<span class="visually-hidden">(current)</span></span></a>
+                  </li>
+                {% if search_result.number != search_result.paginator.num_pages %}
+                  <li class="page-item d-none d-sm-block" aria-current="page"><a href="?page={{search_result.next_page_number}}">
+                  <span class="page-link">{{search_result.next_page_number}}<span class="visually-hidden">(current)</span></span></a>
+                  </li>
+                {% endif %}
+                {% if search_result.next_page_number != search_result.paginator.num_pages %}
+                  <li class="page-item d-none d-sm-block" aria-current="page"><a href="?page={{search_result.next_page_number|add:"1"}}">
+                  <span class="page-link">{{search_result.next_page_number|add:"1"}}<span class="visually-hidden">(current)</span></span></a>
+                  </li>
+                {% endif %}
+              </ul>
+            {% if search_result.has_next %}
+              <ul class="pagination">
+                <li class="page-item"><a class="page-link" href="?page={{ search_result.next_page_number }}" aria-label="Next">Next<i class="ci-arrow-right ms-2"></i></a></li>
+              </ul>
             {% else %}
-            <ul class="pagination" style="visibility:none">
-              <li class="page-item"><a class="page-link" href="#"><i class="ci-arrow-left me-2"></i>Prev</a></li>
-            </ul>
+              <ul class="pagination" style="visibility:none">
+                <li class="page-item"><a class="page-link" href="#" aria-label="Next">Next<i class="ci-arrow-right ms-2"></i></a></li>
+              </ul>
             {% endif %}
-
-
-            <ul class="pagination">
-              {% if search_result.previous_page_number != 1 %}
-                <li class="page-item d-none d-sm-block" aria-current="page"><a href="?page={{search_result.previous_page_number|add:"-1"}}">
-                <span class="page-link">{{search_result.previous_page_number|add:"-1"}}<span class="visually-hidden">(current)</span></span></a>
-                </li>
-              {% endif %}
-              {% if search_result.number != 1 %}
-                <li class="page-item d-none d-sm-block" aria-current="page"><a href="?page={{search_result.previous_page_number}}">
-                <span class="page-link">{{search_result.previous_page_number}}<span class="visually-hidden">(current)</span></span></a>
-                </li>
-              {% endif %}
-                <li class="page-item active d-none d-sm-block" aria-current="page"><a href="?page={{search_result.number}}">
-                <span class="page-link">{{search_result.number}}<span class="visually-hidden">(current)</span></span></a>
-                </li>
-              {% if search_result.number != search_result.paginator.num_pages %}
-                <li class="page-item d-none d-sm-block" aria-current="page"><a href="?page={{search_result.next_page_number}}">
-                <span class="page-link">{{search_result.next_page_number}}<span class="visually-hidden">(current)</span></span></a>
-                </li>
-              {% endif %}
-              {% if search_result.next_page_number != search_result.paginator.num_pages %}
-                <li class="page-item d-none d-sm-block" aria-current="page"><a href="?page={{search_result.next_page_number|add:"1"}}">
-                <span class="page-link">{{search_result.next_page_number|add:"1"}}<span class="visually-hidden">(current)</span></span></a>
-                </li>
-              {% endif %}
-            </ul>
-          {% if search_result.has_next %}
-            <ul class="pagination">
-              <li class="page-item"><a class="page-link" href="?page={{ search_result.next_page_number }}" aria-label="Next">Next<i class="ci-arrow-right ms-2"></i></a></li>
-            </ul>
-          {% else %}
-            <ul class="pagination" style="visibility:none">
-              <li class="page-item"><a class="page-link" href="#" aria-label="Next">Next<i class="ci-arrow-right ms-2"></i></a></li>
-            </ul>
-          {% endif %}
-          </nav>
+            </nav>
+          </div>
         </section>
       </div>
     </div>

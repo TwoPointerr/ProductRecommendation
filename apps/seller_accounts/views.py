@@ -7,6 +7,8 @@ from django.contrib.auth import logout
 from apps.cart.models import *
 from apps.seller_accounts.models import *
 from django.contrib import messages
+from django.core.paginator import Paginator
+from django.db.models import Q
 
 from django.core.files.storage import FileSystemStorage
 from django.db.models import Sum
@@ -151,7 +153,7 @@ def add_single_product(request):
             upload_multiple_product_img(product,product_img,product_img_urls)
             sale=Sales.objects.create(company=CompanyDetails.objects.get(user=request.user),product=product, rate= product_market_price)
             messages.success(request,'Product Added Succesfully')
-           
+            return redirect('apps.seller_accounts:companyproducts')
     else:
         messages.warning(request,'Login as Seller Account.')
         return redirect('apps.seller_accounts:signin')
@@ -326,9 +328,32 @@ def companyproducts(request):
     if check_is_seller(request):
         seller = CompanyDetails.objects.get(user=request.user)
         sale = Sales.objects.filter(company=seller).order_by("-id")
-        return render(request, "dashboard-products.html",{'sale':sale})
+        sale_products_len = len(sale)
+        if request.method == 'POST':
+            product_name = request.POST.get("product_name")
+            return redirect('apps.seller_accounts:search_company_product',product_name)
+        paginator = Paginator(sale, 5)
+        page_number = request.GET.get('page')
+        product_list = paginator.get_page(page_number)
+        return render(request, "dashboard-products.html",{'sale':product_list,'sale_no_products':sale_products_len})
     else:
         return redirect('apps.seller_accounts:signin')
+
+def search_company_products(request,productname):
+    if check_is_seller(request):
+        seller = CompanyDetails.objects.get(user=request.user)
+        sale = Sales.objects.filter(company=seller).order_by("-id")
+        sale_products_len = len(sale)
+        if productname != "":
+            search_products = Product.objects.filter(Q(title__icontains = productname) | Q(description__icontains = productname))
+            sale = Sales.objects.filter(product__in =search_products,company=seller).order_by("-id")
+        paginator = Paginator(sale, 5)
+        page_number = request.GET.get('page')
+        product_list = paginator.get_page(page_number)
+        return render(request, "dashboard-products.html",{'sale':product_list,'sale_no_products':sale_products_len})
+    else:
+        return redirect('apps.seller_accounts:signin')
+
 
 def get_file_path(base_url,filename):
     file_path = os.path.join(base_url, filename)   #full path to text.
