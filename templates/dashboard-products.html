@@ -7,7 +7,7 @@
         <div class="d-flex align-items-center pb-3">
           {% comment %} <div class="img-thumbnail rounded-circle position-relative flex-shrink-0" style="width: 6.375rem;"><img class="rounded-circle" src="{% static 'img/marketplace/account/avatar.png' %}" alt="DSE  Studio"></div> {% endcomment %}
            <div class="ps-3">
-                <h1 class="text-light fs-lg mb-0">{{user.first_name}} {{user.last_name}}</h1>
+                <h1 class="text-light mb-0">{{user.first_name}} {{user.last_name}}</h1>
             </div>
         </div>
         
@@ -52,7 +52,7 @@
               <div class="d-sm-flex flex-wrap justify-content-between align-items-center border-bottom">
                 <h2 class="h3 py-2 me-2 text-center text-sm-start">Your products<span class="badge bg-faded-accent fs-sm text-body align-middle ms-2">{{sale_no_products}}</span></h2>
                 
-                <div class="py-2">
+                <div class="py-2 fade">
                   <div class="d-flex flex-nowrap align-items-center pb-3">
                     <label class="form-label fw-normal text-nowrap mb-0 me-2" for="sorting">Sort by:</label>
                     <select class="form-select form-select-sm me-2" id="sorting">
