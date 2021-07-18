@@ -5,8 +5,7 @@
     <div class="page-title-overlap bg-accent pt-4">
       <div class="container d-flex flex-wrap flex-sm-nowrap justify-content-center justify-content-sm-between align-items-center pt-2">
         <div class="d-flex align-items-center pb-3">
-          {% comment %} <div class="img-thumbnail rounded-circle position-relative flex-shrink-0" style="width: 6.375rem;"><img class="rounded-circle" src="{% static 'img/marketplace/account/avatar.png' %}" alt="DSE  Studio"></div> {% endcomment %}
-           <div class="ps-3">
+          <div class="ps-3">
                 <h1 class="text-light mb-0">{{user.first_name}} {{user.last_name}}</h1>
             </div>
         </div>
@@ -38,7 +37,6 @@
                   <li class="border-bottom mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3" href="{% url 'apps.seller_accounts:sellerorders' %}"><i class="ci-dollar opacity-60 me-2"></i>Orders</a></li>
                   <li class="border-bottom mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3 active" href="{% url 'apps.seller_accounts:companyproducts' %}"><i class="ci-package opacity-60 me-2"></i>Products</a></li>
                   <li class="border-bottom mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3" href="{% url 'apps.seller_accounts:add_new_product' %}"><i class="ci-cloud-upload opacity-60 me-2"></i>Add New Product</a></li>
-                  {% comment %} <li class="border-bottom mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3" href="dashboard-payouts.html"><i class="ci-currency-exchange opacity-60 me-2"></i>Payouts</a></li> {% endcomment %}
                   <li class="mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3" href="{% url 'apps.seller_accounts:signout' %}"><i class="ci-sign-out opacity-60 me-2"></i>Sign out</a></li>
                 </ul>
                 <hr>
@@ -68,7 +66,6 @@
               {% csrf_token %}
                 <div class="input-group d-none d-lg-flex py-4 ">
                   <input class="form-control rounded-end pe-5" type="text" name ="product_name" placeholder="Search for products" required>
-                  {% comment %} <button type="submit" class="btn btn-sm btn-outline-dark">Search</button> {% endcomment %}
                   <button type="submit" class="btn btn-outline-dark btn-icon">
                   <i class="ci-search"></i>
                   </button>
@@ -101,8 +98,6 @@
                   <div class="d-inline-block text-muted fs-ms border-start ms-2 ps-2">Sales: <span class="fw-medium">{{sale.quantity}}</span></div>
                   <div class="d-inline-block text-muted fs-ms border-start ms-2 ps-2">Earnings: <span class="fw-medium">${{sale.subtotal}}</span></div>
                   <div class="d-flex justify-content-center justify-content-sm-start pt-3">
-                    
-
                     <a class="nav-link-style me-2" href="{% url 'apps.seller_accounts:edit_product' sale.product.id %}" >
                     <button class="btn bg-faded-info btn-icon me-2" type="button"><i class="ci-edit text-info"></i></button></a>
                      <a class="nav-link-style me-2" href="{% url 'apps.seller_accounts:delete_product' sale.product.id %}">

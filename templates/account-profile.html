@@ -55,62 +55,7 @@
             <h6 class="fs-base text-light mb-0">Update you profile details below:</h6><a class="btn btn-primary btn-sm" href="{% url 'apps.accounts:signout' %}"><i class="ci-sign-out me-2"></i>Sign out</a>
           </div>
           <!-- Profile form-->
-          {% comment %} <form>
-            <div class="bg-secondary rounded-3 p-4 mb-4">
-              <div class="d-flex align-items-center"><img class="rounded" src="{% static 'img/shop/account/avatar.jpg' %}" width="90" alt="Susan Gardner">
-                <div class="ps-3">
-                  <button class="btn btn-light btn-shadow btn-sm mb-2" type="button"><i class="ci-loading me-2"></i>Change avatar</button>
-                  <div class="p mb-0 fs-ms text-muted">Upload JPG, GIF or PNG image. 300 x 300 required.</div>
-                </div>
-              </div>
-            </div>
-            <div class="row gx-4 gy-3">
-              <div class="col-sm-6">
-                <label class="form-label" for="account-fn">First Name</label>
-                <input class="form-control" type="text" id="account-fn" value="{{user.first_name}}">
-              </div>
-              <div class="col-sm-6">
-                <label class="form-label" for="account-ln">Last Name</label>
-                <input class="form-control" type="text" id="account-ln" value="{{user.last_name}}">
-              </div>
-              <div class="col-sm-6">
-                <label class="form-label" for="account-email">Email Address</label>
-                <input class="form-control" type="email" id="account-email" value="{{user.email}}" disabled>
-              </div>
-              <div class="col-sm-6">
-                <label class="form-label" for="account-phone">Phone Number</label>
-                <input class="form-control" type="text" id="account-phone" value="{{user.phoneno}}" required>
-              </div>
-              <div class="col-sm-6">
-                <label class="form-label" for="account-pass">New Password</label>
-                <div class="password-toggle">
-                  <input class="form-control" type="password" id="account-pass">
-                  <label class="password-toggle-btn" aria-label="Show/hide password">
-                    <input class="password-toggle-check" type="checkbox"><span class="password-toggle-indicator"></span>
-                  </label>
-                </div>
-              </div>
-              <div class="col-sm-6">
-                <label class="form-label" for="account-confirm-pass">Confirm Password</label>
-                <div class="password-toggle">
-                  <input class="form-control" type="password" id="account-confirm-pass">
-                  <label class="password-toggle-btn" aria-label="Show/hide password">
-                    <input class="password-toggle-check" type="checkbox"><span class="password-toggle-indicator"></span>
-                  </label>
-                </div>
-              </div>
-              <div class="col-12">
-                <hr class="mt-2 mb-3">
-                <div class="d-flex flex-wrap justify-content-between align-items-center">
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="subscribe_me" checked>
-                    <label class="form-check-label" for="subscribe_me">Subscribe me to Newsletter</label>
-                  </div>
-                  <button class="btn btn-primary mt-3 mt-sm-0" type="button">Update profile</button>
-                </div>
-              </div>
-            </div>
-          </form> {% endcomment %}
+          
           <form method="POST" class="needs-validation" enctype="multipart/form-data" novalidate>
                     {% csrf_token %}
                     <div class="bg-secondary rounded-3 p-4 mb-4">
@@ -126,8 +71,7 @@
                                     <input type="file" name="img" class="file-drop-input" accept="image/*" style="max-height: 50px;">
                                     <button type="button" class="file-drop-btn btn btn-primary btn-sm">Or select file</button>
                                 </div>
-                                {% comment %} <button class="btn btn-light btn-shadow btn-sm mb-2" type="button"><i class="ci-loading me-2"></i>Change avatar</button> {% endcomment %} {% comment %}
-                                <div class="p mb-0 fs-ms text-muted">Upload JPG, GIF or PNG image. 300 x 300 required.</div> {% endcomment %}
+                                
                             </div>
                         </div>
                     </div>

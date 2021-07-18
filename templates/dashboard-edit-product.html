@@ -6,7 +6,6 @@
     <div class="page-title-overlap bg-accent pt-4">
       <div class="container d-flex flex-wrap flex-sm-nowrap justify-content-center justify-content-sm-between align-items-center pt-2">
         <div class="d-flex align-items-center pb-3">
-          {% comment %} <div class="img-thumbnail rounded-circle position-relative flex-shrink-0" style="width: 6.375rem;"><img class="rounded-circle" src="{% static 'img/marketplace/account/avatar.png' %}" alt="DSE  Studio"></div> {% endcomment %}
            <div class="ps-3">
                 <h1 class="text-light mb-0">{{user.first_name}} {{user.last_name}}</h1>
             </div>
@@ -51,10 +50,7 @@
                 <li class="nav-item"><a class="nav-link px-0 active" href="#profile">
                     <div class="d-none d-lg-block  h6"><i class="ci-edit-alt opacity-60 me-2"></i>Edit Product</div></a></li>
                 
-                {% comment %} <li class="nav-item"><a class="nav-link px-0" href="#payment" data-bs-toggle="tab" role="tab">
-                    <div class="d-none d-lg-block"><i class="ci-card opacity-60 me-2"></i>Payment methods</div>
-                    <div class="d-lg-none text-center"><i class="ci-card opacity-60 d-block fs-xl mb-2"></i><span class="fs-ms">Payment</span></div></a></li> {% endcomment %}
-              </ul>
+                </ul>
               <!-- Title-->
               <div class="d-sm-flex flex-wrap justify-content-between align-items-center pb-2">
                 
@@ -88,16 +84,7 @@
                       {% for product_img in product.productimagesurl_set.all|slice:":1" %}
                       <img src="{{product_img.image_url}}" width="300" alt="Product">
                       {%endfor%}
-                    {% endif %}
-                    
-                            {% comment %} <div class="ps-3">
-                                <div class="file-drop-area">
-                                    <div class="file-drop-icon ci-cloud-upload"></div>
-                                    <span class="file-drop-message">Drag and drop here to upload</span>
-                                    <input type="file" name="img" class="file-drop-input" accept="image/*" style="max-height: 50px;">
-                                    <button type="button" class="file-drop-btn btn btn-primary btn-sm">Or select file</button>
-                                </div>
-                                 {% endcomment %}
+                    {% endif %}                            
                     <div class="ps-4">
                       <div class="file-drop-area mb-3">
                         <div class="file-drop-icon ci-cloud-upload"></div><span class="file-drop-message">Drag and drop here to upload product screenshot</span>
@@ -135,13 +122,7 @@
                     </div>
 
                     <div class="row">
-                      {% comment %} <div class="col-sm-6 mb-3">
-                        <label class="form-label" for="unp-standard-price">Standard license price</label>
-                        <div class="input-group"><span class="input-group-text"><i class="ci-dollar"></i></span>
-                          <input class="form-control" type="text" id="unp-standard-price">
-                        </div>
-                        <div class="form-text">Average marketplace price for this category is $15.</div>
-                      </div> {% endcomment %}
+                      
                       <div class="col-sm-6 mb-3">
                         <label class="form-label" for="unp-extended-price">Product price</label>
                         <div class="input-group"><span class="input-group-text"><i class="ci-dollar"></i></span>
@@ -150,16 +131,7 @@
                         
                       </div>
                     </div>
-                    {% comment %} <div class="mb-3 py-2">
-                      <label class="form-label" for="unp-product-tags">Product tags</label>
-                      <textarea class="form-control" rows="4" id="unp-product-tags"></textarea>
-                      <div class="form-text">Up to 10 keywords that describe your item. Tags should all be in lowercase and separated by commas.</div>
-                    </div> {% endcomment %}
-                    {% comment %} <div class="mb-3 pb-2">
-                      <label class="form-label" for="unp-product-files">Product files for sale</label>
-                      <input class="form-control" type="file" id="unp-product-files">
-                      <div class="form-text">Maximum file size is 1GB</div>
-                    </div> {% endcomment %}
+                   
                     <button class="btn btn-primary d-block w-100" type="submit"><i class="ci-cloud-upload fs-lg me-2"></i>Update Product</button>
                   </form>
                 </div>

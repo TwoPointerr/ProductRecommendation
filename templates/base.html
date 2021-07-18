@@ -47,77 +47,7 @@ input[type=number] {
 
 <body>
   <!-- Sign in / sign up modal-->
-  {% comment %} <div class="modal fade" id="signin-modal" tabindex="-1" role="dialog">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content">
-        <div class="modal-header bg-secondary">
-          <ul class="nav nav-tabs card-header-tabs" role="tablist">
-            <li class="nav-item"><a class="nav-link fw-medium active" href="#signin-tab" data-bs-toggle="tab" role="tab"
-                aria-selected="true"><i class="ci-unlocked me-2 mt-n1"></i>Sign in</a></li>
-            <li class="nav-item"><a class="nav-link fw-medium" href="#signup-tab" data-bs-toggle="tab" role="tab"
-                aria-selected="false"><i class="ci-user me-2 mt-n1"></i>Sign up</a></li>
-          </ul>
-          <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body tab-content py-4">
-          <form class="needs-validation tab-pane fade show active" autocomplete="off" novalidate id="signin-tab">
-            <div class="mb-3">
-              <label class="form-label" for="si-email">Email address</label>
-              <input class="form-control" type="email" id="si-email" placeholder="johndoe@example.com" required>
-              <div class="invalid-feedback">Please provide a valid email address.</div>
-            </div>
-            <div class="mb-3">
-              <label class="form-label" for="si-password">Password</label>
-              <div class="password-toggle">
-                <input class="form-control" type="password" id="si-password" required>
-                <label class="password-toggle-btn" aria-label="Show/hide password">
-                  <input class="password-toggle-check" type="checkbox"><span class="password-toggle-indicator"></span>
-                </label>
-              </div>
-            </div>
-            <div class="mb-3 d-flex flex-wrap justify-content-between">
-              <div class="form-check mb-2">
-                <input class="form-check-input" type="checkbox" id="si-remember">
-                <label class="form-check-label" for="si-remember">Remember me</label>
-              </div><a class="fs-sm" href="#">Forgot password?</a>
-            </div>
-            <button class="btn btn-primary btn-shadow d-block w-100" type="submit">Sign in</button>
-          </form>
-          <form class="needs-validation tab-pane fade" autocomplete="off" novalidate id="signup-tab">
-            <div class="mb-3">
-              <label class="form-label" for="su-name">Full name</label>
-              <input class="form-control" type="text" id="su-name" placeholder="John Doe" required>
-              <div class="invalid-feedback">Please fill in your name.</div>
-            </div>
-            <div class="mb-3">
-              <label for="su-email">Email address</label>
-              <input class="form-control" type="email" id="su-email" placeholder="johndoe@example.com" required>
-              <div class="invalid-feedback">Please provide a valid email address.</div>
-            </div>
-            <div class="mb-3">
-              <label class="form-label" for="su-password">Password</label>
-              <div class="password-toggle">
-                <input class="form-control" type="password" id="su-password" required>
-                <label class="password-toggle-btn" aria-label="Show/hide password">
-                  <input class="password-toggle-check" type="checkbox"><span class="password-toggle-indicator"></span>
-                </label>
-              </div>
-            </div>
-            <div class="mb-3">
-              <label class="form-label" for="su-password-confirm">Confirm password</label>
-              <div class="password-toggle">
-                <input class="form-control" type="password" id="su-password-confirm" required>
-                <label class="password-toggle-btn" aria-label="Show/hide password">
-                  <input class="password-toggle-check" type="checkbox"><span class="password-toggle-indicator"></span>
-                </label>
-              </div>
-            </div>
-            <button class="btn btn-primary btn-shadow d-block w-100" type="submit">Sign up</button>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div> {% endcomment %}
+  
   <!-- Quick View Modal-->
   <div class="modal-quick-view modal fade" id="quick-view" tabindex="-1">
     <div class="modal-dialog modal-xl">
@@ -272,7 +202,7 @@ input[type=number] {
           {% csrf_token %}
           <div class="input-group d-none d-lg-flex mx-4">
             <input class="form-control rounded-end pe-5" type="text" name = "keyword" placeholder="Search for products" required>
-            {% comment %} <button type="submit" class="btn btn-sm btn-outline-dark">Search</button> {% endcomment %}
+            
             <button type="submit" class="btn btn-outline-dark btn-icon">
             <i class="ci-search"></i>
             </button>
@@ -285,10 +215,7 @@ input[type=number] {
             <a class="navbar-tool navbar-stuck-toggler" href="#"><span class="navbar-tool-tooltip">Expand menu</span>
               <div class="navbar-tool-icon-box"><i class="navbar-tool-icon ci-menu"></i></div>
             </a>
-            {% comment %} <a class="navbar-tool d-none d-lg-flex" href="account-wishlist.html"><span
-                class="navbar-tool-tooltip">Wishlist</span>
-              <div class="navbar-tool-icon-box"><i class="navbar-tool-icon ci-heart"></i></div>
-            </a> {% endcomment %}
+            
             {% if user.is_authenticated %}
               {% if user.is_staff %}
                 <div class="navbar-tool-icon-box"><a href="{% url 'apps.seller_accounts:profile'%}"><i class="navbar-tool-icon ci-user"></i></div>
@@ -325,15 +252,12 @@ input[type=number] {
         <div class="container">
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <!-- Search-->
-            {% comment %} <div class="input-group d-lg-none my-3"><i
-                class="ci-search position-absolute top-50 start-0 translate-middle-y text-muted fs-base ms-3"></i>
-              <input class="form-control rounded-start" type="text" placeholder="Search for products">
-            </div> {% endcomment %}
+            
             <form class="input-group d-lg-none d-flex flex-nowrap my-3" method="POST" action="{% url 'apps.main:search_product' %}">
           {% csrf_token %}
           <div class="input-group d-lg-none d-lg-flex">
             <input class="form-control rounded-end pe-5" type="text" name = "keyword" placeholder="Search for products" required>
-            {% comment %} <button type="submit" class="btn btn-sm btn-outline-dark">Search</button> {% endcomment %}
+            
             <button type="submit" class="btn btn-outline-dark btn-icon">
             <i class="ci-search"></i>
             </button>
@@ -435,28 +359,15 @@ input[type=number] {
                   data-bs-toggle="dropdown">Account</a>
                 <ul class="dropdown-menu">
                 {% if user.is_staff %}
-                {% comment %}
-                  <li class="dropdown"><a class="dropdown-item dropdown-toggle" href="#"
-                      data-bs-toggle="dropdown">Vendor Dashboard</a>
-                     <ul class="dropdown-menu"> {% endcomment %}
-                     
+                                     
                       <li><a class="dropdown-item" href="{% url 'apps.seller_accounts:profile' %}">Settings</a></li>
                       <li><a class="dropdown-item" href="{% url 'apps.seller_accounts:sellerorders' %}">Orders</a></li>
                       <li><a class="dropdown-item" href="{% url 'apps.seller_accounts:companyproducts' %}">Products</a></li>
-                      <li><a class="dropdown-item" href="{% url 'apps.seller_accounts:add_new_product' %}">Add New Product</a></li>
-                    {% comment %} </ul> 
-                  </li>{% endcomment %}
-                  {% else %}
-                  {% comment %} <li class="dropdown"><a class="dropdown-item dropdown-toggle" href="#" data-bs-toggle="dropdown">Shop
-                      User Account</a>
-                    <ul class="dropdown-menu"> {% endcomment %}
-                    
-                      <li><a class="dropdown-item" href="{% url 'apps.accounts:orders' %}">Orders History</a></li>
+                      <li><a class="dropdown-item" href="{% url 'apps.seller_accounts:add_new_product' %}">Add New Product</a></li>                 {% else %}
+                                      <li><a class="dropdown-item" href="{% url 'apps.accounts:orders' %}">Orders History</a></li>
                       <li><a class="dropdown-item" href="{% url 'apps.accounts:profile' %}">Profile Settings</a></li>
                       <li><a class="dropdown-item" href="{% url 'apps.accounts:address' %}">Account Address</a></li>
-                   {% comment %}  </ul>
-                  </li> {% endcomment %}
-                  
+                                   
                   {% endif %}
                   {% if user.is_authenticated %}
                   <li><a class="dropdown-item" href="{% url 'apps.accounts:signout' %}">Sign Out</a></li>
@@ -487,44 +398,7 @@ input[type=number] {
 {% include 'messages.html' %}
 
 <footer class="bg-dark">
-    {% comment %} <div class="container">
-      <div class="row pb-2">
-        <div class="col-md-5 col-sm-6">
-          <div class="widget widget-links widget-light pb-2 mb-4">
-            <h3 class="widget-title text-light">Shop departments</h3>
-            <ul class="widget-list">
-              <li class="widget-list-item"><a class="widget-list-link" href="#">Sneakers</a></li>
-              <li class="widget-list-item"><a class="widget-list-link" href="#">Sandals</a></li>
-              <li class="widget-list-item"><a class="widget-list-link" href="#">Jeans</a></li>
-              <li class="widget-list-item"><a class="widget-list-link" href="#">Shirts &amp; Tops</a></li>
-              <li class="widget-list-item"><a class="widget-list-link" href="#">Shorts</a></li>
-              <li class="widget-list-item"><a class="widget-list-link" href="#">T-Shirts</a></li>
-              <li class="widget-list-item"><a class="widget-list-link" href="#">Accessories</a></li>
-            </ul>
-          </div>
-        </div>
-        <div class="col-md-2 col-sm-6"></div>
-        <div class="col-md-5 col-sm-6">
-          <div class="widget widget-links widget-light pb-2 mb-4">
-            <h3 class="widget-title text-light">Account &amp; shipping info</h3>
-            <ul class="widget-list">
-              <li class="widget-list-item"><a class="widget-list-link" href="#">Your account</a></li>
-              <li class="widget-list-item"><a class="widget-list-link" href="#">Refunds &amp; replacements</a></li>
-              <li class="widget-list-item"><a class="widget-list-link" href="#">Order tracking</a></li>
-              <li class="widget-list-item"><a class="widget-list-link" href="#">Delivery info</a></li>
-            </ul>
-          </div>
-          <div class="widget widget-links widget-light pb-2 mb-4">
-            <h3 class="widget-title text-light">About us</h3>
-            <ul class="widget-list">
-              <li class="widget-list-item"><a class="widget-list-link" href="#">About company</a></li>
-              <li class="widget-list-item"><a class="widget-list-link" href="#">Our team</a></li>
-            </ul>
-          </div>
-        </div>
-        
-      </div>
-    </div> {% endcomment %}
+    
     <div class="pt-5 bg-darker">
       <div class="container">
         <div class="row pb-3">

@@ -42,9 +42,7 @@
 
                 <!-- Shipping address-->
                 <form method="POST" class="needs-validation" enctype="multipart/form-data" novalidate>
-                    {% csrf_token %}
-                    
-                    <div class="bg-secondary rounded-3 p-4 mb-4">
+                    {% csrf_token %}                    <div class="bg-secondary rounded-3 p-4 mb-4">
                         <div class="d-flex align-items-center">
                             {% if profile.image %}
                             <img class="rounded" src="{{profile.image.url}}" width="180" alt="{{user.first_name}} {{user.last_name}}"> {% endif %}
@@ -57,9 +55,7 @@
                                     <input type="file" name="img" class="file-drop-input" accept="image/*" style="max-height: 50px;">
                                     <button type="button" class="file-drop-btn btn btn-primary btn-sm">Or select file</button>
                                 </div>
-                                {% comment %} <button class="btn btn-light btn-shadow btn-sm mb-2" type="button"><i class="ci-loading me-2"></i>Change avatar</button> {% endcomment %} {% comment %}
-                                <div class="p mb-0 fs-ms text-muted">Upload JPG, GIF or PNG image. 300 x 300 required.</div> {% endcomment %}
-                            </div>
+                                 </div>
                         </div>
                     </div>
                     <div class="row gx-4 gy-3">

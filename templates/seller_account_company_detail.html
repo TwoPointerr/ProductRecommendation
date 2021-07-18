@@ -33,21 +33,14 @@
                   <div class="step-progress"><span class="step-count">3</span></div>
                   <div class="step-label"><i class="ci-location"></i>Address Info</div>
                 </a>
-                {% comment %} <a class="step-item" href="checkout-payment.html">
-                  <div class="step-progress"><span class="step-count">4</span></div>
-                  <div class="step-label"><i class="ci-card"></i>Payment</div>
-                </a>
-                <a class="step-item" href="checkout-review.html">
-                  <div class="step-progress"><span class="step-count">5</span></div>
-                  <div class="step-label"><i class="ci-check-circle"></i>Review</div>
-                </a> {% endcomment %}
+                
               </div>
               <!-- Tab content-->
               <div class="tab-content">
                 <!-- Profile-->
                 <div class="tab-pane fade show active" id="profile" role="tabpanel">
                   
-                  {% comment %} <div class="row gx-4 gy-3"> {% endcomment %}
+                  
                   <div class="col-md-12 pt-4 mt-3 mt-md-0">
                     <form method="POST" name="companydetailForm" class="" novalidate onsubmit="return validSeller()">
                       {% csrf_token %}
@@ -84,107 +77,14 @@
                           </div>
                           </div>
                         </div>
-                        <!-- <div class="col-sm-6">
-                            <label class="form-label" for="reg-phone">Phone Number</label>
-                            <input class="form-control" type="text" name="phonenumber" required id="reg-phone">
-                            <div class="invalid-feedback">Please enter your phone number!</div>
-                          </div> -->
-                        <!-- <div class="col-sm-6">
-                            <label class="form-label" for="reg-password">Password</label>
-                            <input class="" type="password" id= "password" name="password" required id="reg-password">
-                            <span id="message" style="color:red"></span>
-                            <div class="invalid-feedback">Please enter password!</div>
-                          </div> -->
-                        <!-- Password visibility toggle -->
-                        {% comment %} <div class="mb-3">
-                          <label class="form-label" for="pass-visibility">Password</label>
-                          <div class="password-toggle">
-                            <input class="form-control unique_password" name="password" type="password" id="pass-visibility">
-                            <label class="password-toggle-btn" aria-label="Show/hide password">
-                              <input class="password-toggle-check" type="checkbox">
-                              <span class="password-toggle-indicator"></span>
-                            </label>
-                          </div>
-                        </div>
-                        <div class="alert alert-info d-flex" role="alert">
-                          <div class="alert-icon">
-                            <i class="ci-announcement"></i>
-                          </div>
-                          <div>The Password must atleast be of 8-15 characters</div>
-                        </div> {% endcomment %}
-                        <!-- <div class="col-sm-6">
-                            <label class="form-label" for="reg-password-confirm">Confirm Password</label>
-                            <input class="form-control" type="password" id= "cfpassword" name="cfpassword" required id="reg-password-confirm">
-                          </div> -->
-                        <!-- Password visibility toggle -->
-                        {% comment %} <div class="mb-3">
-                          <label class="form-label" for="pass-visibility">Confirm Password</label>
-                          <div class="password-toggle">
-                            <input class="form-control cfpassword" type="password" id="pass-visibility">
-                            <label class="password-toggle-btn" aria-label="Show/hide password">
-                              <input class="password-toggle-check" type="checkbox">
-                              <span class="password-toggle-indicator"></span>
-                            </label>
-                          </div>
-                          <div>
-                            <span id="message-password" style="color:red"></span>
-                          </div>
-                        </div> {% endcomment %}
+                        
                         <div class="col-12 text-end">
                           <button class="btn btn-primary" type="submit">Next<i class="ms-3 ci-arrow-right"></i></button>
                         </div>
                       </div>
                     </form>
                   </div>
-                    {% comment %} <div class="col-sm-6">
-                      <label class="form-label" for="dashboard-fn">First Name</label>
-                      <input class="form-control" type="text" id="dashboard-fn" value="John">
-                    </div>
-                    <div class="col-sm-6">
-                      <label class="form-label" for="dashboard-ln">Last Name</label>
-                      <input class="form-control" type="text" id="dashboard-ln" value="Doe">
-                    </div>
-                    <div class="col-sm-6">
-                      <label class="form-label" for="dashboard-email">Email address</label>
-                      <input class="form-control" type="text" id="dashboard-email" value="contact@example.com" disabled>
-                    </div>
-                    <div class="col-sm-6">
-                      <label class="form-label" for="dashboard-profile-name">Profile Name</label>
-                      <input class="form-control" type="text" id="dashboard-profile-name" value="DSE  Studio">
-                    </div>
-                    <div class="col-sm-6">
-                      <label class="form-label" for="dashboard-country">Country</label>
-                      <select class="form-select" id="dashboard-country">
-                        <option value>Select country</option>
-                        <option value="Argentina">Argentina</option>
-                        <option value="Belgium">Belgium</option>
-                        <option value="France">France</option>
-                        <option value="Germany">Germany</option>
-                        <option value="Madagascar" selected>Madagascar</option>
-                        <option value="Spain">Spain</option>
-                        <option value="UK">United Kingdom</option>
-                        <option value="USA">USA</option>
-                      </select>
-                    </div>
-                    <div class="col-sm-6">
-                      <label class="form-label" for="dashboard-city">City</label>
-                      <input class="form-control" type="text" id="dashboard-city" value="Antananarivo">
-                    </div>
-                    <div class="col-sm-6">
-                      <label class="form-label" for="dashboard-address">Address Line</label>
-                      <input class="form-control" type="text" id="dashboard-address" value="Some Cool Street, 22/1">
-                    </div>
-                    <div class="col-sm-6">
-                      <label class="form-label" for="dashboard-zip">ZIP Code</label>
-                      <input class="form-control" type="text" id="dashboard-zip">
-                    </div>
-                    <div class="col-12">
-                      <hr class="mt-2 mb-4">
-                      <div class="d-sm-flex justify-content-between align-items-center">
-                        <button class="btn btn-primary mt-3 mt-sm-0" type="button">Register</button>
-                      </div>
-                    </div> {% endcomment %}
-                  {% comment %} </div> {% endcomment %}
+                    
                 </div>
                 <!-- Notifications-->
                 <div class="tab-pane fade" id="notifications" role="tabpanel">

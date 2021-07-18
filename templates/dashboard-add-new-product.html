@@ -6,8 +6,7 @@
     <div class="page-title-overlap bg-accent pt-4">
       <div class="container d-flex flex-wrap flex-sm-nowrap justify-content-center justify-content-sm-between align-items-center pt-2">
         <div class="d-flex align-items-center pb-3">
-          {% comment %} <div class="img-thumbnail rounded-circle position-relative flex-shrink-0" style="width: 6.375rem;"><img class="rounded-circle" src="{% static 'img/marketplace/account/avatar.png' %}" alt="DSE  Studio"></div> {% endcomment %}
-           <div class="ps-3">
+                     <div class="ps-3">
                 <h1 class="text-light mb-0">{{user.first_name}} {{user.last_name}}</h1>
             </div>
         </div>
@@ -54,24 +53,12 @@
                 <li class="nav-item"><a class="nav-link px-0" href="#notifications" data-bs-toggle="tab" role="tab">
                     <div class="d-none d-lg-block"><i class="ci-add-document opacity-60 me-2"></i>Add Multiple Products</div>
                     <div class="d-lg-none text-center"><i class="ci-bell opacity-60 d-block fs-xl mb-2"></i><span class="fs-ms">Notifications</span></div></a></li>
-                {% comment %} <li class="nav-item"><a class="nav-link px-0" href="#payment" data-bs-toggle="tab" role="tab">
-                    <div class="d-none d-lg-block"><i class="ci-card opacity-60 me-2"></i>Payment methods</div>
-                    <div class="d-lg-none text-center"><i class="ci-card opacity-60 d-block fs-xl mb-2"></i><span class="fs-ms">Payment</span></div></a></li> {% endcomment %}
+                
               </ul>
               <!-- Title-->
               <div class="d-sm-flex flex-wrap justify-content-between align-items-center pb-2">
                 <h2 class="h3 py-2 me-2 text-center text-sm-start">Add New Product</h2>
-                {% comment %} <div class="py-2">
-                  <select class="form-select me-2" id="unp-category">
-                    <option>Select category</option>
-                    <option>Photos</option>
-                    <option>Graphics</option>
-                    <option>UI Design</option>
-                    <option>Web Themes</option>
-                    <option>Fonts</option>
-                    <option>Add-Ons</option>
-                  </select>
-                </div> {% endcomment %}
+                
               </div>
               <div class="tab-content">
                 <!-- Profile-->
@@ -142,29 +129,10 @@
                     <div class="mb-3 py-2">
                       <label class="form-label" for="unp-product-description">Product Image URL'S </label><spam><i>&nbsp;( Optional )</i></spam>
                       <textarea class="form-control" rows="6" id="unp-product-img-url" name="product_img_urls" placeholder="Seprate URLS with ' | ' eg. https.url1.jpg | https.url2.jpg"></textarea>
-                    </div>
-                    
-                    <div class="row">
-                      {% comment %} <div class="col-sm-6 mb-3">
-                        <label class="form-label" for="unp-standard-price">Standard license price</label>
-                        <div class="input-group"><span class="input-group-text"><i class="ci-dollar"></i></span>
-                          <input class="form-control" type="text" id="unp-standard-price">
-                        </div>
-                        <div class="form-text">Average marketplace price for this category is $15.</div>
-                      </div> {% endcomment %}
+                    </div>                   <div class="row">
                       
-                    </div>
-                    {% comment %} <div class="mb-3 py-2">
-                      <label class="form-label" for="unp-product-tags">Product tags</label>
-                      <textarea class="form-control" rows="4" id="unp-product-tags"></textarea>
-                      <div class="form-text">Up to 10 keywords that describe your item. Tags should all be in lowercase and separated by commas.</div>
-                    </div> {% endcomment %}
-                    {% comment %} <div class="mb-3 pb-2">
-                      <label class="form-label" for="unp-product-files">Product files for sale</label>
-                      <input class="form-control" type="file" id="unp-product-files">
-                      <div class="form-text">Maximum file size is 1GB</div>
-                    </div> {% endcomment %}
-                    <button class="btn btn-primary d-block w-100" type="submit"><i class="ci-cloud-upload fs-lg me-2"></i>Upload Product</button>
+                      
+                    </div>                    <button class="btn btn-primary d-block w-100" type="submit"><i class="ci-cloud-upload fs-lg me-2"></i>Upload Product</button>
                   </form>
                 </div>
                 <div class="tab-pane fade" id="notifications" role="tabpanel">
