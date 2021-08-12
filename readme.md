@@ -17,3 +17,7 @@ It provides basic e-commerce functionalities to users and also includes techniqu
 [Report](https://drive.google.com/file/d/1Dg8V0HF6Inw0__Bi_4uipcgpkCDhYq-F/view?usp=sharing)
 
   
+## Acknowledgements
+
+ - [Cartzilla Theme](https://cartzilla.createx.studio/)
+ 
