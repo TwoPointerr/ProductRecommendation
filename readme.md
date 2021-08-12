@@ -7,9 +7,10 @@ It provides basic e-commerce functionalities to users and also includes techniqu
 
 ## Authors
 
-- [@harshadrane67](https://github.com/harshadrane67)
-- [@PremMevada](https://github.com/PremMevada)
-- [@mandharet](https://github.com/mandharet)
+- [Harshad Rane](https://github.com/harshadrane67)
+- [Prem Mevada](https://github.com/PremMevada)
+- [Tejas Mandhare](https://github.com/mandharet)
+- [Omkar Suryawanshi](#)
 
   
 ## Report
