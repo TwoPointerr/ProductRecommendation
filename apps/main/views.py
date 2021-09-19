@@ -187,15 +187,15 @@ def filter_auto(request):
     return render(request, "shop-grid-ls.html", {'product_list': product_list,'gender_cat':list(gender_cat),'sub_category':list(sub_cat),'article_type':list(articel_type), 'minprice':minprice, 'maxprice':maxprice, 'colors':list(color)})
     
 
-@login_required
+
 def Contact(request):
     set_page_active('Contact')
-    user=User.objects.get(id=request.user.id)
+    """ user=User.objects.get(id=request.user.id)
     if not request.user.is_staff:        
         profile=Profile.objects.get(user=user)
         mob_no=profile.mob_no
     else:
-        mob_no=""
+        mob_no="" """
     if request.method == 'POST':
         name = request.POST.get('name')
         email = request.POST.get('email')
@@ -204,7 +204,7 @@ def Contact(request):
         message = request.POST.get('message')
         CustomerQueries.objects.create(user=user, name=name, email=email, phonenumber=phonenumber, subject=subject, message=message)
         messages.success(request,'Your Queries are Submitted')
-    return render(request, 'contacts.html', {'mob_no':mob_no})
+    return render(request, 'contacts.html')
 
 def reviews(request, prodid):
     set_page_active('Shop')
