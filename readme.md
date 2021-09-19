@@ -20,5 +20,5 @@ It provides basic e-commerce functionalities to users and also includes techniqu
   
 ## Acknowledgements
 
- - [Cartzilla Theme](https://cartzilla.createx.studio/)
+ - [Cartzilla Theme](https://cartzilla.createx.studio/docs/dev-setup.html)
  
