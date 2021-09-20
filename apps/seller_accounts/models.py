@@ -20,6 +20,6 @@ class CompanyAddress(models.Model):
     state = models.CharField(max_length=200)
     pincode = models.PositiveIntegerField()
     def __str__(self):
-        return self.city + " - " + self.pincode
+        return self.city + " - " + str(self.pincode)
 
 

@@ -75,7 +75,7 @@
             <!-- Item-->
              {% for cp in order.cart.cartproduct_set.all %}
             <div class="d-sm-flex justify-content-between mb-4 pb-3 pb-sm-2 border-bottom">
-              <div class="d-sm-flex text-center text-sm-start"><a class="d-inline-block flex-shrink-0 mx-auto" href="shop-single-v1.html" style="width: 10rem;">
+              <div class="d-sm-flex text-center text-sm-start"><a class="d-inline-block flex-shrink-0 mx-auto" href="{% url 'apps.main:single_product' cp.product.id %}" style="width: 10rem;">
                                         {% if cp.product.productimagesfiles_set.all %}
                       {% for product_img in cp.product.productimagesfiles_set.all|slice:":1" %}
                         <img src="{{product_img.image_file.url}}" width="180" alt="Product">
@@ -87,9 +87,9 @@
                     {% endif %}
               </a>
                 <div class="ps-sm-4 pt-2">
-                  <h3 class="product-title fs-base mb-2"><a href="shop-single-v1.html">{{cp.product.title}}</a></h3>
-                  <div class="fs-sm"><span class="text-muted me-2">Size:</span>8.5</div>
-                  <div class="fs-sm"><span class="text-muted me-2">Color:</span>White &amp; Blue</div>
+                  <h3 class="product-title fs-base mb-2"><a href="{% url 'apps.main:single_product' cp.product.id %}">{{cp.product.title}}</a></h3>
+                  <!-- <div class="fs-sm"><span class="text-muted me-2">Size:</span>8.5</div> -->
+                  <!-- <div class="fs-sm"><span class="text-muted me-2">Color:</span>White &amp; Blue</div> -->
                   <div class="fs-lg text-accent pt-2">${{cp.rate}}</div>
                 </div>
               </div>

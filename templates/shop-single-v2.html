@@ -32,7 +32,7 @@
         <ul class="nav nav-tabs" role="tablist">
           <li class="nav-item"><a class="nav-link py-4 px-sm-4 active" href="#general" data-bs-toggle="tab" role="tab">General <span class='d-none d-sm-inline'>Info</span></a></li>
           <li class="nav-item"><a class="nav-link py-4 px-sm-4" href="#specs" data-bs-toggle="tab" role="tab"><span class='d-none d-sm-inline'>Tech</span> Specs</a></li>
-          <li class="nav-item"><a class="nav-link py-4 px-sm-4" href="#reviews" data-bs-toggle="tab" role="tab">Reviews <span class="fs-sm opacity-60">(74)</span></a></li>
+          <li class="nav-item"><a class="nav-link py-4 px-sm-4" href="#reviews" data-bs-toggle="tab" role="tab">Reviews <span class="fs-sm opacity-60"></span></a></li>
         </ul>
         <div class="px-4 pt-lg-3 pb-3 mb-5">
           <div class="tab-content px-lg-3">
@@ -92,7 +92,7 @@
                     <h1 class="h3 text-dark mb-2">{{single_product.title}}</h1>
                     <div class="h3 fw-normal text-accent mb-3 me-1">${{single_product.market_price}}</div>
                     <div class="fs-sm mb-4"><span class="text-heading fw-medium me-1">Color:</span><span class="text-muted" id="colorOption">{{single_product.color}}</span></div>
-                    <div class="position-relative me-n4 mb-3">
+                    {% comment %} <div class="position-relative me-n4 mb-3">
                       <div class="form-check form-option form-check-inline mb-2">
                         <input class="form-check-input" type="radio" name="color" id="color1" data-bs-label="colorOption" value="Dark blue/Orange" checked>
                         <label class="form-option-label rounded-circle" for="color1"><span class="form-option-color rounded-circle" style="background-color: #f25540;"></span></label>
@@ -110,13 +110,17 @@
                         <label class="form-option-label rounded-circle" for="color4"><span class="form-option-color rounded-circle" style="background-color: #333;"></span></label>
                       </div>
                       <div class="product-badge product-available mt-n1"><i class="ci-security-check"></i>Product available</div>
-                    </div>
-                    <div class="d-flex align-items-center pt-2 pb-4">
+                    </div> {% endcomment %}
+                    <div class="d-flex align-items-center pt-2 pb-4" >
+                      {% if user.is_staff %}
+                      <button class="btn btn-primary btn-shadow d-block w-100 disabled" type="button"><i class="ci-cart fs-lg me-2"></i>Add to Cart</button>
+                      {% else %}
                       <a class="w-100" href="{% url 'apps.cart:addtocart' single_product.id %}">
                       <button class="btn btn-primary btn-shadow d-block w-100" type="button"><i class="ci-cart fs-lg me-2"></i>Add to Cart</button>
                       </a>
+                      {% endif %}
                     </div>
-                    <div class="d-flex mb-4">
+                    {% comment %} <div class="d-flex mb-4">
                       <div class="w-100 me-3">
                         <button class="btn btn-secondary d-block w-100" type="button"><i class="ci-heart fs-lg me-2"></i><span class='d-none d-sm-inline'>Add to </span>Wishlist</button>
                       </div>
@@ -173,7 +177,7 @@
                       </div>
                     </div>
                     <!-- Sharing-->
-                    <label class="form-label d-inline-block align-middle my-2 me-3">Share:</label><a class="btn-share btn-twitter me-2 my-2" href="#"><i class="ci-twitter"></i>Twitter</a><a class="btn-share btn-instagram me-2 my-2" href="#"><i class="ci-instagram"></i>Instagram</a><a class="btn-share btn-facebook my-2" href="#"><i class="ci-facebook"></i>Facebook</a>
+                    <label class="form-label d-inline-block align-middle my-2 me-3">Share:</label><a class="btn-share btn-twitter me-2 my-2" href="#"><i class="ci-twitter"></i>Twitter</a><a class="btn-share btn-instagram me-2 my-2" href="#"><i class="ci-instagram"></i>Instagram</a><a class="btn-share btn-facebook my-2" href="#"><i class="ci-facebook"></i>Facebook</a> {% endcomment %}
                   </div>
                 </div>
               </div>
@@ -198,13 +202,23 @@
                   </div>
                 </div>
                 <div class="d-flex align-items-center pt-3">
-                  <a href="{% url 'apps.cart:addtocart' single_product.id %}"><button class="btn btn-primary btn-shadow me-2" type="button"><i class="ci-cart fs-lg me-sm-2"></i><span class="d-none d-sm-inline">Add to Cart</span></button></a>
-                  <div class="me-2">
+                 {% if user.is_staff %}
+                  <button class="btn btn-primary btn-shadow me-2 disabled" type="button"><i class="ci-cart fs-lg me-sm-2">
+                  </i>
+                  <span class="d-none d-sm-inline">Add to Cart</span></button>
+                  {% else %}
+                  <a href="{% url 'apps.cart:addtocart' single_product.id %}">
+                  <button class="btn btn-primary btn-shadow me-2" type="button"><i class="ci-cart fs-lg me-sm-2">
+                  </i>
+                  <span class="d-none d-sm-inline">Add to Cart</span></button>
+                  {% endif %}
+                  </a>
+                  {% comment %} <div class="me-2">
                     <button class="btn btn-secondary btn-icon" type="button" data-bs-toggle="tooltip" title="Add to Wishlist"><i class="ci-heart fs-lg"></i></button>
                   </div>
                   <div>
                     <button class="btn btn-secondary btn-icon" type="button" data-bs-toggle="tooltip" title="Compare"><i class="ci-compare fs-lg"></i></button>
-                  </div>
+                  </div> {% endcomment %}
                 </div>
               </div>
               <!-- Specs table-->
@@ -268,32 +282,35 @@
                   </div>
                 </div>
                 <div class="d-flex align-items-center pt-3">
-                  <select class="form-select me-2" style="width: 5rem;">
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                  </select>
-                  <a class="w-100" href="{% url 'apps.cart:addtocart' single_product.id %}">
-                  <button class="btn btn-primary btn-shadow me-2" type="button"><i class="ci-cart fs-lg me-sm-2"></i><span class="d-none d-sm-inline">Add to Cart</span></button>
+                   {% if user.is_staff %}
+                  <button class="btn btn-primary btn-shadow me-2 disabled" type="button"><i class="ci-cart fs-lg me-sm-2">
+                  </i>
+                  <span class="d-none d-sm-inline">Add to Cart</span></button>
+                  {% else %}
+                  <a href="{% url 'apps.cart:addtocart' single_product.id %}">
+                  <button class="btn btn-primary btn-shadow me-2" type="button"><i class="ci-cart fs-lg me-sm-2">
+                  </i>
+                  <span class="d-none d-sm-inline">Add to Cart</span></button>
+                  {% endif %}
                   </a>
-                  <div class="me-2">
+                  {% comment %} <div class="me-2">
                     <button class="btn btn-secondary btn-icon" type="button" data-bs-toggle="tooltip" title="Add to Wishlist"><i class="ci-heart fs-lg"></i></button>
                   </div>
                   <div>
                     <button class="btn btn-secondary btn-icon" type="button" data-bs-toggle="tooltip" title="Compare"><i class="ci-compare fs-lg"></i></button>
-                  </div>
+                  </div> {% endcomment %}
                 </div>
               </div>
               <!-- Reviews-->
               <div class="row pt-2 pb-3">
                 <div class="col-lg-4 col-md-5">
-                  <h2 class="h3 mb-4">74 Reviews</h2>
-                  <div class="star-rating me-2"><i class="ci-star-filled fs-sm text-accent me-1"></i><i class="ci-star-filled fs-sm text-accent me-1"></i><i class="ci-star-filled fs-sm text-accent me-1"></i><i class="ci-star-filled fs-sm text-accent me-1"></i><i class="ci-star fs-sm text-muted me-1"></i></div><span class="d-inline-block align-middle">4.1 Overall rating</span>
-                  <p class="pt-3 fs-sm text-muted">58 out of 74 (77%)<br>Customers recommended this product</p>
+                  <h2 class="h3 mb-4">Reviews</h2>
+                  <!-- <div class="star-rating me-2"><i class="ci-star-filled fs-sm text-accent me-1"></i><i class="ci-star-filled fs-sm text-accent me-1"></i><i class="ci-star-filled fs-sm text-accent me-1"></i><i class="ci-star-filled fs-sm text-accent me-1"></i><i class="ci-star fs-sm text-muted me-1"></i>
+                  </div>
+                  <span class="d-inline-block align-middle">4.1 Overall rating</span>
+                  <p class="pt-3 fs-sm text-muted">58 out of 74 (77%)<br>Customers recommended this product</p> -->
                 </div>
-                <div class="col-lg-8 col-md-7">
+                <!-- <div class="col-lg-8 col-md-7">
                   <div class="d-flex align-items-center mb-2">
                     <div class="text-nowrap me-3"><span class="d-inline-block align-middle text-muted">5</span><i class="ci-star-filled fs-xs ms-1"></i></div>
                     <div class="w-100">
@@ -334,13 +351,13 @@
                       </div>
                     </div><span class="text-muted ms-3">2</span>
                   </div>
-                </div>
+                </div> -->
               </div>
               <hr class="mt-4 mb-3">
               <div class="row py-4">
                 <!-- Reviews list-->
                 <div class="col-md-7">
-                  <div class="d-flex justify-content-end pb-4">
+                  <!-- <div class="d-flex justify-content-end pb-4">
                     <div class="d-flex flex-nowrap align-items-center">
                       <label class="fs-sm text-muted text-nowrap me-2 d-none d-sm-block" for="sort-reviews">Sort by:</label>
                       <select class="form-select form-select-sm" id="sort-reviews">
@@ -351,12 +368,15 @@
                         <option>Low rating</option>
                       </select>
                     </div>
-                  </div>
+                  </div> -->
                   <!-- Review-->
                   {% for review in reviews %}
                   <div class="product-review pb-4 mb-4 border-bottom">
                     <div class="d-flex mb-3">
-                      <div class="d-flex align-items-center me-4 pe-2"><img src="{{review.user.profile.image.url}}" width="50" height="50" alt="Rafael Marquez">
+                      <div class="d-flex align-items-center me-4 pe-2">
+                      {% if review.user.profile.image.url %}
+                      <img src="{{review.user.profile.image.url}}" width="50" height="50" alt="{{review.user.first_name}}">
+                      {% endif %}
                         <div class="ps-3">
                           <h6 class="fs-sm mb-0">{{review.user.first_name}} {{review.user.last_name}}</h6><span class="fs-ms text-muted">{{review.created_at}}</span>
                         </div>

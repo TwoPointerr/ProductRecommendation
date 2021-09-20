@@ -6,7 +6,7 @@
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb breadcrumb-light flex-lg-nowrap justify-content-center justify-content-lg-start">
                     <li class="breadcrumb-item"><a class="text-nowrap" href="{% url 'apps.main:index' %}"><i class="ci-home"></i>Home</a></li>
-                    <li class="breadcrumb-item text-nowrap"><a href="shop-grid-ls.html">Shop</a>
+                    <li class="breadcrumb-item text-nowrap"><a href="{% url 'apps.main:showallproducts' %}">Shop</a>
                     </li>
                     <li class="breadcrumb-item text-nowrap active" aria-current="page">Cart</li>
                 </ol>
@@ -22,7 +22,7 @@
         <!-- List of items-->
         <section class="col-lg-8">
             <div class="d-flex justify-content-between align-items-center pt-3 pb-4 pb-sm-5 mt-1">
-                <h2 class="h6 text-light mb-0">Products</h2><a class="btn btn-outline-primary btn-sm ps-2" href="shop-grid-ls.html"><i class="ci-arrow-left me-2"></i>Continue shopping</a>
+                <h2 class="h6 text-light mb-0">Products</h2><a class="btn btn-outline-primary btn-sm ps-2" href="{% url 'apps.main:showallproducts' %}"><i class="ci-arrow-left me-2"></i>Continue shopping</a>
             </div>
             <!-- Item-->
 
@@ -30,7 +30,7 @@
             <div class="d-sm-flex justify-content-between align-items-center my-2 pb-3 border-bottom">
                 <div class="d-block d-sm-flex align-items-center text-center text-sm-start">
 
-                    <a class="d-inline-block flex-shrink-0 mx-auto me-sm-4" href="shop-single-v1.html"> 
+                    <a class="d-inline-block flex-shrink-0 mx-auto me-sm-4" href="{% url 'apps.main:single_product' cp.product.id %}"> 
                     {% if cp.product.productimagesfiles_set.all %}
                       {% for product_img in cp.product.productimagesfiles_set.all|slice:":1" %}
                         <img src="{{product_img.image_file.url}}" width="180" alt="Product">
@@ -42,7 +42,7 @@
                     {% endif %}
                     </a>
                     <div class="pt-2">
-                        <h3 class="product-title fs-base mb-2"><a href="shop-single-v1.html">{{cp.product.title}}</a></h3>
+                        <h3 class="product-title fs-base mb-2"><a href="{% url 'apps.main:single_product' cp.product.id %}">{{cp.product.title}}</a></h3>
                         <div class="fs-sm"><span class="text-muted me-2">Size:</span>8.5</div>
                         <div class="fs-sm"><span class="text-muted me-2">Color:</span>White &amp; Blue</div>
                         <div class="fs-lg text-accent pt-2">${{cp.rate}}</div>
