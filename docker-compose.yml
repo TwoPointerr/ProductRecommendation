@@ -1,6 +1,17 @@
 version: '2.15.1'
 
 services:  
+
+  db:
+    image: postgres
+    environment: 
+      - POSTGRES_DB=eshopdb
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=1234
+    ports: 
+      - "5432:5432"
+    restart: always
+
   eshop_gunicorn:
     volumes: 
       - static:/static
@@ -14,16 +25,6 @@ services:
     depends_on:
      - db
 
-  db:
-    image: postgres
-    environment: 
-      - POSTGRES_DB=eshopdb
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=1234
-    ports: 
-      - "5432:5432"
-    restart: always
-
   nginx:
     build: ./nginx
     volumes: 
@@ -33,6 +34,16 @@ services:
       - "80:80"
     depends_on:
       - eshop_gunicorn
+      
+  # pgadmin:
+  #   image: dpage/pgadmin4
+  #   environment: 
+  #     - PGADMIN_DEFAULT_EMAIL=pg@admin.com
+  #     - PGADMIN_DEFAULT_PASSWORD=1234
+  #   ports: 
+  #     - "5050:80"
+  #   depends_on:
+  #    - db
 
 volumes:
   static:
