@@ -13,3 +13,4 @@ six==1.16.0
 sklearn==0.0
 sqlparse==0.4.1
 threadpoolctl==2.1.0
+gunicorn==21.2.0

@@ -35,7 +35,7 @@ SECRET_KEY = 'django-insecure-7dtqsvi1avy%=4e*u#c$vlo_ja2du67&5203549n5g_3diu9^i
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -94,7 +94,7 @@ DATABASES = {
         'NAME': 'eshopdb',
         'USER': 'postgres',
         'PASSWORD': '1234',
-        'HOST': 'localhost',
+        'HOST': 'host.docker.internal',
     }
 }
 
@@ -148,8 +148,8 @@ LOGIN_URL = reverse_lazy('apps.accounts:signin')
 # LOGIN_REDIRECT_URL = reverse_lazy('apps.main:index')
 # LOGOUT_REDIRECT_URL = reverse_lazy('apps.main:index')
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [BASE_DIR / "static"]
-STATIC_ROOT = BASE_DIR / "static_cdn"
+# STATICFILES_DIRS = [BASE_DIR / "static"]
+STATIC_ROOT = BASE_DIR / "static"
 MEDIA_URL ="/media/"
 MEDIA_ROOT =BASE_DIR/"media"
 # Default primary key field type
