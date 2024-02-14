@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 from django.contrib.messages import constants as messages
 from pathlib import Path
 from django.urls import reverse_lazy
+from decouple import config
+import os
 
 
 
@@ -35,12 +37,16 @@ SECRET_KEY = 'django-insecure-7dtqsvi1avy%=4e*u#c$vlo_ja2du67&5203549n5g_3diu9^i
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['*']
+# Configure the domain name using the environment variable
+# that Azure automatically creates for us.
+ALLOWED_HOSTS = [os.environ['WEBSITE_HOSTNAME']] if 'WEBSITE_HOSTNAME' in os.environ else ['*']
 
+CSRF_TRUSTED_ORIGINS = ['http://*.database.windows.net','https://*.azurewebsites.net']
 
 # Application definition
 
 INSTALLED_APPS = [
+    'whitenoise.runserver_nostatic',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -54,6 +60,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -90,11 +97,18 @@ WSGI_APPLICATION = 'eshop.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'eshopdb',
-        'USER': 'postgres',
-        'PASSWORD': '1234',
-        'HOST': 'host.docker.internal',
+        'ENGINE': 'mssql',
+        'NAME': config('name'),
+        'USER': config('user'),
+        'PASSWORD': config('pass'),
+        'HOST': config('host'),
+        'PORT': config('port'),
+        'OPTIONS': {
+            'driver': 'ODBC Driver 17 for SQL Server',
+            'MARS_Connection': True,
+            'Encrypt': 'yes',
+            'TrustServerCertificate': 'no',
+        },
     }
 }
 
@@ -149,11 +163,18 @@ LOGIN_URL = reverse_lazy('apps.accounts:signin')
 # LOGOUT_REDIRECT_URL = reverse_lazy('apps.main:index')
 STATIC_URL = '/static/'
 # STATICFILES_DIRS = [BASE_DIR / "static"]
-STATIC_ROOT = BASE_DIR / "static"
+STATIC_ROOT = BASE_DIR / "static/"
 MEDIA_URL ="/media/"
-MEDIA_ROOT =BASE_DIR/"media"
+MEDIA_ROOT =BASE_DIR/"media/"
+
+# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+# MEDIA_URL ="/media/"
+# MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
+
+# WHITENOISE_USE_FINDERS = True
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 

@@ -1,49 +1,26 @@
-version: '2.15.1'
+version: '0.0.1'
 
 services:  
-
-  db:
-    image: postgres
-    environment: 
-      - POSTGRES_DB=eshopdb
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=1234
-    ports: 
-      - "5432:5432"
-    restart: always
-
   eshop_gunicorn:
     volumes: 
-      - static:/static
-      - media:/media
-    # env_file: 
-    #   - .env
+      - static:/code/static
+      - media:/code/media
+    # image: mandharet/eshop-django:0.1
     build: 
       context: .
     ports: 
-      - "8000:8000"
-    depends_on:
-     - db
+      - "8080:8080"
 
   nginx:
-    build: ./nginx
     volumes: 
-      - static:/static
-      - media:/media
+      - static:/code/static
+      - media:/code/media
+    # image: mandharet/eshop-nginx:0.1
+    build: ./nginx
     ports:
-      - "80:80"
+      - "88:88"
     depends_on:
       - eshop_gunicorn
-      
-  # pgadmin:
-  #   image: dpage/pgadmin4
-  #   environment: 
-  #     - PGADMIN_DEFAULT_EMAIL=pg@admin.com
-  #     - PGADMIN_DEFAULT_PASSWORD=1234
-  #   ports: 
-  #     - "5050:80"
-  #   depends_on:
-  #    - db
 
 volumes:
   static:
