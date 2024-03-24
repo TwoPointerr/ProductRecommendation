@@ -66,6 +66,8 @@ docker-compose up
 
 <details>
 
+Environment: Python 3 (3.9.5 recommended)
+
 ### 1. Clone the Repository
 
 ```bash
