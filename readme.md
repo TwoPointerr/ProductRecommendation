@@ -18,7 +18,7 @@ It provides basic e-commerce functionalities to users and also includes techniqu
 [Report](https://drive.google.com/file/d/1Dg8V0HF6Inw0__Bi_4uipcgpkCDhYq-F/view?usp=sharing) not working
 
 
-##Website Overview:
+## Website Overview:
 
 This e-Shop website offers a seamless experience for both buyers and sellers. Users can explore our products, conveniently categorized for easy navigation. If they decide to make a purchase, registration as a customer is required, providing necessary information before proceeding to checkout.
 
